@@ -1,0 +1,48 @@
+<%- include layouts/header.ejs %>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="h1"><%=page_title%></h1>
+            </div>
+        </div>
+
+
+         <div class="col-sm-12">
+            <table class="table table-hover table-bordered">
+                <tr class="bg-primary">
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+                               
+                <% if(data.length){ 
+                                
+                 for(var i = 0;i < data.length;i++) { %>
+                 
+                <tr>
+                    <td><%=(i+1)%></td>
+                    <td><%=data[i].name%></td>
+                    <td><%=data[i].address%></td>
+                    <td><%=data[i].phone%></td>
+                    <td><%=data[i].email%></td>
+                </tr>
+            <% }
+            
+             }else{ %>
+                 <tr>
+                    <td colspan="3">No Employers</td>
+                 </tr>
+            <% } %>
+                
+                              
+                
+            </table>
+         </div>
+        <div class="col-sm-2">
+           <button type="button" class="btn btn-success" onClick="addEmployers();">Add Employer</button>
+         </div>
+        
+        
+<%- include layouts/footer.ejs %>
