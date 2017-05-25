@@ -25,16 +25,16 @@
         }
     },
     "production": {
-        "urlPath": "/node/court",
-        "username": "cgdbowner",
-        "password": "court2017",
-        "database": "cgdbn",
-        "host": "192.168.111.3",
-        "port": 1433,
+        "urlPath": "/opt/app-root/src/",
+        "username": "root",
+        "password": "",
+        "database": "nodejs",
+        "host": "127.0.0.1",
+        "port": 3306,
         "forceUpdate": false,
-        "dialect": "mssql",
+        "dialect": "mysql",
         "dialectOptions": {
-            "instanceName": "SQLEXPRESS"
+            "instanceName": "MySQL57"
         }
     }    
 }
