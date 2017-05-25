@@ -1,0 +1,40 @@
+{
+    "development": {
+        "urlPath": "/",
+        "username": "root",
+        "password": "",
+        "database": "nodejs",
+        "host": "localhost",
+        "port": 3306,
+        "forceUpdate": false,
+        "dialect": "mysql",
+        "dialectOptions": {
+        "instanceName": "MySQL57"
+        }
+    },
+    "test": {
+        "username": "cgdbowner",
+        "password": "password",
+        "database": "cgdbn",
+        "host": "localhost",
+        "port": 1433,
+        "forceUpdate": false,
+        "dialect": "mssql",
+        "dialectOptions": {
+            "instanceName": "SQLRTB"
+        }
+    },
+    "production": {
+        "urlPath": "/node/court",
+        "username": "cgdbowner",
+        "password": "court2017",
+        "database": "cgdbn",
+        "host": "192.168.111.3",
+        "port": 1433,
+        "forceUpdate": false,
+        "dialect": "mssql",
+        "dialectOptions": {
+            "instanceName": "SQLEXPRESS"
+        }
+    }    
+}

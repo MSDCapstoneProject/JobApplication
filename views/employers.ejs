@@ -1,48 +1,84 @@
 <%- include layouts/header.ejs %>
 
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h1 class="h1"><%=page_title%></h1>
-            </div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="h1">
+                <%=page_title%>
+            </h1>
         </div>
+    </div>
 
 
-         <div class="col-sm-12">
-            <table class="table table-hover table-bordered">
-                <tr class="bg-primary">
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                </tr>
-                               
-                <% if(data.length){ 
+    <div class="col-sm-12">
+        <table class="table table-hover table-bordered">
+            <tr class="bg-primary">
+                <th>No</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+            </tr>
+
+            <% if(data.length){ 
                                 
                  for(var i = 0;i < data.length;i++) { %>
-                 
+
                 <tr>
-                    <td><%=(i+1)%></td>
-                    <td><%=data[i].name%></td>
-                    <td><%=data[i].address%></td>
-                    <td><%=data[i].phone%></td>
-                    <td><%=data[i].email%></td>
+                    <td>
+                        <%=(i+1)%>
+                    </td>
+                    <td>
+                        <%=data[i].name%>
+                    </td>
+                    <td>
+                        <%=data[i].address%>
+                    </td>
+                    <td>
+                        <%=data[i].phone%>
+                    </td>
+                    <td>
+                        <%=data[i].email%>
+                    </td>
                 </tr>
-            <% }
+                <% }
             
              }else{ %>
-                 <tr>
-                    <td colspan="3">No Employers</td>
-                 </tr>
-            <% } %>
-                
-                              
-                
-            </table>
-         </div>
-        <div class="col-sm-2">
-           <button type="button" class="btn btn-success" onClick="addEmployers();">Add Employer</button>
-         </div>
-        
-        
-<%- include layouts/footer.ejs %>
+                    <tr>
+                        <td colspan="3">No Employers</td>
+                    </tr>
+                    <% } %>
+
+
+
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-16 col-centered text-center">
+            <div class="col-lg-5">
+            </div>
+            <div class="col-lg-2 form-group">
+                <button type="button" class="btn btn-success form-control" onClick="addEmployers();">Add Employer</button>
+            </div>
+            <div class="col-lg-7">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="form-group">
+            <div class="col-sm-8">
+                <input class="form-control col-lg-12" type="text" name="employer_name" id="employer_name" />
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-default" id="employer_search" name="employer_search">Search</button>
+            </div>
+        </div>
+    </div>
+    <div id="searchResults" class="col-sm-12">
+        <h2> Search results </h2>
+        <ul class="list-group">
+        </ul>
+    </div>
+
+    <%- include layouts/footer.ejs %>
