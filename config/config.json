@@ -13,15 +13,16 @@
         }
     },
     "test": {
-        "username": "cgdbowner",
-        "password": "password",
-        "database": "cgdbn",
+        "urlPath": "/",
+        "username": "root",
+        "password": "",
+        "database": "nodejs",
         "host": "localhost",
-        "port": 1433,
+        "port": 3306,
         "forceUpdate": false,
-        "dialect": "mssql",
+        "dialect": "mysql",
         "dialectOptions": {
-            "instanceName": "SQLRTB"
+        "instanceName": "MySQL57"
         }
     },
     "production": {
