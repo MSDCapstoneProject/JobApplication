@@ -11,7 +11,7 @@ var path = require('path');
 //load route
 var customers = require('./routes/customers'); 
 var employers = require('./routes/employers'); 
-var candidates = require('./routes/candidates');
+var jobSeekers = require('./routes/candidates');
 var app = express();
 
 var connection  = require('express-myconnection'); 
@@ -68,7 +68,7 @@ app.post('/employers/search', employers.search);
 
 
 app.get('/candidates',candidates.list);
-app.get('/candidates/save', candidates.save);
+app.post('/candidates/save', candidates.save);
 
 app.use(app.router);
 

@@ -1,17 +1,8 @@
--- phpMyAdmin SQL Dump
--- version 4.0.9
--- http://www.phpmyadmin.net
---
--- Inang: localhost
--- Waktu pembuatan: 02 Mei 2014 pada 12.05
--- Versi Server: 5.5.34
--- Versi PHP: 5.4.22
+-- db create script 
 
---****Create SQL schema as nodejs in mysql
+create database jobbridge;
 
-
-USE nodejs;
-
+USE jobbridge;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -20,80 +11,51 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
---
--- Database: `nodejs`
---
-
 -- --------------------------------------------------------
-
---
--- Stable structure `customer`
---
-
-
-CREATE TABLE IF NOT EXISTS `customer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `address` text NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
-
-INSERT INTO `customer` (`id`, `name`, `address`, `email`, `phone`) VALUES
-(2, 'Nadya Eka', 'Jl. Ciwidey no 20', 'nadya@yahoo.com', '086454743743'),
-(3, 'Amali', 'Jl. kemandoran no 10 Jakarta', 'amalia@langit.com', '03937263623'),
-(4, 'Angel ', 'Jl. Ciledug no 45A. tanggerang', 'angel@gmail.com', '082271626121'),
-(5, 'Ujang', 'Jl. ribut no 90 A', 'ujang@gmail.com', '07846352532'),
-(6, 'Memet', 'Blok cepu no 14. Bandung', 'memet@ongkek.com', '038372636232'),
-(9, 'Agung', 'Jl st Petersburg no 34. Russia', 'agung@yahoo.com', '038373273262'),
-(10, 'Jhon Taylor', 'St paris A . Block 43. paris', 'jtaylor@yahoo.com', '039223232323');
-
-CREATE TABLE IF NOT EXISTS `employers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `address` text NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
-
-
-INSERT INTO `employers` ( `name`, `address`, `email`, `phone`) VALUES
-( 'Bock Tools', '12, Cambridge','jobs@bock.com', '22678909'),
-( 'Horizon Parts', '2-A, Kitchener','jobs@horizonparts.com', '519677289');
-
-
-CREATE TABLE IF NOT EXISTS `candidates` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `address` text NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
-
-
-INSERT INTO `candidates` ( `name`, `address`, `email`, `phone`) VALUES
-( 'Jerry ', 'Kitchener','jerry@gmail.com', '22293343'),
-( 'Kim', 'Waterloo','kim@yahoo.com', '442223343');
-
-ALTER TABLE employers 
-  ADD COLUMN createdAt DATETIME AFTER phone;
-  
-ALTER TABLE employers 
-  ADD COLUMN updatedAt DATETIME AFTER createdAt;
-  
-  ALTER TABLE employers 
-  ADD COLUMN deletedAt DATETIME AFTER updatedAt;
-
---
--- Dumping data for table`customer`
---
-
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- create employers table
+
+CREATE TABLE IF NOT EXISTS `Employers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `address` text NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `website` varchar(200),
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deletedAt` datetime,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+
+INSERT INTO `Employers` ( `name`, `address`, `email`, `phone`,`website`) VALUES
+( 'Bock Tools', '12, Cambridge','jobs@bock.com', '22678909', 'http://www.bocktools.com'),
+( 'Horizon Parts', '2-A, Kitchener','jobs@horizonparts.com', '519677289','http://www.horizonparts.com');
+
+CREATE TABLE IF NOT EXISTS `JobSeekers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(200),
+  `lastName` varchar(200),
+  `address` text,
+  `email` varchar(200),
+  `phone` varchar(20),
+  `sin` varchar(100),
+  `DOB` date,
+  `status` varchar(25),
+  `gender` varchar(10),
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deletedAt` datetime,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+
+INSERT INTO `JobSeekers` ( `firstname`,`lastName`, `address`, `email`,`phone`,`sin`,`DOB`,`status`,`gender`) VALUES
+( 'Jen','Smith', 'Kitchener','jerry@gmail.com', '22293343','333422344','1990-02-12','citizen','male'),
+( 'Kitty','karen', 'Waterloo','kitty@gmail.com', '4433334','4444','1980-10-03','student','female');
