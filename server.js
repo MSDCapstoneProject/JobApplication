@@ -9,9 +9,8 @@ var http = require('http');
 var path = require('path');
 
 //load route
-var customers = require('./routes/customers'); 
 var employers = require('./routes/employers'); 
-var jobSeekers = require('./routes/candidates');
+var jobSeekers = require('./routes/jobSeekers');
 var app = express();
 
 var connection  = require('express-myconnection'); 
@@ -46,29 +45,18 @@ app.use(
         user: 'root',
         password : '',
         port : 3306, //port mysql
-        database:'nodejs'
+        database:'jobbridge'
 
     },'pool') //or single
 );
 
-
-
 app.get('/', routes.index);
-app.get('/customers', customers.list);
-app.get('/customers/add', customers.add);
-app.post('/customers/add', customers.save);
-app.get('/customers/delete/:id', customers.delete_customer);
-app.get('/customers/edit/:id', customers.edit);
-app.post('/customers/edit/:id',customers.save_edit);
 
-app.get('/employers', employers.list);
-app.get('/employers/add', employers.add);
-app.post('/employers/save', employers.save);
-app.post('/employers/search', employers.search);
+app.get('/employers', employers.get);
+app.post('/employers', employers.post);
 
-
-app.get('/candidates',candidates.list);
-app.post('/candidates/save', candidates.save);
+app.get('/jobSeekers',jobSeekers.get);
+app.post('/jobSeekers', jobSeekers.post);
 
 app.use(app.router);
 

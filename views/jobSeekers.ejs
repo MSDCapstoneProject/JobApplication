@@ -7,19 +7,19 @@
             </h1>
         </div>
     </div>
-
-
     <div class="col-sm-12">
         <table class="table table-hover table-bordered">
             <tr class="bg-primary">
                 <th>No</th>
-                <th>Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Address</th>
                 <th>Phone</th>
-                <th>Email</th>
-                <th>Website</th>
+                <th>SIN</th>
+                <th>DOB</th>
+                <th>Status</th>
+                <th>Gender</th>
             </tr>
-
             <% if(data.length){ 
                                 
                  for(var i = 0;i < data.length;i++) { %>
@@ -29,40 +29,49 @@
                         <%=(i+1)%>
                     </td>
                     <td>
-                        <%=data[i].name%>
+                        <%=data[i].firstName%>
+                    </td>
+                    <td>
+                        <%=data[i].lastName%>
                     </td>
                     <td>
                         <%=data[i].address%>
                     </td>
                     <td>
-                        <%=data[i].phone%>
-                    </td>
-                    <td>
                         <%=data[i].email%>
                     </td>
                     <td>
-                        <%=data[i].website%>
+                        <%=data[i].phone%>
+                    </td>
+                    <td>
+                        <%=data[i].sin%>
+                    </td>
+                    <td>
+                        <%=data[i].DOB%>
+                    </td>
+                    <td>
+                        <%=data[i].status%>
+                    </td>
+                    <td>
+                        <%=data[i].gender%>
                     </td>
                 </tr>
                 <% }
             
              }else{ %>
                     <tr>
-                        <td colspan="3">No Employers</td>
+                        <td colspan="3">No Job Seekers</td>
                     </tr>
                     <% } %>
-
-
-
         </table>
     </div>
-
+    <!--
     <div class="row">
         <div class="col-lg-16 col-centered text-center">
             <div class="col-lg-5">
             </div>
             <div class="col-lg-2 form-group">
-                <button type="button" class="btn btn-success form-control" onClick="addEmployers();">Add Employer</button>
+                <button type="button" class="btn btn-success form-control" onClick="addJobSeeker();">Add Job Seeker</button>
             </div>
             <div class="col-lg-7">
             </div>
@@ -84,5 +93,6 @@
         <ul class="list-group">
         </ul>
     </div>
+    -->
 
     <%- include layouts/footer.ejs %>

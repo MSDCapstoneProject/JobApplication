@@ -1,7 +1,7 @@
 $('#employer_search').click(function () {
     console.log($('#employer_name').val());
 
-    $.post('/employers/search', {
+    $.post('/employers', {
         method: 'employerSearch',
         name: $('#employer_name').val(),
     }, function (data, status) {
@@ -12,3 +12,5 @@ $('#employer_search').click(function () {
         });
     });
 });
+
+

@@ -1,91 +1,147 @@
 /*
- * GET users listing.
+ * GET JobSeeker.
  */
 
-var db = require('../models');
-var status = require('./resStatus');
+var db = require("../models");
+var status = require("./resStatus");
 
+var routes = {};
 var response = {};
 
-exports.list = function(req, res){
+function get(req, res) {
+    var jobSeekersId = req.query.id || null;
 
-  req.getConnection(function(err,connection){
-       
-        var query = connection.query('SELECT * FROM jobseekers',function(err,rows)
-        {
-            
-            if(err)
-                console.log("Error Selecting : %s ",err );
-     
-            res.render('jobseekers',{page_title:"JobSeekers",data:rows});
+    Promise.resolve()
+        .then(function () {
+            if (jobSeekersId) {
+                return db.JobSeeker.findAll({ where: { id: jobSeekersId } }); //if id is present
+            } else {
+                return db.JobSeeker.findAll(); //if id is not present
+            }
+        })
+        .then(function (jobSeekers) {
+            if (jobSeekers) {
+                res.render("jobSeekers", { page_title: "Job Bridge - Job Seekers", data: jobSeekers });
+            }
+        })
+        .catch(function (err) {
+            console.log("Error at jobSeekers get request" + err);
+        })
+}
 
-         });
-         //console.log(query.sql);
-    });
-  
-};
+/*
+ * Post JobSeekers.
+ */
 
-/*Save the candidate*/
-exports.save = function(req,res){
-    var postData = req.body;
-    respone ={};
+function post(req, res) {
+    var postData = req.query;
     
-    var input = JSON.parse(JSON.stringify(req.body));
-    
-    req.getConnection(function (err, connection) {
-        
-        var data = {
-            name    : input.name,
-            address : input.address,
-            email   : input.email,
-            phone   : input.phone,
-        };
-        
-        var query = connection.query("INSERT INTO jobseekers set ? ",data, function(err, rows)
-        {
-  
-          if (err)
-              console.log("Error inserting : %s ",err );
-
-        response.status = status.SUCCESS;
-
-        //send status as success.
-        res.json({ response });
-        });
-    
-    });
-
-        var postData = req.body; //read the post request JSON
-        var JobSeekerData = {
-            firstName : postData.firstName,
-            lastName : postData.lastName,
-            address : postData.address,
-            email : postData.email,
-            phone : postData.phone,
-            sin : postData.sin,
-            DOB : postData.DOB,
-            status : postData.status,
-            gender : postData.gender
-        }
-
-    if (postData.method == "addJobSeeker") {
-
-    }
+    if (postData.method == "searchJobSeekers") {
         response = {};
         Promise.resolve()
             .then(function () {
-                return db.JobSeeker.
+                return db.JobSeeker.findAll({
+                    where: { name: { $like: "%" + postData.name + "%" } }
+                }); //currently searching only through name
             })
-            .then(function (employers) {
-                response.employee = [];
-                employers.forEach(function(employee) {
-                 response.employee.push(employee.dataValues);   
-                });
+            .then(function (jobSeekers) {
+                if (jobSeekers) {
+                    response.jobSeeker = [];
+                    jobSeekers.forEach(function (jobSeeker) {
+                        response.jobSeeker.push(jobSeeker.dataValues);
+                    });
+                }
                 response.status = status.SUCCESS;
                 res.json({ response });
             })
             .catch(function (err) {
-                console.log('Error at employerSearch ' + err);
+                console.log("Error at searchJobSeekers " + err);
             })
-    
-};
+    }
+    else if (postData.method == "saveJobSeeker") {
+        response = {};
+
+        // building json for insert
+        var entry = {
+            firstName: postData.firstName,
+            lastName: postData.lastName,
+            address: postData.address,
+            email: postData.email,
+            phone: postData.phone,
+            sin: postData.sin,
+            DOB: postData.DOB,
+            status: postData.status,
+            gender: postData.gender
+        }
+
+        Promise.resolve()
+            .then(function () {
+                return db.JobSeeker.create(entry);   //create a record
+            })
+            .then(function (jobSeeker) {
+                if (jobSeeker) {
+                    response.name = jobSeeker.firstName;
+                }
+                response.status = status.SUCCESS;
+                res.json(response);
+            })
+            .catch(function (err) {
+                console.log("Error at saveJobSeeker " + err);
+                res.json({ status: status.EXCEPTION });
+            })
+    } else if (postData.method == "editJobSeeker") {
+        response = {};
+
+        //create a json
+        var entry = {
+            firstName: postData.firstName,
+            lastName: postData.lastName,
+            address: postData.address,
+            email: postData.email,
+            phone: postData.phone,
+            sin: postData.sin,
+            DOB: postData.DOB,
+            status: postData.status,
+            gender: postData.gender
+        }
+
+        Promise.resolve()
+            .then(function () {
+                return db.JobSeeker.update(entry, {where: { id: postData.id } }); //update a record with post request id
+            })
+            .then(function (jobSeeker) {
+                if (jobSeeker) {
+                    response.name = postData.name;
+                }
+                response.status = status.SUCCESS;
+                res.json(response);
+            })
+            .catch(function (err) {
+                console.log("Error at editJobSeeker " + err);
+                res.json({ status: status.EXCEPTION });
+            })
+    } else if (postData.method == "deleteJobSeeker") {
+        response = {};
+
+        Promise.resolve()
+            .then(function () {
+                return db.JobSeeker.destroy({ where: { id: postData.id } }); //delete a record with post request id
+            })
+            .then(function (jobSeeker) {
+                if (jobSeeker) {
+                    response.name = postData.firstName;
+                }
+                response.status = status.SUCCESS;
+                res.json(response);
+            })
+            .catch(function (err) {
+                console.log("Error at deleteJobSeeker " + err);
+                res.json({ status: status.EXCEPTION });
+            })
+    }
+}
+
+
+routes.get = get;
+routes.post = post;
+module.exports = routes;

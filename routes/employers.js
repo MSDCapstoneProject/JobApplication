@@ -1,89 +1,139 @@
 /*
- * GET employers listing.
+ * GET employers.
  */
 
-//var db = require('/models');
+var db = require("../models");
+var status = require("./resStatus");
 
-var db = require('../models');
+var routes = {};
 
-var status = require('./resStatus');
+function get(req, res) {
+    var employerId = req.query.id || null;
 
-exports.list = function (req, res) {
+    Promise.resolve()
+        .then(function () {
+            if (employerId) {
+                return db.Employer.findAll({ where: { id: employerId } }); //if id is present
+            } else {
+                return db.Employer.findAll(); //if id is not present
+            }
+        })
+        .then(function (employers) {
+            if (employers) {
+                res.render("employers", { page_title: "Job Bridge - Employers", data: employers });
+            }
+        })
+        .catch(function (err) {
+            console.log("Error at Employer get request" + err);
+        })
+}
 
-    req.getConnection(function (err, connection) {
+/*
+ * Post employers.
+ */
 
-        var query = connection.query('SELECT * FROM employers', function (err, rows) {
-            if (err)
-                console.log("Error Selecting : %s ", err);
-            res.render('employers', { page_title: "Employers Information", data: rows });
-        });
-    });
-};
+function post(req, res) {
+    var postData = req.query;
+    var response = {};
 
-exports.add = function (req, res) {
-    res.render('add_employers', { page_title: "Add Employer" });
-};
-
-/*Save the customer*/
-exports.save = function (req, res) {
-    var postData = req.body;
-
-    if (postData.method == "add_candidate") {
-        console.log("reached here");
-    }
-
-    var input = JSON.parse(JSON.stringify(req.body));
-
-    req.getConnection(function (err, connection) {
-
-        var data = {
-            name: input.name,
-            address: input.address,
-            email: input.email,
-            phone: input.phone
-
-        };
-
-        var query = connection.query("INSERT INTO employers set ? ", data, function (err, rows) {
-
-            if (err)
-                console.log("Error inserting : %s ", err);
-
-            res.redirect('/employers');
-
-        });
-
-        // console.log(query.sql); get raw query
-
-    });
-};
-
-
-exports.search = function (req, res) {
-    var postData = req.body;
-
-    if (postData.method == "employerSearch") {
-        var response = {};
+    if (postData.method == "searchEmployer") {
+        response = {};
         Promise.resolve()
             .then(function () {
                 return db.Employer.findAll({
-                    where: {name:  { $like: "%"+postData.name+"%" } }
-                })
-                //return db.sequelize.query("select * from employers where name like '%samsung%'");
+                    where: { name: { $like: "%" + postData.name + "%" } }
+                }); //currently searching only through name
             })
             .then(function (employers) {
-                response.employee = [];
-                employers.forEach(function(employee) {
-                 response.employee.push(employee.dataValues);   
-                });
+                if (employers) {
+                    response.employee = [];
+                    employers.forEach(function (employee) {
+                        response.employee.push(employee.dataValues);
+                    });
+                }
                 response.status = status.SUCCESS;
                 res.json({ response });
             })
             .catch(function (err) {
-                console.log('Error at employerSearch ' + err);
+                console.log("Error at searchEmployer " + err);
+            })
+    }
+    else if (postData.method == "saveEmployer") {
+        response = {};
+
+        // building json for insert
+        var entry = {
+            name: postData.name,
+            address: postData.address,
+            email: postData.email,
+            phone: postData.phone,
+            website: postData.website || null
+        };
+
+        Promise.resolve()
+            .then(function () {
+                return db.Employer.create(entry);   //create a record
+            })
+            .then(function (employers) {
+                if (employers) {
+                    response.name = employers.name;
+                }
+                response.status = status.SUCCESS;
+                res.json(response);
+            })
+            .catch(function (err) {
+                console.log("Error at saveEmployer " + err);
+                res.json({ status: status.EXCEPTION });
+            })
+    } else if (postData.method == "editEmployer") {
+        response = {};
+
+        //create a json
+        var entry = {
+            name: postData.name,
+            address: postData.address,
+            email: postData.email,
+            phone: postData.phone,
+            website: postData.website || null,
+            updatedAt: new Date()
+        }
+
+        Promise.resolve()
+            .then(function () {
+                return db.Employer.update(entry, { where: { id: postData.id } }); //update a record with post request id
+            })
+            .then(function (employers) {
+                if (employers) {
+                    response.name = postData.name;
+                }
+                response.status = status.SUCCESS;
+                res.json(response);
+            })
+            .catch(function (err) {
+                console.log("Error at editEmployer " + err);
+                res.json({ status: status.EXCEPTION });
+            })
+    } else if (postData.method == "deleteEmployer") {
+        response = {};
+        Promise.resolve()
+            .then(function () {
+                return db.Employer.destroy({ where: { id: postData.id } }); //delete a record with post request id
+            })
+            .then(function (employers) {
+                if (employers) {
+                    response.name = postData.name;
+                }
+                response.status = status.SUCCESS;
+                res.json(response);
+            })
+            .catch(function (err) {
+                console.log("Error at deleteEmployer " + err);
+                res.json({ status: status.EXCEPTION });
             })
     }
 }
 
 
-
+routes.get = get;
+routes.post = post;
+module.exports = routes;
