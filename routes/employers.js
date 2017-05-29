@@ -20,7 +20,8 @@ function get(req, res) {
         })
         .then(function (employers) {
             if (employers) {
-                res.render("employers", { page_title: "Job Bridge - Employers", data: employers });
+                //res.render("employers", { page_title: "Job Bridge - Employers", data: employers });
+                res.json(employers);
             }
         })
         .catch(function (err) {

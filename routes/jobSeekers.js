@@ -21,7 +21,8 @@ function get(req, res) {
         })
         .then(function (jobSeekers) {
             if (jobSeekers) {
-                res.render("jobSeekers", { page_title: "Job Bridge - Job Seekers", data: jobSeekers });
+                //res.render("jobSeekers", { page_title: "Job Bridge - Job Seekers", data: jobSeekers });
+                res.json(jobSeekers);
             }
         })
         .catch(function (err) {
