@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -9,11 +8,11 @@ var http = require('http');
 var path = require('path');
 
 //load route
-var employers = require('./routes/employers'); 
+var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
 var app = express();
 
-var connection  = require('express-myconnection'); 
+var connection = require('express-myconnection');
 var mysql = require('mysql');
 
 // all environments
@@ -30,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 }
 
 /*------------------------------------------
@@ -39,17 +38,19 @@ if ('development' == app.get('env')) {
 -------------------------------------------*/
 
 app.use(
-    connection(mysql,{
-        
+    connection(mysql, {
+
         host: 'localhost',
         user: 'root',
-        password : '',
-        port : 3306, //port mysql
-        database:'jobbridge'
+        password: '',
+        port: 3306, //port mysql
+        database: 'jobbridge'
 
-    },'pool') //or single
+    }, 'pool') //or single
 );
 
+
+/*
 app.get('/', routes.index);
 
 app.get('/employers', employers.get);
@@ -60,6 +61,24 @@ app.post('/jobSeekers', jobSeekers.post);
 
 app.use(app.router);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+*/
+
+app.get('/', routes.index);
+
+app.get('/employers', employers.list);
+app.get('/employers/:id', employers.list);
+app.post('/employers/add', employers.add);
+app.post('/employers/update', employers.update);
+app.post('/employers/delete', employers.delete);
+
+app.get('/jobSeekers', jobSeekers.list);
+app.get('/jobSeekers/:id', jobSeekers.list);
+app.post('/jobSeekers/add', jobSeekers.add);
+app.post('/jobSeekers/update', jobSeekers.update);
+app.post('/jobSeekers/delete', jobSeekers.delete);
+
+app.use(app.router);
+
+http.createServer(app).listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + app.get('port'));
 });

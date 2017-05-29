@@ -35,18 +35,22 @@ config.json
         start node.js server application
         visit : http://localhost:3000
 
-        Employer get: http://localhost:3000/employers?id=1
-        Employer post search : http://localhost:3000/employers?name=bock&method=searchEmployer
-        Employer post create a new employer : http://localhost:3000/employers?method=saveEmployer&name=Sky Wheels&address=new London&email=jobs@skywheel.com&phone=44224555&website=http://www.skywheel.com
+        Jobseeker Operation // 
 
-        Employer post update an existing employer : http://localhost:3000/employers?method=editEmployer&name=Sky Wheels&address=Kitchener&email=jobs@skywheel.com&phone=44224555&website=http://www.skywheel.com&id=3
+        Employer get for all: http://localhost:3000/employers
+        Employer get for id: http://localhost:3000/employers?id=1 or http://localhost:3000/employers/1 
+        Employer post add employer : http://localhost:3000/employers/update?name=Dell &address=new London&email=jobs@skywheel.com&phone=44224555&website=http://www.skywheel.com
 
-        Employer post delete an existing employer : http://localhost:3000/employers?method=deleteEmployer&id=2
+        Employer post delete an existing employer : http://localhost:3000/employers/delete?id=1
 
-        same for jobseeker // 
+        Jobseeker Operation // 
+        JobSeeker get for all: http://localhost:3000/jobSeekers
+        JobSeeker get for id: http://localhost:3000/jobSeekers?id=1 or http://localhost:3000/jobSeekers/1
 
-        NOTE:- Currently update needs all the fields
-	
-You're gonna need to create a DB named 'nodejs' and import customer.sql
+        JobSeeker Add: http://localhost:3000/employers/update?name=Dell &address=new London&email=jobs@skywheel.com&phone=44224555&website=http://www.skywheel.com
+
+        JobSeeker Update: http://localhost:3000/jobSeekers/update?firstName=Timmy&lastName=Lim&address=New York&email=Joy@gmail.com&phone=4424555&sin=33455553&DOB=1987-09-09&status=Student&gender=male&id=5
+
+        JobSeeker delete: http://localhost:3000/jobSeekers/delete?id=4
 
 ## NOTES

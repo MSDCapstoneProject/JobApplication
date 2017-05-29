@@ -6,16 +6,21 @@ var db = require("../models");
 var status = require("./resStatus");
 
 var routes = {};
+var method;
 
-function get(req, res) {
-    var employerId = req.query.id || null;
+exports.list = function (req, res) {
+
+    var employerId = req.query.id || req.params.id;;
 
     Promise.resolve()
         .then(function () {
             if (employerId) {
-                return db.Employer.findAll({ where: { id: employerId } }); //if id is present
+                return db.Employer.findAll({
+                    attributes: ['id', 'name', 'address', 'email', 'website'],
+                    where: { id: employerId }
+                }); //if id is present
             } else {
-                return db.Employer.findAll(); //if id is not present
+                return db.Employer.findAll({ attributes: ['id', 'name', 'address', 'email', 'website'] }); //if id is not present
             }
         })
         .then(function (employers) {
@@ -33,15 +38,33 @@ function get(req, res) {
  * Post employers.
  */
 
-function post(req, res) {
-    var postData = req.query.method ? req.query : req.body;
+exports.add = function (req, res) {
+    method = "saveEmployer";
+    post(req, res, method);
+}
+
+exports.update = function (req, res) {
+    method = "editEmployer";
+    post(req, res, method);
+}
+
+exports.delete = function (req, res) {
+    method = "deleteEmployer";
+    post(req, res, method);
+}
+
+
+
+function post(req, res, method) {
+    var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
     var response = {};
 
-    if (postData.method == "searchEmployer") {
+    if (method == "searchEmployer") {
         response = {};
         Promise.resolve()
             .then(function () {
                 return db.Employer.findAll({
+                    attributes: ['id', 'name', 'address', 'email', 'website'],
                     where: { name: { $like: "%" + postData.name + "%" } }
                 }); //currently searching only through name
             })
@@ -59,7 +82,7 @@ function post(req, res) {
                 console.log("Error at searchEmployer " + err);
             })
     }
-    else if (postData.method == "saveEmployer") {
+    else if (method == "saveEmployer") {
         response = {};
 
         // building json for insert
@@ -68,7 +91,10 @@ function post(req, res) {
             address: postData.address,
             email: postData.email,
             phone: postData.phone,
-            website: postData.website || null
+            website: postData.website || null,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+
         };
 
         Promise.resolve()
@@ -86,7 +112,7 @@ function post(req, res) {
                 console.log("Error at saveEmployer " + err);
                 res.json({ status: status.EXCEPTION });
             })
-    } else if (postData.method == "editEmployer") {
+    } else if (method == "editEmployer") {
         response = {};
 
         //create a json
@@ -114,7 +140,7 @@ function post(req, res) {
                 console.log("Error at editEmployer " + err);
                 res.json({ status: status.EXCEPTION });
             })
-    } else if (postData.method == "deleteEmployer") {
+    } else if (method == "deleteEmployer") {
         response = {};
         Promise.resolve()
             .then(function () {
@@ -133,8 +159,3 @@ function post(req, res) {
             })
     }
 }
-
-
-routes.get = get;
-routes.post = post;
-module.exports = routes;

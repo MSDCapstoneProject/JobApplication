@@ -7,21 +7,22 @@ var status = require("./resStatus");
 
 var routes = {};
 var response = {};
+var method;
 
-function get(req, res) {
-    var jobSeekersId = req.query.id || null;
+exports.list = function (req, res) {
+
+    var jobSeekersId = req.query.id || req.params.id;
 
     Promise.resolve()
         .then(function () {
             if (jobSeekersId) {
-                return db.JobSeeker.findAll({ where: { id: jobSeekersId } }); //if id is present
+                return db.JobSeeker.findAll({ attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'], where: { id: jobSeekersId } }); //if id is present
             } else {
-                return db.JobSeeker.findAll(); //if id is not present
+                return db.JobSeeker.findAll({ attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'] }); //if id is not present
             }
         })
         .then(function (jobSeekers) {
             if (jobSeekers) {
-                //res.render("jobSeekers", { page_title: "Job Bridge - Job Seekers", data: jobSeekers });
                 res.json(jobSeekers);
             }
         })
@@ -34,14 +35,31 @@ function get(req, res) {
  * Post JobSeekers.
  */
 
-function post(req, res) {
-    var postData = req.query.method ? req.query : req.body;
+exports.add = function (req, res) {
+    method = "saveJobSeeker";
+    post(req, res, method);
+}
 
-    if (postData.method == "searchJobSeekers") {
+exports.update = function (req, res) {
+    method = "editJobSeeker";
+    post(req, res, method);
+}
+
+exports.delete = function (req, res) {
+    method = "deleteJobSeeker";
+    post(req, res, method);
+}
+
+
+function post(req, res, method) {
+    var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
+
+    if (method == "searchJobSeekers") {
         response = {};
         Promise.resolve()
             .then(function () {
                 return db.JobSeeker.findAll({
+                    attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'],
                     where: { name: { $like: "%" + postData.name + "%" } }
                 }); //currently searching only through name
             })
@@ -59,7 +77,7 @@ function post(req, res) {
                 console.log("Error at searchJobSeekers " + err);
             })
     }
-    else if (postData.method == "saveJobSeeker") {
+    else if (method == "saveJobSeeker") {
         response = {};
 
         // building json for insert
@@ -72,7 +90,9 @@ function post(req, res) {
             sin: postData.sin,
             DOB: postData.DOB,
             status: postData.status,
-            gender: postData.gender
+            gender: postData.gender,
+            createdAt: new Date(),
+            updatedAt: new Date(),
         }
 
         Promise.resolve()
@@ -90,7 +110,7 @@ function post(req, res) {
                 console.log("Error at saveJobSeeker " + err);
                 res.json({ status: status.EXCEPTION });
             })
-    } else if (postData.method == "editJobSeeker") {
+    } else if (method == "editJobSeeker") {
         response = {};
 
         //create a json
@@ -103,7 +123,8 @@ function post(req, res) {
             sin: postData.sin,
             DOB: postData.DOB,
             status: postData.status,
-            gender: postData.gender
+            gender: postData.gender,
+            updatedAt: new Date(),
         }
 
         Promise.resolve()
@@ -121,7 +142,7 @@ function post(req, res) {
                 console.log("Error at editJobSeeker " + err);
                 res.json({ status: status.EXCEPTION });
             })
-    } else if (postData.method == "deleteJobSeeker") {
+    } else if (method == "deleteJobSeeker") {
         response = {};
 
         Promise.resolve()
@@ -141,8 +162,3 @@ function post(req, res) {
             })
     }
 }
-
-
-routes.get = get;
-routes.post = post;
-module.exports = routes;
