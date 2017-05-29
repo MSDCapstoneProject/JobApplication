@@ -33,7 +33,7 @@ function get(req, res) {
  */
 
 function post(req, res) {
-    var postData = req.query;
+    var postData = req.query.method ? req.query : req.body;
     var response = {};
 
     if (postData.method == "searchEmployer") {

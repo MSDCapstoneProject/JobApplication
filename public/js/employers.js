@@ -2,7 +2,7 @@ $('#employer_search').click(function () {
     console.log($('#employer_name').val());
 
     $.post('/employers', {
-        method: 'employerSearch',
+        method: 'searchEmployer',
         name: $('#employer_name').val(),
     }, function (data, status) {
         var data = data.response;
@@ -12,5 +12,3 @@ $('#employer_search').click(function () {
         });
     });
 });
-
-

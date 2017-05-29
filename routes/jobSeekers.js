@@ -34,8 +34,8 @@ function get(req, res) {
  */
 
 function post(req, res) {
-    var postData = req.query;
-    
+    var postData = req.query.method ? req.query : req.body;
+
     if (postData.method == "searchJobSeekers") {
         response = {};
         Promise.resolve()
@@ -107,7 +107,7 @@ function post(req, res) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSeeker.update(entry, {where: { id: postData.id } }); //update a record with post request id
+                return db.JobSeeker.update(entry, { where: { id: postData.id } }); //update a record with post request id
             })
             .then(function (jobSeeker) {
                 if (jobSeeker) {
