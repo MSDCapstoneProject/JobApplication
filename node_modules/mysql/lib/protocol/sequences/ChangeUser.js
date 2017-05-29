@@ -6,7 +6,7 @@ var Auth     = require('../Auth');
 module.exports = ChangeUser;
 Util.inherits(ChangeUser, Sequence);
 function ChangeUser(options, callback) {
-  Sequence.call(this, callback);
+  Sequence.call(this, options, callback);
 
   this._user          = options.user;
   this._password      = options.password;
@@ -23,7 +23,7 @@ ChangeUser.prototype.start = function(handshakeInitializationPacket) {
     user          : this._user,
     scrambleBuff  : scrambleBuff,
     database      : this._database,
-    charsetNumber : this._charsetNumber,
+    charsetNumber : this._charsetNumber
   });
 
   this._currentConfig.user          = this._user;

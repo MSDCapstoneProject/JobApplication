@@ -7,7 +7,19 @@ module.exports = RowDataPacket;
 function RowDataPacket() {
 }
 
-RowDataPacket.prototype.parse = function(parser, fieldPackets, typeCast, nestTables, connection) {
+Object.defineProperty(RowDataPacket.prototype, 'parse', {
+  configurable : true,
+  enumerable   : false,
+  value        : parse
+});
+
+Object.defineProperty(RowDataPacket.prototype, '_typeCast', {
+  configurable : true,
+  enumerable   : false,
+  value        : typeCast
+});
+
+function parse(parser, fieldPackets, typeCast, nestTables, connection) {
   var self = this;
   var next = function () {
     return self._typeCast(fieldPacket, parser, connection.config.timezone, connection.config.supportBigNumbers, connection.config.bigNumberStrings, connection.config.dateStrings);
@@ -17,7 +29,7 @@ RowDataPacket.prototype.parse = function(parser, fieldPackets, typeCast, nestTab
     var fieldPacket = fieldPackets[i];
     var value;
 
-    if (typeof typeCast == "function") {
+    if (typeof typeCast === 'function') {
       value = typeCast.apply(connection, [ new Field({ packet: fieldPacket, parser: parser }), next ]);
     } else {
       value = (typeCast)
@@ -27,7 +39,7 @@ RowDataPacket.prototype.parse = function(parser, fieldPackets, typeCast, nestTab
           : parser.parseLengthCodedString() );
     }
 
-    if (typeof nestTables == "string" && nestTables.length) {
+    if (typeof nestTables === 'string' && nestTables.length) {
       this[fieldPacket.table + nestTables + fieldPacket.name] = value;
     } else if (nestTables) {
       this[fieldPacket.table] = this[fieldPacket.table] || {};
@@ -36,21 +48,23 @@ RowDataPacket.prototype.parse = function(parser, fieldPackets, typeCast, nestTab
       this[fieldPacket.name] = value;
     }
   }
-};
+}
 
-RowDataPacket.prototype._typeCast = function(field, parser, timeZone, supportBigNumbers, bigNumberStrings, dateStrings) {
+function typeCast(field, parser, timeZone, supportBigNumbers, bigNumberStrings, dateStrings) {
   var numberString;
 
   switch (field.type) {
     case Types.TIMESTAMP:
+    case Types.TIMESTAMP2:
     case Types.DATE:
     case Types.DATETIME:
+    case Types.DATETIME2:
     case Types.NEWDATE:
       var dateString = parser.parseLengthCodedString();
-      if (dateStrings) {
-          return dateString;
+
+      if (typeMatch(field.type, dateStrings)) {
+        return dateString;
       }
-      var dt;
 
       if (dateString === null) {
         return null;
@@ -65,7 +79,7 @@ RowDataPacket.prototype._typeCast = function(field, parser, timeZone, supportBig
         dateString += ' ' + timeZone;
       }
 
-      dt = new Date(dateString);
+      var dt = new Date(dateString);
       if (isNaN(dt.getTime())) {
         return originalString;
       }
@@ -79,14 +93,14 @@ RowDataPacket.prototype._typeCast = function(field, parser, timeZone, supportBig
     case Types.FLOAT:
     case Types.DOUBLE:
       numberString = parser.parseLengthCodedString();
-      return (numberString === null || (field.zeroFill && numberString[0] == "0"))
+      return (numberString === null || (field.zeroFill && numberString[0] === '0'))
         ? numberString : Number(numberString);
     case Types.NEWDECIMAL:
     case Types.LONGLONG:
       numberString = parser.parseLengthCodedString();
-      return (numberString === null || (field.zeroFill && numberString[0] == "0"))
+      return (numberString === null || (field.zeroFill && numberString[0] === '0'))
         ? numberString
-        : ((supportBigNumbers && (bigNumberStrings || (Number(numberString) > IEEE_754_BINARY_64_PRECISION)))
+        : ((supportBigNumbers && (bigNumberStrings || (Number(numberString) >= IEEE_754_BINARY_64_PRECISION) || Number(numberString) <= -IEEE_754_BINARY_64_PRECISION))
           ? numberString
           : Number(numberString));
     case Types.BIT:
@@ -105,4 +119,15 @@ RowDataPacket.prototype._typeCast = function(field, parser, timeZone, supportBig
     default:
       return parser.parseLengthCodedString();
   }
-};
+}
+
+function typeMatch(type, list) {
+  if (Array.isArray(list)) {
+    for (var i = 0; i < list.length; i++) {
+      if (Types[list[i]] === type) return true;
+    }
+    return false;
+  } else {
+    return Boolean(list);
+  }
+}

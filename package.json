@@ -3,16 +3,20 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-  "start": "node server.js",
-   "install": "sequelize"
-},
-"main": "server.js",  
+    "start": "node server.js",
+    "install": "sequelize"
+  },
+  "main": "server.js",
   "dependencies": {
-  "ejs": "^1.0.0",
-  "express": "3.5.1",
-  "express-myconnection": "1.0.4",
-  "jade": "*",
-  "path": "^0.12.7",
-  "sequelize": "^3.25.0"
+    "ah-sequelize-plugin": "^0.8.7",
+    "ejs": "^1.0.0",
+    "express": "3.5.1",
+    "express-myconnection": "1.0.4",
+    "jade": "*",
+    "mysql": "^2.13.0",
+    "path": "^0.12.7",
+    "sequelize": "^3.30.4",
+    "sequelize-cli": "^2.4.0",
+    "sequelize-fixtures": "^0.5.6"
   }
 }
