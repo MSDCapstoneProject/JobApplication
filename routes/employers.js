@@ -15,12 +15,12 @@ exports.list = function (req, res) {
     Promise.resolve()
         .then(function () {
             if (employerId) {
-                return db.Employer.findAll({
+                return db.Employers.findAll({
                     attributes: ['id', 'name', 'address', 'email', 'website'],
                     where: { id: employerId }
                 }); //if id is present
             } else {
-                return db.Employer.findAll({ attributes: ['id', 'name', 'address', 'email', 'website'] }); //if id is not present
+                return db.Employers.findAll({ attributes: ['id', 'name', 'address', 'email', 'website'] }); //if id is not present
             }
         })
         .then(function (employers) {
@@ -62,7 +62,7 @@ function post(req, res, method) {
         response = {};
         Promise.resolve()
             .then(function () {
-                return db.Employer.findAll({
+                return db.Employers.findAll({
                     attributes: ['id', 'name', 'address', 'email', 'website'],
                     where: { name: { $like: "%" + postData.name + "%" } }
                 }); //currently searching only through name
@@ -97,7 +97,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.Employer.create(entry);   //create a record
+                return db.Employers.create(entry);   //create a record
             })
             .then(function (employers) {
                 if (employers) {
@@ -125,7 +125,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.Employer.update(entry, { where: { id: postData.id } }); //update a record with post request id
+                return db.Employers.update(entry, { where: { id: postData.id } }); //update a record with post request id
             })
             .then(function (employers) {
                 if (employers) {
@@ -142,7 +142,7 @@ function post(req, res, method) {
         response = {};
         Promise.resolve()
             .then(function () {
-                return db.Employer.destroy({ where: { id: postData.id } }); //delete a record with post request id
+                return db.Employers.destroy({ where: { id: postData.id } }); //delete a record with post request id
             })
             .then(function (employers) {
                 if (employers) {

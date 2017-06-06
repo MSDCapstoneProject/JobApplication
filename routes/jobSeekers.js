@@ -16,9 +16,9 @@ exports.list = function (req, res) {
     Promise.resolve()
         .then(function () {
             if (jobSeekersId) {
-                return db.JobSeeker.findAll({ attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'], where: { id: jobSeekersId } }); //if id is present
+                return db.JobSeekers.findAll({ attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'], where: { id: jobSeekersId } }); //if id is present
             } else {
-                return db.JobSeeker.findAll({ attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'] }); //if id is not present
+                return db.JobSeekers.findAll({ attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'] }); //if id is not present
             }
         })
         .then(function (jobSeekers) {
@@ -58,7 +58,7 @@ function post(req, res, method) {
         response = {};
         Promise.resolve()
             .then(function () {
-                return db.JobSeeker.findAll({
+                return db.JobSeekers.findAll({
                     attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'],
                     where: { name: { $like: "%" + postData.name + "%" } }
                 }); //currently searching only through name
@@ -97,7 +97,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSeeker.create(entry);   //create a record
+                return db.JobSeekers.create(entry);   //create a record
             })
             .then(function (jobSeeker) {
                 if (jobSeeker) {
@@ -129,7 +129,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSeeker.update(entry, { where: { id: postData.id } }); //update a record with post request id
+                return db.JobSeekers.update(entry, { where: { id: postData.id } }); //update a record with post request id
             })
             .then(function (jobSeeker) {
                 if (jobSeeker) {
@@ -147,7 +147,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSeeker.destroy({ where: { id: postData.id } }); //delete a record with post request id
+                return db.JobSeekers.destroy({ where: { id: postData.id } }); //delete a record with post request id
             })
             .then(function (jobSeeker) {
                 if (jobSeeker) {
