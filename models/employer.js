@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
-    var Employer = sequelize.define("Employer", {
+    var Employers = sequelize.define("Employers", {
         name: DataTypes.STRING,
         address: DataTypes.STRING,
         email: DataTypes.STRING,
@@ -11,5 +11,5 @@ module.exports = function (sequelize, DataTypes) {
             paranoid: true,
         });
 
-    return Employer;
+    return Employers;
 };

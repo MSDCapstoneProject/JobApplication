@@ -10,16 +10,16 @@ module.exports = function (sequelize, DataTypes) {
         endTime: DataTypes.TIME,
         wage: DataTypes.DECIMAL(10, 2),
         description: DataTypes.STRING,
-        postDate: DataTypes.date,
-        expiryDate: DataTypes.date,
+        postDate: DataTypes.DATE,
+        expiryDate: DataTypes.DATE,
         status: DataTypes.BOOLEAN,
     }, {
             paranoid: true,
             classMethods: {
                 associate: function (models) {
-                    Jobs.belongsTo(models.employer);
-                    Jobs.belongsTo(models.jobTypes);
-                    Jobs.belongsTo(models.jobCategories);
+                    Jobs.belongsTo(models.Employers);
+                    Jobs.belongsTo(models.JobTypes);
+                    Jobs.belongsTo(models.JobCategories);
                 }
             }
 

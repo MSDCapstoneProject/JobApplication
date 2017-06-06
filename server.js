@@ -10,6 +10,7 @@ var path = require('path');
 //load route
 var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
+var jobs = require('./routes/jobs');
 var app = express();
 
 var connection = require('express-myconnection');
