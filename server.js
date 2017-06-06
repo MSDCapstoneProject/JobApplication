@@ -77,6 +77,11 @@ app.post('/jobSeekers/add', jobSeekers.add);
 app.post('/jobSeekers/update', jobSeekers.update);
 app.post('/jobSeekers/delete', jobSeekers.delete);
 
+app.get('/jobs',jobs.list);
+app.get('/jobs/:id',jobs.list);
+app.post('jobs/add',jobs.add);
+
+
 app.use(app.router);
 
 http.createServer(app).listen(app.get('port'), function () {
