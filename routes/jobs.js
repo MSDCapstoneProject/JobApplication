@@ -2,8 +2,9 @@ var db = require("../models");
 var status = require("./resStatus");
 
 var routes = {};
-var response = {};
+var response = [];
 var method;
+//var response = [];
 
 exports.list = function (req, res) {
 
@@ -27,25 +28,42 @@ exports.list = function (req, res) {
                 var employerPromises = [];
                 jobs.forEach(function (jobData) {
                     var job = jobData.dataValues;
+                    response.push(job); // added value into response
                     job.Employer = [];
-                    //employerPromises.push(
-                    return Promise.resolve()
-                        .then(function () {
-                            return db.Employers.findOne({ where: { id: job.EmployerId } })
-                        })
-                        .then(function (employer) {
-                            if (employer) {
-                                job.Employer.push(employer.dataValues);
-                            }
-                        })
-                        .catch(function (err) {
-                            console.log("Error at Get Jobs - Employers " + err);
-                        })
-                    //);
+                    employerPromises.push(
+                        Promise.resolve()
+                            .then(function () {
+                                return db.Employers.findOne({ where: { id: job.EmployerId } })
+                            })
+                            .then(function (employerData) {
+                                if (employerData) {
+                                    var employer = {};
+                                    employer = employerData.dataValues;
+                                    job.Employer.push(employer);
+                                }
+                                return db.JobTypes.findOne({where:{ id: job.JobTypeId}});
+                            })
+                            .then(function(jobTypeData){
+                                if(jobTypeData){
+                                    job.JobType = jobTypeData.description;
+                                }
+                                return db.JobCategories.findOne({where :{ id : job.JobCategoryId}})
+                            })
+                            .then(function(jobCategoryData){
+                                if(jobCategoryData){
+                                    job.JobCategory = jobCategoryData.description; 
+                                }
+                            })
+                            .catch(function (err) {
+                                console.log("Error at Get Jobs - Employers " + err);
+                            })
+                    );
                 });
-                //return Promise.all(employerPromises);
+                return Promise.all(employerPromises);
             }
-            res.json(jobs);
+        })
+        .then(function(){
+            res.json(response);
         })
         .catch(function (err) {
             console.log("Error at Get Jobs" + err);
