@@ -6,6 +6,7 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var bodyParser = require('body-parser')
 
 //load route
 var employers = require('./routes/employers');
@@ -27,6 +28,10 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+var jsonParser = bodyParser.json()
 
 // development only
 if ('development' == app.get('env')) {
