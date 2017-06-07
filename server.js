@@ -80,7 +80,9 @@ app.post('/jobSeekers/delete', jobSeekers.delete);
 
 app.get('/jobs',jobs.list);
 app.get('/jobs/:id',jobs.list);
-app.post('jobs/add',jobs.add);
+app.post('/jobs/add',jobs.add);
+app.post('/jobs/update', jobs.update);
+app.post('/jobs/delete', jobs.delete);
 
 
 app.use(app.router);

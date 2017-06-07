@@ -2,12 +2,12 @@ var db = require("../models");
 var status = require("./resStatus");
 
 var routes = {};
-var response = [];
+var getResponse = [];
 var method;
-//var response = [];
+var response = {};
 
 exports.list = function (req, res) {
-
+    getResponse = [];
     var jobId = req.query.id || req.params.id;
 
     Promise.resolve()
@@ -28,7 +28,7 @@ exports.list = function (req, res) {
                 var employerPromises = [];
                 jobs.forEach(function (jobData) {
                     var job = jobData.dataValues;
-                    response.push(job); // added value into response
+                    getResponse.push(job); // added value into getResponse
                     job.Employer = [];
                     employerPromises.push(
                         Promise.resolve()
@@ -41,17 +41,17 @@ exports.list = function (req, res) {
                                     employer = employerData.dataValues;
                                     job.Employer.push(employer);
                                 }
-                                return db.JobTypes.findOne({where:{ id: job.JobTypeId}});
+                                return db.JobTypes.findOne({ where: { id: job.JobTypeId } });
                             })
-                            .then(function(jobTypeData){
-                                if(jobTypeData){
+                            .then(function (jobTypeData) {
+                                if (jobTypeData) {
                                     job.JobType = jobTypeData.description;
                                 }
-                                return db.JobCategories.findOne({where :{ id : job.JobCategoryId}})
+                                return db.JobCategories.findOne({ where: { id: job.JobCategoryId } })
                             })
-                            .then(function(jobCategoryData){
-                                if(jobCategoryData){
-                                    job.JobCategory = jobCategoryData.description; 
+                            .then(function (jobCategoryData) {
+                                if (jobCategoryData) {
+                                    job.JobCategory = jobCategoryData.description;
                                 }
                             })
                             .catch(function (err) {
@@ -62,8 +62,8 @@ exports.list = function (req, res) {
                 return Promise.all(employerPromises);
             }
         })
-        .then(function(){
-            res.json(response);
+        .then(function () {
+            res.json(getResponse);
         })
         .catch(function (err) {
             console.log("Error at Get Jobs" + err);
@@ -106,6 +106,9 @@ function post(req, res, method) {
             postDate: postData.postDate,
             expiryDate: postData.expiryDate,
             status: postData.status,
+            EmployerId: postData.employerId,
+            JobTypeId: postData.jobTypeId,
+            JobCategoryId: postData.jobCategoryId,
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -140,6 +143,9 @@ function post(req, res, method) {
             postDate: postData.postDate,
             expiryDate: postData.expiryDate,
             status: postData.status,
+            EmployerId: postData.employerId,
+            JobTypeId: postData.jobTypeId,
+            JobCategoryId: postData.jobCategoryId,
             updatedAt: new Date()
         }
         Promise.resolve()
