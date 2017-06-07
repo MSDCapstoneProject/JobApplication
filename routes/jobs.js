@@ -24,8 +24,28 @@ exports.list = function (req, res) {
         })
         .then(function (jobs) {
             if (jobs) {
-                res.json(jobs);
+                var employerPromises = [];
+                jobs.forEach(function (jobData) {
+                    var job = jobData.dataValues;
+                    job.Employer = [];
+                    //employerPromises.push(
+                    return Promise.resolve()
+                        .then(function () {
+                            return db.Employers.findOne({ where: { id: job.EmployerId } })
+                        })
+                        .then(function (employer) {
+                            if (employer) {
+                                job.Employer.push(employer.dataValues);
+                            }
+                        })
+                        .catch(function (err) {
+                            console.log("Error at Get Jobs - Employers " + err);
+                        })
+                    //);
+                });
+                //return Promise.all(employerPromises);
             }
+            res.json(jobs);
         })
         .catch(function (err) {
             console.log("Error at Get Jobs" + err);
@@ -109,8 +129,8 @@ function post(req, res, method) {
                 return db.Jobs.update(entry, { where: { id: postData.id } })
             })
             .then(function (jobs) {
-                if(jobs){
-                    response.jobTitle = postData.title;   
+                if (jobs) {
+                    response.jobTitle = postData.title;
                 }
                 response.status = status.SUCCESS;
                 res.json(response);
