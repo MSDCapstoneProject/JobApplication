@@ -22,9 +22,7 @@ module.exports = function (sequelize, DataTypes) {
                     Jobs.belongsTo(models.JobCategories);
                 }
             }
-
         });
 
     return Jobs;
-
 };
