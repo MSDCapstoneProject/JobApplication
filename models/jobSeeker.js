@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
         email: DataTypes.STRING,
         phone: DataTypes.STRING,
         sin: DataTypes.STRING,
-        DOB: DataTypes.DATE,
+        DOB: DataTypes.DATEONLY,
         status: DataTypes.STRING,
         gender: DataTypes.STRING
     }, {

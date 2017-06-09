@@ -33,7 +33,10 @@ exports.list = function (req, res) {
                     employerPromises.push(
                         Promise.resolve()
                             .then(function () {
-                                return db.Employers.findOne({ where: { id: job.EmployerId } })
+                                return db.Employers.findOne({
+                                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                                    where: { id: job.EmployerId }
+                                })
                             })
                             .then(function (employerData) {
                                 if (employerData) {

@@ -4,14 +4,14 @@ module.exports = function (sequelize, DataTypes) {
     var Jobs = sequelize.define("Jobs", {
         title: DataTypes.STRING,
         jobLocation: DataTypes.STRING,
-        startDate: DataTypes.DATE,
-        endDate: DataTypes.DATE,
+        startDate: DataTypes.DATEONLY,
+        endDate: DataTypes.DATEONLY,
         startTime: DataTypes.TIME,
         endTime: DataTypes.TIME,
         wage: DataTypes.DECIMAL(10, 2),
         description: DataTypes.TEXT,
-        postDate: DataTypes.DATE,
-        expiryDate: DataTypes.DATE,
+        postDate: DataTypes.DATEONLY,
+        expiryDate: DataTypes.DATEONLY,
         status: DataTypes.BOOLEAN,
     }, {
             paranoid: true,
