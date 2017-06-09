@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         startTime: DataTypes.TIME,
         endTime: DataTypes.TIME,
         wage: DataTypes.DECIMAL(10, 2),
-        description: DataTypes.STRING,
+        description: DataTypes.TEXT,
         postDate: DataTypes.DATE,
         expiryDate: DataTypes.DATE,
         status: DataTypes.BOOLEAN,

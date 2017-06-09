@@ -135,3 +135,16 @@ Attention to detail and accuracy
 Repetitive work bending, twisting, standing for long periods of time
 All other duties as assigned by supervisor
 Safety shoes mandatory; proper dress attire is long pants and t-shirt unless otherwise stated", '2017-07-05','2017-07-14',1,3);
+
+
+
+----9 June 2017
+
+use jobbridge;
+
+alter table jobs modify description longtext;
+
+INSERT INTO `Jobs` (`employerId`,`title`,`jobTypeId`,`jobLocation`,`startDate`,`endDate`,`startTime`,`endTime`,`wage`,`description`,`postDate`,`expiryDate`,`status`,`jobCategoryId`) VALUES
+(2, 'Production Associate - CNC Machining',2, 'Vaughan, ON','2017-07-20','2017-07-25','08:00:00','17:00:00',14.00,"<ul><li>Provide information and assist customers with fishing and reviewing the rules that are applicable at the Lyndon Fishing Pond facility.</li><li>Ensure that safety is paramount regarding fish and lawn care equipment handling.</li><li>Determine ground maintenance requirements and assist in upkeep of grounds as required.</li><li>Assist in all areas of operation of Lyndon Fishing Pond facilities and the hatchery as needed.</li><li>Perform various tasks such as feeding and be comfortable with handling and cleaning fish.</li><li>As situations arise, flexibility in hours may be required with consultation of management.</li><li>Help to promote and market for an increase in sales and to drive new customer growth.</li></ul>", '2017-07-01','2017-07-19',1,2),
+(1, 'Construction Labourer',3, 'Milton, ON','2017-07-25','2017-08-06','07:00:00','16:00:00',12.50,"<ul><li>Exceptional Customer Service and Sales</li><li>Communication</li><li>Time Management Skills</li><li>Energetic with Good Stress Tolerance</li><li>Team Work</li><li>Attention to Detail and Problem Solving</li><li>Work with Attention to Safety</li><li>Accountability and Dependability</li><li>Operating Lawn Care Equipment</li></ul>", '2017-07-05','2017-07-14',1,3);
+
