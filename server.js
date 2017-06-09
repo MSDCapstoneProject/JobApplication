@@ -1,42 +1,44 @@
-/**
+/*
  * Module dependencies.
  */
 
 var express = require('express');
+var app = express();
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
-//load route
-var employers = require('./routes/employers');
-var jobSeekers = require('./routes/jobSeekers');
-var jobs = require('./routes/jobs');
-var app = express();
-
-var connection = require('express-myconnection');
-var mysql = require('mysql');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-//app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-var jsonParser = bodyParser.json()
+app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
+
+app.use(bodyParser.json()); // parse json encoded bodies
+
+app.use(bodyParser.json({ type: 'application/*+json' }));
 
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
+
+//load route
+var employers = require('./routes/employers');
+var jobSeekers = require('./routes/jobSeekers');
+var jobs = require('./routes/jobs');
+
+var connection = require('express-myconnection');
+var mysql = require('mysql');
 
 /*------------------------------------------
     connection peer, register as middleware
@@ -54,20 +56,6 @@ app.use(
 
     }, 'pool') //or single
 );
-
-
-/*
-app.get('/', routes.index);
-
-app.get('/employers', employers.get);
-app.post('/employers', employers.post);
-
-app.get('/jobSeekers',jobSeekers.get);
-app.post('/jobSeekers', jobSeekers.post);
-
-app.use(app.router);
-
-*/
 
 app.get('/', routes.index);
 

@@ -133,7 +133,7 @@ function post(req, res, method) {
             })
             .then(function (jobSeeker) {
                 if (jobSeeker) {
-                    response.name = postData.name;
+                    response.name = postData.firstName;
                 }
                 response.status = status.SUCCESS;
                 res.json(response);
