@@ -1,9 +1,9 @@
 -- db create script 
 
-create database jobbridge;
+--create database jobbridge;
 
-USE jobbridge;
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+--USE jobbridge;
+SET SQL_MODE = "ALLOW_INVALID_DATES";
 SET time_zone = "+00:00";
 
 
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `Employers` (
   `email` varchar(200) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `website` varchar(200),
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `deletedAt` datetime,
+`created_at` TIMESTAMP NOT NULL DEFAULT 0,
+`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` DATETIME,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS `JobSeekers` (
   `DOB` date,
   `status` varchar(25),
   `gender` varchar(10),
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `deletedAt` datetime,
+`created_at` TIMESTAMP NOT NULL DEFAULT 0,
+`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deletedAt` TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -60,9 +60,9 @@ CREATE TABLE IF NOT EXISTS `JobTypes` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `description` varchar(200),
 `internalCode` varchar(200),
-`createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-`updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`deletedAt` datetime,
+`created_at` TIMESTAMP NOT NULL DEFAULT 0,
+`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` TIMESTAMP,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -70,9 +70,9 @@ CREATE TABLE IF NOT EXISTS `JobCategories` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `description` varchar(200),
 `internalCode` varchar(200),
-`createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-`updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`deletedAt` datetime,
+`created_at` TIMESTAMP NOT NULL DEFAULT 0,
+`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` TIMESTAMP,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -92,20 +92,11 @@ CREATE TABLE IF NOT EXISTS `Jobs` (
 `expiryDate` date,
 `status` bit,
 `jobCategoryId` int(11),
-`createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-`updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`deletedAt` datetime,
+`created_at` TIMESTAMP NOT NULL DEFAULT 0,
+`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` TIMESTAMP,
 PRIMARY KEY (`id`),
 FOREIGN KEY(`jobTypeId`) REFERENCES JobTypes(`id`) ON DELETE CASCADE,
 FOREIGN KEY(`jobCategoryId`) REFERENCES JobCategories(`id`) ON DELETE CASCADE,
 FOREIGN KEY(`employerId`) REFERENCES Employers(`id`) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1;
-
-
-
-----9 June 2017
-
-use jobbridge;
-
-alter table jobs modify description longtext;
-

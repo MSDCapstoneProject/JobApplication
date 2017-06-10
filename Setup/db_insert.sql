@@ -1,5 +1,3 @@
-
-
 INSERT INTO `Employers` ( `name`, `address`, `email`, `phone`,`website`) VALUES
 ( 'Bock Tools', '12, Cambridge','jobs@bock.com', '22678909', 'http://www.bocktools.com'),
 ( 'Horizon Parts', '2-A, Kitchener','jobs@horizonparts.com', '519677289','http://www.horizonparts.com');
@@ -23,20 +21,9 @@ INSERT INTO `JobCategories` (`description`,`internalCode`) VALUES
 ('Plumber','PLUMBER');
 
 INSERT INTO `Jobs` (`employerId`,`title`,`jobTypeId`,`jobLocation`,`startDate`,`endDate`,`startTime`,`endTime`,`wage`,`description`,`postDate`,`expiryDate`,`status`,`jobCategoryId`) VALUES
-(2, 'General Labour',2, 'Vaughan, ON','2017-07-20','2017-07-25','08:00:00','17:00:00',14.00,"Front Line Work Force Inc. has over 20 years of human resource management experience, providing innovative workforce solutions to companies of all sizes, to meet the challenges of today's changing business environments and provide a level of service that reflects our commitment to excellence. Combining the right people with our in house assessment software technologies ensures Front Line Work Force will successfully meet all your staffing needs. Front Line Work Force accommodates a diverse and broad based sector of staffing needs whether it's, Skilled/Unskilled Industrial Labour or Office Personnel on a temporary, contractual or permanent basis. Whatever your 'frontline' requirements are, Front Line Work Force has the resources to meet all your requirements. Front Line Work Force specializes in the placement of individuals for all skilled trades, production, distribution, manufacturing and office support personnel throughout the GTA.
-
-Our client electrical distribution industry, our goal was simply to take something great and make it better, more competitive, and more valuable as a supplier to existing and new customers. Their growth has been remarkable in a very short time", '2017-07-01','2017-07-19',1,2),
-(1, 'Order Picker/Packer',3, 'Milton, ON','2017-07-25','2017-08-06','07:00:00','16:00:00',12.50,"Our client is an Automotive parts warehouse in the Milton area and is looking for energetic Order picker and packers.
-
-Job Description :
-
-General labour and order picking as assigned
-Lifting up to 70 lbs
-Operating basic warehouse transport equipment
-Attention to detail and accuracy
-Repetitive work bending, twisting, standing for long periods of time
-All other duties as assigned by supervisor
-Safety shoes mandatory; proper dress attire is long pants and t-shirt unless otherwise stated", '2017-07-05','2017-07-14',1,3);
+(2, 'General Labour',2, 'Vaughan, ON','2017-07-20','2017-07-25','08:00:00','17:00:00',14.00,"<ul><li>Working with team members in egg collection</li><li>Completing general barn duties such as feeding and bedding</li><li>Maintaining barn and all equipment</li><li>Ability to handle moderate to heavy physical work</li><li>Must be able to work in a fast-paced environment; work under pressure</li></ul>", '2017-07-01','2017-07-19',1,2),
+(1, 'Order Picker/Packer',3, 'Milton, ON','2017-07-25','2017-08-06','07:00:00','16:00:00',12.50,"<p><b>Wages</b> : Forklift Wages <b>$14.00-$16.00</b> per hour, General Labourers Wages <b>$12.00-$14.50</b> per hour</p>
+<ul><li>Recent experience on any of the following: counter balance, reach, power pallet jack, walkie.</li><li>Be able lift up to 50 pounds</li><li>Own a pair of CSA approved steel toe boots</li></ul>", '2017-07-05','2017-07-14',1,3);
 
 
 INSERT INTO `Jobs` (`employerId`,`title`,`jobTypeId`,`jobLocation`,`startDate`,`endDate`,`startTime`,`endTime`,`wage`,`description`,`postDate`,`expiryDate`,`status`,`jobCategoryId`) VALUES
