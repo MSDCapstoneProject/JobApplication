@@ -48,13 +48,13 @@ exports.list = function (req, res) {
                             })
                             .then(function (jobTypeData) {
                                 if (jobTypeData) {
-                                    job.JobType = jobTypeData.description;
+                                    job.jobType = jobTypeData.description;
                                 }
                                 return db.JobCategories.findOne({ where: { id: job.JobCategoryId } })
                             })
                             .then(function (jobCategoryData) {
                                 if (jobCategoryData) {
-                                    job.JobCategory = jobCategoryData.description;
+                                    job.jobCategory = jobCategoryData.description;
                                 }
                             })
                             .catch(function (err) {
