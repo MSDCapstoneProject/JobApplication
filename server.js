@@ -10,6 +10,10 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 
+//var FCM = require('fcm-node');//
+
+
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -36,7 +40,7 @@ if ('development' == app.get('env')) {
 var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
 var jobs = require('./routes/jobs');
-
+var fcms = require('./routes/fcm/sendFcmNotification');
 var connection = require('express-myconnection');
 var mysql = require('mysql');
 
@@ -76,7 +80,8 @@ app.get('/jobs/:id',jobs.list);
 app.post('/jobs/add',jobs.add);
 app.post('/jobs/update', jobs.update);
 app.post('/jobs/delete', jobs.delete);
-
+//send push message
+//app.get('/fcm/sendFcmNotification', fcm.send);
 
 app.use(app.router);
 
