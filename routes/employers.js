@@ -77,7 +77,7 @@ function post(req, res, method) {
                     });
                 }
                 response.status = status.SUCCESS;
-                res.json({ response });
+                res.json(response);
             })
             .catch(function (err) {
                 console.log("Error at searchEmployer " + err);

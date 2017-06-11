@@ -9,11 +9,6 @@ var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
 
-
-//var FCM = require('fcm-node');//
-
-
-
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +35,7 @@ if ('development' == app.get('env')) {
 var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
 var jobs = require('./routes/jobs');
-var fcms = require('./routes/fcm/sendFcmNotification');
+var fcms = require('./routes/sendFcmNotification');
 var connection = require('express-myconnection');
 var mysql = require('mysql');
 
@@ -49,7 +44,7 @@ var mysql = require('mysql');
     type koneksi : single,pool and request 
 -------------------------------------------*/
 
-app.use(
+/*app.use(
     connection(mysql, {
 
         host: 'localhost',
@@ -59,7 +54,7 @@ app.use(
         database: 'jobbridge'
 
     }, 'pool') //or single
-);
+);*/
 
 app.get('/', routes.index);
 
@@ -82,6 +77,9 @@ app.post('/jobs/update', jobs.update);
 app.post('/jobs/delete', jobs.delete);
 //send push message
 //app.get('/fcm/sendFcmNotification', fcm.send);
+
+//send push message
+app.get('/sendNotification',fcms.send);
 
 app.use(app.router);
 

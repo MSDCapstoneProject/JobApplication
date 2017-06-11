@@ -29,7 +29,7 @@ exports.list = function (req, res) {
                 jobs.forEach(function (jobData) {
                     var job = jobData.dataValues;
                     getResponse.push(job); // added value into getResponse
-                    job.Employer = [];
+                    job.Employer = {};
                     employerPromises.push(
                         Promise.resolve()
                             .then(function () {
@@ -42,7 +42,7 @@ exports.list = function (req, res) {
                                 if (employerData) {
                                     var employer = {};
                                     employer = employerData.dataValues;
-                                    job.Employer.push(employer);
+                                    job.Employer = employer;
                                 }
                                 return db.JobTypes.findOne({ where: { id: job.JobTypeId } });
                             })
