@@ -23,6 +23,7 @@ var response = { //this may vary according to the message type (single recipient
 exports.send = function (req, res) {
             Promise.resolve()
             .then(function () {
+                //fcm.send(response);
                 res.json(response);
             })
             .catch(function (err) {
