@@ -35,6 +35,9 @@ if ('development' == app.get('env')) {
 var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
 var jobs = require('./routes/jobs');
+var jobSubscribers = require('./routes/jobSubscribers');
+
+//Notification
 var fcms = require('./routes/sendFcmNotification');
 var connection = require('express-myconnection');
 var mysql = require('mysql');
@@ -75,6 +78,13 @@ app.get('/jobs/:id',jobs.list);
 app.post('/jobs/add',jobs.add);
 app.post('/jobs/update', jobs.update);
 app.post('/jobs/delete', jobs.delete);
+
+app.get('/jobSubscribers',jobSubscribers.list);
+app.get('/jobSubscribers/:id',jobSubscribers.list);
+app.post('/jobSubscribers/add',jobSubscribers.add);
+app.post('/jobSubscribers/update',jobSubscribers.update);
+app.post('jobSubscribers/delete',jobSubscribers.delete);
+
 //send push message
 //app.get('/fcm/sendFcmNotification', fcm.send);
 
