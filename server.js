@@ -39,6 +39,9 @@ var jobSubscribers = require('./routes/jobSubscribers');
 
 //Notification
 var fcms = require('./routes/sendFcmNotification');
+var fcm = require('./fcm/sendFcmNotification')
+
+
 var connection = require('express-myconnection');
 var mysql = require('mysql');
 
@@ -79,14 +82,15 @@ app.post('/jobs/add',jobs.add);
 app.post('/jobs/update', jobs.update);
 app.post('/jobs/delete', jobs.delete);
 
-app.get('/jobSubscribers',jobSubscribers.list);
+/*app.get('/jobSubscribers',jobSubscribers.list);
 app.get('/jobSubscribers/:id',jobSubscribers.list);
 app.post('/jobSubscribers/add',jobSubscribers.add);
 app.post('/jobSubscribers/update',jobSubscribers.update);
 app.post('jobSubscribers/delete',jobSubscribers.delete);
+*/
 
-//send push message
-//app.get('/fcm/sendFcmNotification', fcm.send);
+//send push message by Moonsun - 
+//app.get('/fcm/sendFcmNotification',fcm.send);
 
 //send push message
 app.get('/sendNotification',fcms.send);
