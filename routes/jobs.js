@@ -128,7 +128,7 @@ function post(req, res, method) {
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at add Jobs " + err);
+                console.log("Error at saveJobs " + err);
                 res.json({ status: status.EXCEPTION });
             })
     } else if (method == "editJobs") {

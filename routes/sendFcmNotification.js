@@ -24,7 +24,7 @@ var response = { //this may vary according to the message type (single recipient
 exports.send = function (req, res) {
             Promise.resolve()
             .then(function () {
-                fcm.send(response); //commented to avoid sedning unnecessary notifications in the testing environment
+                //fcm.send(response); //commented to avoid sedning unnecessary notifications in the testing environment
                 res.json({status : status.SUCCESS});
             })
             .catch(function (err) {

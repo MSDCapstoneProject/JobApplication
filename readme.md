@@ -60,11 +60,35 @@ config.json
 
         Jobs Delete: http://localhost:3000/jobs/delete/?id=1
 
+JobSubscribers Operation ----->
 
+        JobSubscribers get for all: http://localhost:3000/jobSubscribers
 
+        JobSubscribers get for id: http://localhost:3000/jobSubscribers/1
 
+        JobSubscribers Post Add: http://localhost:3000/jobSubscribers/add
 
+                Json  =         {
+                                "appliedOn": "2017-06-14",
+                                "EmployerId": "1",
+                                "JobId":"1",
+                                "JobSeekerId": "1"
+                                }
 
+        JobSubscribers Post update: http://localhost:3000/jobSubscribers/update
 
+                Json  =         {
+                                "id": "1"
+                                "appliedOn": "2017-06-15",
+                                "EmployerId": "1",
+                                "JobId":"3",
+                                "JobSeekerId": "1"
+                                }
+
+        JobSubscribers Post Delete: http://localhost:3000/jobSubscribers/delete
+
+                Json  =         {
+                                "id": "1"
+                                }
 
 ## NOTES
