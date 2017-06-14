@@ -39,7 +39,7 @@ var jobSubscribers = require('./routes/jobSubscribers');
 
 //Notification
 var fcms = require('./routes/sendFcmNotification');
-//var fcm = require('./fcm/sendFcmNotification')
+var fcm = require('./fcm/sendFcmNotification');
 
 
 var connection = require('express-myconnection');
@@ -90,7 +90,7 @@ app.post('/jobSubscribers/delete',jobSubscribers.delete);
 
 
 //send push message by Moonsun - 
-//app.get('/fcm/sendFcmNotification',fcm.send);
+app.get('/fcm/sendFcmNotification',fcm.send);
 
 //send push message
 app.get('/sendNotification',fcms.send);
