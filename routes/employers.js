@@ -16,11 +16,11 @@ exports.list = function (req, res) {
         .then(function () {
             if (employerId) {
                 return db.Employers.findAll({
-                    attributes: ['id', 'name', 'address', 'email', 'website'],
+                    attributes: ['id', 'name', 'address', 'email', 'phone', 'website'],
                     where: { id: employerId }
                 }); //if id is present
             } else {
-                return db.Employers.findAll({ attributes: ['id', 'name', 'address', 'email', 'website'] }); //if id is not present
+                return db.Employers.findAll({ attributes: ['id', 'name', 'address', 'email', 'phone', 'website'] }); //if id is not present
             }
         })
         .then(function (employers) {
@@ -56,7 +56,7 @@ exports.delete = function (req, res) {
 
 function post(req, res, method) {
     var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
-    
+
 
     var response = {};
 
@@ -65,7 +65,7 @@ function post(req, res, method) {
         Promise.resolve()
             .then(function () {
                 return db.Employers.findAll({
-                    attributes: ['id', 'name', 'address', 'email', 'website'],
+                    attributes: ['id', 'name', 'address', 'email', 'phone', 'website'],
                     where: { name: { $like: "%" + postData.name + "%" } }
                 }); //currently searching only through name
             })
