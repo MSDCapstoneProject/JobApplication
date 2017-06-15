@@ -101,7 +101,7 @@ function post(req, res, method) {
     if (method == "saveJobSubscriber") {
         var entry = {
             applicationStatus: "applied", //need to change at server side
-            appliedOn: postData.appliedOn,
+            appliedOn: new Date(),
             EmployerId: postData.EmployerId,
             JobId: postData.JobId,
             JobSeekerId: postData.JobSeekerId,
@@ -129,7 +129,6 @@ function post(req, res, method) {
     } else if (method == "editJobSubscriber") {
         var entry = {
             applicationStatus: postData.applicationStatus,
-            appliedOn: postData.appliedOn,
             EmployerId: postData.EmployerId,
             JobId: postData.JobId,
             JobSeekerId: postData.JobSeekerId,
