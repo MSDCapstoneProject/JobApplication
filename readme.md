@@ -69,7 +69,6 @@ JobSubscribers Operation ----->
         JobSubscribers Post Add: http://localhost:3000/jobSubscribers/add
 
                 Json  =         {
-                                "appliedOn": "2017-06-14",
                                 "EmployerId": "1",
                                 "JobId":"1",
                                 "JobSeekerId": "1"
@@ -79,10 +78,35 @@ JobSubscribers Operation ----->
 
                 Json  =         {
                                 "id": "1"
-                                "appliedOn": "2017-06-15",
                                 "EmployerId": "1",
                                 "JobId":"3",
                                 "JobSeekerId": "1"
+                                }
+
+        JobSubscribers Post Delete: http://localhost:3000/jobSubscribers/delete
+
+                Json  =         {
+                                "id": "1"
+                                }
+
+
+UserTokens Operation ----->
+
+        UserTokens get for all: http://localhost:3000/userTokens
+
+        UserTokens get for id: http://localhost:3000/userTokens/1
+
+        UserTokens Post Add: http://localhost:3000/userTokens/add
+
+                Json  =         {
+                                "token": "1y766yui988876"
+                                }
+
+        UserTokens Post Add: http://localhost:3000/userTokens/update
+
+                Json  =         {
+                                "id": "1",
+                                "token": "1y766yui988876"
                                 }
 
         JobSubscribers Post Delete: http://localhost:3000/jobSubscribers/delete
