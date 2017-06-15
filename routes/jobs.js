@@ -66,6 +66,7 @@ exports.list = function (req, res) {
             }
         })
         .then(function () {
+            getResponse.status = status.SUCCESS;
             res.json(getResponse);
         })
         .catch(function (err) {
@@ -184,5 +185,8 @@ function post(req, res, method) {
                 console.log("Error at delete Jobs " + err);
                 res.json({ status: status.EXCEPTION });
             })
+    } else {
+        console.log("Method not found");
+        res.json({ status: status.UNKNOWN_REQUEST });
     }
 }

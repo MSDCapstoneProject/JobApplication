@@ -96,6 +96,20 @@ FOREIGN KEY(`jobCategoryId`) REFERENCES JobCategories(`id`) ON DELETE CASCADE,
 FOREIGN KEY(`employerId`) REFERENCES Employers(`id`) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
+
+-- 15 June 2017
+
+create table UserTokens(
+`id` int(20) NOT NULL AUTO_INCREMENT,
+`token` varchar(200) NOT NULL,
+PRIMARY KEY(`id`),
+UNIQUE KEY(`token`),
+`createdAt` TIMESTAMP NOT NULL DEFAULT 0,
+`updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` DATETIME
+)ENGINE=InnoDB AUTO_INCREMENT=1;
+
+
 /*drop table Jobs;
 drop table JobSeekers;
 drop table JobCategories;
