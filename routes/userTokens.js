@@ -61,8 +61,8 @@ function post(req, res, method) {
     if (method == "saveUserTokens") {
         var entry = {
             token: postData.token,
-            createdAt : new Date(),
-            updatedAt : new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         };
 
         Promise.resolve()
@@ -70,7 +70,7 @@ function post(req, res, method) {
                 return db.UserTokens.create(entry);
             })
             .then(function (userTokenData) {
-                if(userTokenData){
+                if (userTokenData) {
                     response.status = status.SUCCESS;
                 }
                 res.json(response);
@@ -89,7 +89,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.UserTokens.update( entry, {where: { id: postData.id } });
+                return db.UserTokens.update(entry, { where: { id: postData.id } });
             })
             .then(function (userTokenData) {
                 if (userTokenData) {

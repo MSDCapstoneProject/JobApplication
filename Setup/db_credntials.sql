@@ -2,8 +2,7 @@
 https://www.db4free.net/phpMyAdmin/
 
 
-    "development": {
-        "urlPath": "/",
+
         "username": "sql9179567",
         "password": "ZaDW8MW3JF",
         "database": "sql9179567",

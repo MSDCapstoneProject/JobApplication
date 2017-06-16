@@ -111,4 +111,11 @@ UserTokens Operation ----->
                                 "id": "1" // need to find token
                                 }
 
+
+Job Types Operation ----->
+
+        Job Types get for all: http://localhost:3000/jobTypes
+
+        Job Types get for id: http://localhost:3000/jobTypes/1
+
 ## NOTES
