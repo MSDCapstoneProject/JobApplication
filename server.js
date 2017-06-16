@@ -35,7 +35,7 @@ if ('development' == app.get('env')) {
 var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
 var jobs = require('./routes/jobs');
-var jobSubscribers = require('./routes/jobSubscribers');
+var jobApplications = require('./routes/jobApplications');
 var userTokens = require('./routes/userTokens');
 
 //Notification
@@ -83,11 +83,11 @@ app.post('/jobs/add', jobs.add);
 app.post('/jobs/update', jobs.update);
 app.post('/jobs/delete', jobs.delete);
 
-app.get('/jobSubscribers', jobSubscribers.list);
-app.get('/jobSubscribers/:id', jobSubscribers.list);
-app.post('/jobSubscribers/add', jobSubscribers.add);
-app.post('/jobSubscribers/update', jobSubscribers.update);
-app.post('/jobSubscribers/delete', jobSubscribers.delete);
+app.get('/jobApplications', jobApplications.list);
+app.get('/jobApplications/:id', jobApplications.list);
+app.post('/jobApplications/add', jobApplications.add);
+app.post('/jobApplications/update', jobApplications.update);
+app.post('/jobApplications/delete', jobApplications.delete);
 
 app.get('/userTokens', userTokens.list);
 app.get('/userTokens/:id', userTokens.list);

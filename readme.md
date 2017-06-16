@@ -60,11 +60,14 @@ config.json
 
         Jobs Delete: http://localhost:3000/jobs/delete/?id=1
 
-JobSubscribers Operation ----->
+JobSubscribers Operation -----> JobSubscribers to jobApplications
 
-        JobSubscribers get for all: http://localhost:3000/jobSubscribers
+       // ---JobSubscribers get for all: http://localhost:3000/jobSubscribers  
 
-        JobSubscribers get for id: http://localhost:3000/jobSubscribers/1
+        JobSubscribers get for id: http://localhost:3000/jobSubscribers/1 -- need all jobs for job seeker id then return need all jobs
+
+        //jobSeeker 
+
 
         JobSubscribers Post Add: http://localhost:3000/jobSubscribers/add
 
@@ -102,17 +105,10 @@ UserTokens Operation ----->
                                 "token": "1y766yui988876"
                                 }
 
-        UserTokens Post Add: http://localhost:3000/userTokens/update
-
-                Json  =         {
-                                "id": "1",
-                                "token": "1y766yui988876"
-                                }
-
         JobSubscribers Post Delete: http://localhost:3000/jobSubscribers/delete
 
                 Json  =         {
-                                "id": "1"
+                                "id": "1" // need to find token
                                 }
 
 ## NOTES

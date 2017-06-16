@@ -13,58 +13,58 @@ exports.list = function (req, res) {
     Promise.resolve()
         .then(function () {
             if (jobSeekerId) {
-                return db.JobSubscribers.findAll({
+                return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { JobSeekerId: jobSeekerId }
                 });
             } else {
-                return db.JobSubscribers.findAll({
+                return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
                 });
             }
         })
-        .then(function (jobSubscribers) {
-            if (jobSubscribers) {
+        .then(function (JobApplications) {
+            if (JobApplications) {
                 var employerPromises = [];
-                jobSubscribers.forEach(function (jobSubscribersData) {
-                    var jobSubscriber = jobSubscribersData.dataValues;
-                    getResponse.push(jobSubscriber);
-                    jobSubscriber.Employer = {};
-                    jobSubscriber.Job = {};
-                    jobSubscriber.JobSeeker = {};
+                JobApplications.forEach(function (JobApplicationsData) {
+                    var jobApplication = JobApplicationsData.dataValues;
+                    getResponse.push(jobApplication);
+                    jobApplication.Employer = {};
+                    jobApplication.Job = {};
+                    jobApplication.JobSeeker = {};
                     employerPromises.push(
                         Promise.resolve()
                             .then(function () {
                                 return db.Employers.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobSubscriber.EmployerId }
+                                    where: { id: jobApplication.EmployerId }
                                 });
                             })
                             .then(function (employerData) {
                                 if (employerData) {
-                                    jobSubscriber.Employer = employerData[0].dataValues;
+                                    jobApplication.Employer = employerData[0].dataValues;
                                 }
                                 return db.Jobs.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobSubscriber.JobId }
+                                    where: { id: jobApplication.JobId }
                                 });
                             })
                             .then(function (jobdata) {
                                 if (jobdata) {
-                                    jobSubscriber.Job = jobdata[0].dataValues;
+                                    jobApplication.Job = jobdata[0].dataValues;
                                 }
                                 return db.JobSeekers.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobSubscriber.JobSeekerId }
+                                    where: { id: jobApplication.JobSeekerId }
                                 });
                             })
                             .then(function (jobSeekerdata) {
                                 if (jobSeekerdata) {
-                                    jobSubscriber.JobSeeker = jobSeekerdata[0].dataValues;
+                                    jobApplication.JobSeeker = jobSeekerdata[0].dataValues;
                                 }
                             })
                             .catch(function (err) {
-                                console.log("Error at get jobSubscribers " + err);
+                                console.log("Error at get JobApplications " + err);
                             })
                     );
                 });
@@ -75,22 +75,22 @@ exports.list = function (req, res) {
             res.json(getResponse);
         })
         .catch(function (err) {
-
+            console.log("Error at savejobApplication " + err);
         });
 }
 
 exports.add = function (req, res) {
-    method = "saveJobSubscriber";
+    method = "savejobApplication";
     post(req, res, method);
 }
 
 exports.update = function (req, res) {
-    method = "editJobSubscriber";
+    method = "editjobApplication";
     post(req, res, method);
 }
 
 exports.delete = function (req, res) {
-    method = "deleteJobSubscriber";
+    method = "deletejobApplication";
     post(req, res, method);
 }
 
@@ -98,7 +98,7 @@ function post(req, res, method) {
     var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
     response = {};
 
-    if (method == "saveJobSubscriber") {
+    if (method == "savejobApplication") {
         var entry = {
             applicationStatus: "applied", //need to change at server side
             appliedOn: new Date(),
@@ -111,10 +111,10 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSubscribers.create(entry);
+                return db.JobApplications.create(entry);
             })
-            .then(function (jobSubscribersData) {
-                if (jobSubscribersData) {
+            .then(function (JobApplicationsData) {
+                if (JobApplicationsData) {
                     response.applicationStatus = entry.applicationStatus;
                     response.appliedOn = postData.appliedOn;
                     response.status = status.SUCCESS;
@@ -124,9 +124,9 @@ function post(req, res, method) {
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at saveJobSubscriber " + err);
+                console.log("Error at savejobApplication " + err);
             })
-    } else if (method == "editJobSubscriber") {
+    } else if (method == "editjobApplication") {
         var entry = {
             applicationStatus: postData.applicationStatus,
             EmployerId: postData.EmployerId,
@@ -137,10 +137,10 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSubscribers.update(entry, { where: { id: postData.id } });
+                return db.JobApplications.update(entry, { where: { id: postData.id } });
             })
-            .then(function (jobSubscribersData) {
-                if (jobSubscribersData) {
+            .then(function (JobApplicationsData) {
+                if (JobApplicationsData) {
                     response.status = status.SUCCESS;
                 }
             })
@@ -148,15 +148,16 @@ function post(req, res, method) {
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at editJobSubscriber " + err);
+                console.log("Error at editjobApplication " + err);
             })
-    } else if (method == "deleteJobSubscriber") {
+    } else if (method == "deletejobApplication") {
+
         Promise.resolve()
             .then(function () {
-                return db.JobSubscribers.destroy({ where: { id: postData.id } });
+                return db.JobApplications.destroy({ where: { id: postData.id } });
             })
-            .then(function (jobSubscribersData) {
-                if (jobSubscribersData) {
+            .then(function (JobApplicationsData) {
+                if (JobApplicationsData) {
                     response.status = status.SUCCESS;
                 }
             })
@@ -164,7 +165,7 @@ function post(req, res, method) {
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at editJobSubscriber " + err);
+                console.log("Error at editjobApplication " + err);
             })
     } else {
         console.log("Undefined Method");
