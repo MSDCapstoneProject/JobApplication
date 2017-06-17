@@ -1,0 +1,53 @@
+    /*
+    /**
+     * onSwitchChanged
+     *
+     * when user allow push notifications, user can choose options.
+     *
+     * */
+
+    public void onSwitchChanged(View view) {
+        boolean on = ((Switch) view).isChecked();
+        if(on){
+            newJobPush.setEnabled(true);
+            applyStatusPush.setEnabled(true);
+            FirebaseMessaging.getInstance().subscribeToTopic("news"); //TODO: delete later after admin create topic in firebase
+            FirebaseInstanceId.getInstance().getToken();
+
+
+        }else{
+
+
+            newJobPush.setEnabled(false);
+            applyStatusPush.setEnabled(false);
+            //Delete token in database and token instance
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("jobs");
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("applystatus");
+
+        }
+
+    }
+    private void onSelectCheckbox(View view){
+        boolean checked = ((CheckBox) view).isChecked();
+        if(newJobPush.isChecked()){
+            // [START subscribe_topics]
+            FirebaseMessaging.getInstance().subscribeToTopic("jobs");
+            // [END subscribe_topics]
+
+        }else{
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("jobs");
+        }
+        if(applyStatusPush.isChecked()){
+            // [START subscribe_topics]
+            FirebaseMessaging.getInstance().subscribeToTopic("applystatus");
+
+            // [END subscribe_topics]
+        }else{
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("applystatus");
+
+        }
+        FirebaseInstanceId.getInstance().getToken();
+
+
+    }
+*/

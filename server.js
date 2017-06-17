@@ -41,7 +41,7 @@ var userTokens = require('./routes/userTokens');
 //Notification
 var fcms = require('./routes/sendFcmNotification');
 var fcm = require('./fcm/sendFcmNotification');
-var fcm = require('./fcm/sendFcmJobs');
+var fcm2 = require('./fcm/sendFcmJobs');
 
 
 
@@ -99,7 +99,7 @@ app.post('/userTokens/delete', userTokens.delete);
 
 //send push message by Moonsun - 
 app.get('/fcm/sendFcmNotification', fcm.send);
-app.get('/fcm/sendFcmJobs', fcm.send);
+app.get('/fcm/sendFcmJobs', fcm2.send);
 //send push message
 app.get('/sendNotification', fcms.send);
 
