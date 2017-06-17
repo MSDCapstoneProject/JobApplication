@@ -1,5 +1,9 @@
 var db = require("../models");
 var status = require("./resStatus");
+var notifiticationFunctions = require("./sendJobNotification");
+//var fcmMessage = require("./lib/fcmMesage");
+
+var notificationMessage = {};
 
 var routes = {};
 var getResponse = [];
@@ -124,6 +128,7 @@ function post(req, res, method) {
             .then(function (jobs) {
                 if (jobs) {
                     response.jobTitle = postData.title;
+                    notifiticationFunctions.notifyJobPosting(jobs.id);
                 }
                 response.status = status.SUCCESS;
                 res.json(response);

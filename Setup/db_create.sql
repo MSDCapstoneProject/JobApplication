@@ -128,6 +128,13 @@ UNIQUE KEY(`token`),
 `deletedAt` DATETIME
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
+-- 17 June 2017 add foreign key 
+
+alter table sql9179567.JobSeekers add column userTokenId int(11);
+
+ALTER TABLE sql9179567.JobSeekers ADD CONSTRAINT fk_user_token_id FOREIGN KEY (userTokenId) REFERENCES UserTokens(id) ON DELETE CASCADE;
+
+
 
 /*drop table Jobs;
 drop table JobSeekers;
