@@ -14,7 +14,6 @@ var message = { //this may vary according to the message type (single recipient,
         title: 'Title of push message2',
         body: 'This is an important message2'
     },
-
     data: {  //you can send only notification or only data(or include both)
         my_key: 'my value',
         my_another_key: 'my another value'

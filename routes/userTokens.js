@@ -1,10 +1,12 @@
 var db = require("../models");
 var status = require("./resStatus");
+var fcmMessage = require("../lib/fcmMessage");
+
+var notificationMessage = {};
 
 var getResponse = [];
 var method;
 var response = {};
-
 
 exports.list = function (req, res) {
     getResponse = [];
@@ -25,10 +27,14 @@ exports.list = function (req, res) {
         })
         .then(function (userTokenData) {
             if (userTokenData) {
+                notificationMessage.body = {};
                 userTokenData.forEach(function (userTokenData) {
                     getResponse.push(userTokenData.dataValues);
+                    notificationMessage.title = "Test Message";
+                    notificationMessage.body = "From Send Notifications";
+                    notificationMessage.data = userTokenData.dataValues;
+                    fcmMessage.sendMessage(notificationMessage);
                 });
-
             }
             getResponse.status = status.SUCCESS;
             res.json(getResponse);
@@ -54,6 +60,11 @@ exports.delete = function (req, res) {
     post(req, res, method);
 }
 
+exports.all = function (req, res) {
+    method = "sendAll";
+    post(req, res, method);
+}
+
 function post(req, res, method) {
     var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
     response = {};
@@ -61,8 +72,8 @@ function post(req, res, method) {
     if (method == "saveUserTokens") {
         var entry = {
             token: postData.token,
-            createdAt : new Date(),
-            updatedAt : new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         };
 
         Promise.resolve()
@@ -70,7 +81,7 @@ function post(req, res, method) {
                 return db.UserTokens.create(entry);
             })
             .then(function (userTokenData) {
-                if(userTokenData){
+                if (userTokenData) {
                     response.status = status.SUCCESS;
                 }
                 res.json(response);
@@ -79,9 +90,7 @@ function post(req, res, method) {
                 console.log('Error at saveUserTokens' + err);
                 res.json({ status: status.EXCEPTION });
             })
-
-
-    } else if (method == "editUserTokens") {
+    } else if (method == "editUserTokens") { // edit is not required
         var entry = {
             token: postData.token,
             updatedAt: new Date()
@@ -89,7 +98,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.UserTokens.update( entry, {where: { id: postData.id } });
+                return db.UserTokens.update(entry, { where: { id: postData.id } });
             })
             .then(function (userTokenData) {
                 if (userTokenData) {
@@ -106,7 +115,22 @@ function post(req, res, method) {
     } else if (method == "deleteUserTokens") {
         Promise.resolve()
             .then(function () {
-                return db.UserTokens.destroy({ where: { id: postData.id } });
+                return db.UserTokens.destroy({ where: { token: postData.token } }); // delete based on token
+            })
+            .then(function (userTokenData) {
+                if (userTokenData) {
+                    response.status = status.SUCCESS;
+                }
+                res.json(response);
+            })
+            .catch(function (err) {
+                console.log('Error at deleteUserTokens' + err);
+                res.json({ status: status.EXCEPTION });
+            })
+    } else if (method == "sendAll") {
+        Promise.resolve()
+            .then(function () {
+                return db.UserTokens.findAll({ where: { token: postData.token } }); // delete based on token
             })
             .then(function (userTokenData) {
                 if (userTokenData) {

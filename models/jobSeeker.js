@@ -10,9 +10,14 @@ module.exports = function (sequelize, DataTypes) {
         sin: DataTypes.STRING,
         DOB: DataTypes.DATEONLY,
         status: DataTypes.STRING,
-        gender: DataTypes.STRING
+        gender: DataTypes.STRING,
     }, {
             paranoid: true,
+            classMethods :{
+                associate: function (models){
+                    JobSeekers.belongsTo(models.UserTokens);
+                }
+            }
         });
 
     return JobSeekers;

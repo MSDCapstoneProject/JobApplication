@@ -1,20 +1,20 @@
 "use strict";
 
 module.exports = function(sequelize,DataTypes){
-    var JobSubscribers = sequelize.define("JobSubscribers",{
+    var JobApplications = sequelize.define("JobApplications",{
         applicationStatus: DataTypes.STRING,
         appliedOn: DataTypes.DATEONLY
     },{
         paranoid : true,
         classMethods : {
             associate: function (models){
-                JobSubscribers.belongsTo(models.Employers);
-                JobSubscribers.belongsTo(models.JobSeekers);
-                JobSubscribers.belongsTo(models.Jobs);
+                JobApplications.belongsTo(models.Employers);
+                JobApplications.belongsTo(models.JobSeekers);
+                JobApplications.belongsTo(models.Jobs);
             }
         }
     });
 
-    return JobSubscribers;
+    return JobApplications;
 
 }
