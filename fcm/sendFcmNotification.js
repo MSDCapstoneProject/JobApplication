@@ -8,7 +8,7 @@ var token = "eTn7KXL677g:APA91bGmjuHDf03QdP_dewa5qh_LIOu2QUnc8UAAxSVCi9jtf1kOt8r
 var fcm = new FCM(serverKey);
 
 var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-    to: '899886',
+    to: token,
     collapse_key: 'your_collapse_key',
     //collapse_key to prevent duplicate message
     notification: {
