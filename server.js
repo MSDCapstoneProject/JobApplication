@@ -106,6 +106,8 @@ app.get('/jobCategories/:id', jobCategories.list);
 
 //send push message by Moonsun - 
 app.get('/fcm/sendFcmNotification', fcm.send);
+
+
 app.get('/fcm/sendFcmJobs', fcm2.send);
 //send push message
 app.get('/sendNotification', sendNotifications.send);

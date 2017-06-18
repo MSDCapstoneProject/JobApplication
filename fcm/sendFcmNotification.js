@@ -1,3 +1,4 @@
+var status = require("../routes/resStatus");
 var FCM = require('fcm-push');
 
 var serverKey = "AAAA_ISrvWA:APA91bG2HrjB2eXSsN8cNEt_2TOUqFvPN9CE0-Wm8o9th0wcSd63MDXaMLAiyXCVI7kkkdB6dEULNZeph3fGjl5Xcee863D360C9_UVE7DkMy2aVdppqYBSy68V4jAsOMa0Sdo32u6ub";
@@ -7,7 +8,7 @@ var token = "eTn7KXL677g:APA91bGmjuHDf03QdP_dewa5qh_LIOu2QUnc8UAAxSVCi9jtf1kOt8r
 var fcm = new FCM(serverKey);
 
 var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-    to: token,
+    to: '899886',
     collapse_key: 'your_collapse_key',
     //collapse_key to prevent duplicate message
     notification: {
