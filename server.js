@@ -65,7 +65,7 @@ var jobSeekerNotifications = require('./routes/jobSeekerNotifications');
 var sendNotifications = require('./routes/sendFcmNotification');
 var fcm = require('./fcm/sendFcmNotification');
 var fcm2 = require('./fcm/sendFcmJobs');
-
+var fcm3 = require('./fcm/sendFcmApplyStatus');
 
 
 var connection = require('express-myconnection');
@@ -157,6 +157,7 @@ app.post('/jobSeekerNotifications/delete',jobSeekerNotifications.delete);
 app.get('/fcm/sendFcmNotification', fcm.send);
 
 app.get('/fcm/sendFcmJobs', fcm2.send);
+app.get('/fcm/sendFcmApplyStatus', fcm3.send);
 //send push message
 app.get('/sendNotification', sendNotifications.send);
 //app.post('/sendNotification/add'.jobSeekerTokens.add);
