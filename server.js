@@ -36,6 +36,7 @@ var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
 var jobs = require('./routes/jobs');
 var jobApplications = require('./routes/jobApplications');
+var jobApplicants = require('./routes/jobApplicants');
 var userTokens = require('./routes/userTokens');
 var jobTypes = require('./routes/jobTypes');
 var jobCategories = require('./routes/jobCategories');
@@ -93,6 +94,9 @@ app.post('/jobApplications/add', jobApplications.add);
 app.post('/jobApplications/update', jobApplications.update);
 app.post('/jobApplications/delete', jobApplications.delete);
 
+app.get('/jobApplicants/:id',jobApplicants.list);
+app.post('/jobApplicants/update',jobApplicants.update);
+
 app.get('/userTokens', userTokens.list);
 app.get('/userTokens/:id', userTokens.list);
 app.post('/userTokens/add', userTokens.add);
@@ -106,7 +110,6 @@ app.get('/jobCategories/:id', jobCategories.list);
 
 //send push message by Moonsun - 
 app.get('/fcm/sendFcmNotification', fcm.send);
-
 
 app.get('/fcm/sendFcmJobs', fcm2.send);
 //send push message

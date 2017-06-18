@@ -135,4 +135,17 @@ Job Types Operation ----->
 
         Job Types get for id: http://localhost:3000/jobTypes/1
 
+Job Applicants Opearion ----->
+
+        job Applicants get for only single employer: http://localhost:3000/jobApplicants/1
+
+        job Applicants post (change single jobApplication) : http://localhost:3000/jobApplicants/update
+
+        JSON =  {	
+	                "jobApplicationId" : "1",
+	                "applicationStatus" : "accepted"
+                }
+
+        applicationStatus Types = denied, canceled, applied, accepted
+
 ## NOTES
