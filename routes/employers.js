@@ -56,7 +56,7 @@ exports.delete = function (req, res) {
 
 function post(req, res, method) {
     var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
-    
+
 
     var response = {};
 

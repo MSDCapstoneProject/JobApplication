@@ -1,5 +1,9 @@
 var db = require("../models");
 var status = require("./resStatus");
+var notifiticationFunctions = require("./sendJobNotification");
+//var fcmMessage = require("./lib/fcmMesage");
+
+var notificationMessage = {};
 
 var routes = {};
 var getResponse = [];
@@ -66,6 +70,7 @@ exports.list = function (req, res) {
             }
         })
         .then(function () {
+            getResponse.status = status.SUCCESS;
             res.json(getResponse);
         })
         .catch(function (err) {
@@ -123,12 +128,13 @@ function post(req, res, method) {
             .then(function (jobs) {
                 if (jobs) {
                     response.jobTitle = postData.title;
+                    notifiticationFunctions.notifyJobPosting(jobs.id);
                 }
                 response.status = status.SUCCESS;
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at add Jobs " + err);
+                console.log("Error at saveJobs " + err);
                 res.json({ status: status.EXCEPTION });
             })
     } else if (method == "editJobs") {
@@ -184,5 +190,8 @@ function post(req, res, method) {
                 console.log("Error at delete Jobs " + err);
                 res.json({ status: status.EXCEPTION });
             })
+    } else {
+        console.log("Method not found");
+        res.json({ status: status.UNKNOWN_REQUEST });
     }
 }

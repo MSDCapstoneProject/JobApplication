@@ -35,7 +35,19 @@ if ('development' == app.get('env')) {
 var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
 var jobs = require('./routes/jobs');
-var fcms = require('./routes/sendFcmNotification');
+var jobApplications = require('./routes/jobApplications');
+var jobApplicants = require('./routes/jobApplicants');
+var userTokens = require('./routes/userTokens');
+var jobTypes = require('./routes/jobTypes');
+var jobCategories = require('./routes/jobCategories');
+
+//Notification
+var sendNotifications = require('./routes/sendFcmNotification');
+var fcm = require('./fcm/sendFcmNotification');
+var fcm2 = require('./fcm/sendFcmJobs');
+
+
+
 var connection = require('express-myconnection');
 var mysql = require('mysql');
 
@@ -70,16 +82,41 @@ app.post('/jobSeekers/add', jobSeekers.add);
 app.post('/jobSeekers/update', jobSeekers.update);
 app.post('/jobSeekers/delete', jobSeekers.delete);
 
-app.get('/jobs',jobs.list);
-app.get('/jobs/:id',jobs.list);
-app.post('/jobs/add',jobs.add);
+app.get('/jobs', jobs.list);
+app.get('/jobs/:id', jobs.list);
+app.post('/jobs/add', jobs.add);
 app.post('/jobs/update', jobs.update);
 app.post('/jobs/delete', jobs.delete);
-//send push message
-//app.get('/fcm/sendFcmNotification', fcm.send);
 
+app.get('/jobApplications', jobApplications.list);
+app.get('/jobApplications/:id', jobApplications.list);
+app.post('/jobApplications/add', jobApplications.add);
+app.post('/jobApplications/update', jobApplications.update);
+app.post('/jobApplications/delete', jobApplications.delete);
+
+app.get('/jobApplicants/:id',jobApplicants.list);
+app.post('/jobApplicants/update',jobApplicants.update);
+
+app.get('/userTokens', userTokens.list);
+app.get('/userTokens/:id', userTokens.list);
+app.post('/userTokens/add', userTokens.add);
+app.post('/userTokens/update', userTokens.update);
+app.post('/userTokens/delete', userTokens.delete);
+
+app.get('/jobTypes', jobTypes.list);
+app.get('/jobTypes/:id', jobTypes.list);
+app.get('/jobCategories', jobCategories.list);
+app.get('/jobCategories/:id', jobCategories.list);
+
+//send push message by Moonsun - 
+app.get('/fcm/sendFcmNotification', fcm.send);
+
+app.get('/fcm/sendFcmJobs', fcm2.send);
 //send push message
-app.get('/sendNotification',fcms.send);
+app.get('/sendNotification', sendNotifications.send);
+//app.post('/sendNotification/add'.userTokens.add);
+//app.post('/sendNotification/delete', userTokens.delete);
+//app.post('/sendNotification/all',userTokens.all);
 
 app.use(app.router);
 
