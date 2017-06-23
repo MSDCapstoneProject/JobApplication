@@ -111,16 +111,36 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobApplications.create(entry);
+                return isJobApplicationValid(postData.JobId, response);
+            })
+            .then(function () {
+                //need to check the number of positions 
+                if (response.jobApplicationValid) {
+                    //there are still some jobs to be filled so we increased the count and now update the job
+                    return db.JobApplications.create(entry);
+                } else {
+                    response.message = "All Positions Are Filled";
+                    response.status = status.DATA_FULL;
+                }
             })
             .then(function (JobApplicationsData) {
                 if (JobApplicationsData) {
                     response.applicationStatus = entry.applicationStatus;
                     response.appliedOn = postData.appliedOn;
-                    response.status = status.SUCCESS;
                 }
             })
             .then(function () {
+                if (response.jobApplicationValid) {
+                    return increaseJobsApplied(postData.JobId, response);
+                } else {
+                    response.increaseJobsApplied = false;
+                }
+            })
+            .then(function () {
+                //change the staus if both the functions are successful
+                if (response.jobApplicationValid && response.increaseJobsApplied) {
+                    response.status = status.SUCCESS;
+                }
                 res.json(response);
             })
             .catch(function (err) {
@@ -171,4 +191,52 @@ function post(req, res, method) {
         console.log("Undefined Method");
         res.json({ status: status.UNKNOWN_REQUEST });
     }
+}
+
+
+function isJobApplicationValid(jobId, response) {
+    return Promise.resolve()
+        .then(function () {
+            return db.Jobs.findAll({
+                where: { id: jobId }
+            });
+        })
+        .then(function (jobData) {
+            if (jobData) {
+                var job = jobData[0].dataValues;
+                //update the count only if
+                if (job.totalPositions != job.filledPositions && job.totalPositions > job.filledPositions) {
+                    response.jobApplicationValid = true;
+                } else {
+                    response.jobApplicationValid = false;
+                }
+            } else {
+                response.jobApplicationValid = false;
+            }
+        })
+        .catch(function (err) {
+            console.log('Error at isJobApplicationValid ' + err);
+        })
+
+}
+
+function increaseJobsApplied(jobId, response) {
+    return Promise.resolve()
+        .then(function () {
+            return db.Jobs.update({
+                filledPositions: db.Sequelize.literal('filledPositions+1')
+            }, {
+                    where: { id: jobId }
+                })
+        })
+        .then(function (jobsData) {
+            if (jobsData) {
+                response.increaseJobsApplied = true;
+            } else {
+                response.increaseJobsApplied = false;
+            }
+        })
+        .catch(function (err) {
+            console.log('Error at Update increaseJobsApplied ' + err);
+        })
 }

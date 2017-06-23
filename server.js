@@ -87,6 +87,7 @@ app.get('/jobs/:id', jobs.list);
 app.post('/jobs/add', jobs.add);
 app.post('/jobs/update', jobs.update);
 app.post('/jobs/delete', jobs.delete);
+app.post('/jobs/view',jobs.view);
 
 app.get('/jobApplications', jobApplications.list);
 app.get('/jobApplications/:id', jobApplications.list);

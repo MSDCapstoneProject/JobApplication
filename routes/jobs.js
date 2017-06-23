@@ -94,6 +94,11 @@ exports.delete = function (req, res) {
     post(req, res, method);
 }
 
+exports.view = function (req, res) {
+    method = "viewJobs";
+    post(req, res, method);
+}
+
 
 function post(req, res, method) {
     var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
@@ -119,7 +124,8 @@ function post(req, res, method) {
             JobCategoryId: postData.jobCategoryId,
             createdAt: new Date(),
             updatedAt: new Date(),
-            totalPositions: postData.totalPositions
+            totalPositions: postData.totalPositions,
+            views: 0
         }
 
         Promise.resolve()
@@ -174,7 +180,6 @@ function post(req, res, method) {
                 console.log("Error at update Jobs " + err);
                 res.json({ status: status.EXCEPTION });
             })
-
     } else if (method == "deleteJobs") {
         response = {};
         Promise.resolve()
@@ -192,6 +197,24 @@ function post(req, res, method) {
                 console.log("Error at delete Jobs " + err);
                 res.json({ status: status.EXCEPTION });
             })
+    } else if (method == "viewJobs") {
+        response = {};
+        Promise.resolve()
+            .then(function () {
+                return db.Jobs.update({
+                    views: db.Sequelize.literal('views+1') //sequelize.literal('profiles.userId IS null'),
+                },{
+                        where: { id: postData.jobId }
+                    });
+            })
+            .then(function (jobData) {
+                response.status = status.SUCCESS;
+                res.json(response);
+            })
+            .catch(function (err) {
+                console.log("Error at viewJobs " + err);
+            })
+
     } else {
         console.log("Method not found");
         res.json({ status: status.UNKNOWN_REQUEST });

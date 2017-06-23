@@ -96,6 +96,14 @@ config.json
 
         Jobs Delete: http://localhost:3000/jobs/delete/?id=1
 
+        Jobs View POST: http://localhost:3000/jobs/view
+
+                Json = {
+                                "jobId": "29"
+                        }
+
+                
+
 JobSubscribers Operation -----> JobSubscribers to jobApplications
 
        // ---JobSubscribers get for all: http://localhost:3000/jobSubscribers  

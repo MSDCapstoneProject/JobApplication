@@ -4,7 +4,8 @@ var status = {
     AUTHORIZATION_FAIL: 3,
     UNKNOWN_REQUEST: 4,
     EXCEPTION: 5,
-    NO_DATA_FOUND:6
+    NO_DATA_FOUND:6,
+    DATA_FULL:7
 };
 
 module.exports = status;
