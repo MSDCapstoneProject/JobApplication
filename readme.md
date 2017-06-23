@@ -176,4 +176,46 @@ Job Applicants Opearion for Employer----->
 
         applicationStatus Types = denied, canceled, applied, accepted
 
+
+Job Applications Operation for JobSeekers :
+
+        Job Applications Get 
+
+       Job Application Add - http://localhost:3000/jobApplications/add
+       Json = {
+            "appliedOn": "2017-06-14",
+            "EmployerId": "1",
+            "JobId":"4",
+            "JobSeekerId": "2"
+        }
+        
+        Resposne json if all job positions are filled = 
+        Json = {
+                "jobApplicationValid": false,
+                "message": "All Positions Are Filled",
+                "status": 7,
+                "increaseJobsApplied": false
+                }
+
+        Job Application update : http://localhost:3000/jobApplications/update
+
+
+        //if application cancelled by jobSeeker then change status to cancelled
+        Json - {
+	        "id": "7",
+            "EmployerId": "2",
+            applicationStatus: postData.applicationStatus,
+            "applicationStatus" : "cancelled"
+            "JobId":"4",
+            "JobSeekerId": "2"
+                }
+
+        Job Application delete : http://localhost:3000/jobApplications/delete
+
+        Json - {
+			"id": "8"
+                }
+
+        
+
 ## NOTES
