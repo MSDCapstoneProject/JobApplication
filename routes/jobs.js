@@ -118,7 +118,8 @@ function post(req, res, method) {
             JobTypeId: postData.jobTypeId,
             JobCategoryId: postData.jobCategoryId,
             createdAt: new Date(),
-            updatedAt: new Date()
+            updatedAt: new Date(),
+            totalPositions: postData.totalPositions
         }
 
         Promise.resolve()
@@ -155,7 +156,8 @@ function post(req, res, method) {
             EmployerId: postData.employerId,
             JobTypeId: postData.jobTypeId,
             JobCategoryId: postData.jobCategoryId,
-            updatedAt: new Date()
+            updatedAt: new Date(),
+            totalPositions: postData.totalPositions
         }
         Promise.resolve()
             .then(function () {

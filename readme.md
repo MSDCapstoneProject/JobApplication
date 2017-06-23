@@ -70,10 +70,29 @@ config.json
         "status": true,
         "employerId": 2,
         "jobTypeId": 2,
-        "jobCategoryId": 2
+        "jobCategoryId": 2,
+        "totalPositions": 10
         }
 
-        Jobs Update: http://localhost:3000/jobs/update/?id=10&title=General Farm Labourer&jobLocation=St. George, ON&startDate=2017-07-20&endDate=2017-07-29&startTime=09:30:00&endTime=17:00:00&wage=16.22&description=You will have the opportunity for personal development through on the job training, continuing education, industry programs and challenging work. Our company offers sponsored health benefits, incentives plans for you and your family in a fun and inviting team based environment.We have been in business for more than 60 years and over that time have grown into the world’s leader in turkey and laying hen genetics with the Hybrid, Shaver, and Bovans portfolio of products.&postDate=2017-07-10&expiryDate=2017-07-19&status=true&employerId=2&jobTypeId=2&jobCategoryId=2
+        Jobs Update: http://localhost:3000/jobs/update
+
+        {	
+        "title": "General Labour",
+        "jobLocation": "Ottawa, ON",
+        "startDate": "2017-07-21T00:00:00.000Z",
+        "endDate": "2017-07-29T00:00:00.000Z",
+        "startTime": "08:00:00",
+        "endTime": "17:00:00",
+        "wage": 12,
+        "description": "New Labour Job",
+        "postDate": "2017-07-11T00:00:00.000Z",
+        "expiryDate": "2017-07-21T00:00:00.000Z",
+        "status": true,
+        "employerId": 2,
+        "jobTypeId": 2,
+        "jobCategoryId": 2,
+        "totalPositions": 10
+        }
 
         Jobs Delete: http://localhost:3000/jobs/delete/?id=1
 
@@ -136,7 +155,7 @@ Job Types Operation ----->
 
         Job Types get for id: http://localhost:3000/jobTypes/1
 
-Job Applicants Opearion ----->
+Job Applicants Opearion for Employer----->
 
         job Applicants get for only single employer: http://localhost:3000/jobApplicants/1
 

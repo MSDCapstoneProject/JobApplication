@@ -104,24 +104,34 @@ function post(req, res, method) {
                 if (jobSeeker) {
                     response.name = jobSeeker.firstName;
                     //save a token information for this jobseeker
-                    if(postData.token){
+                    if (postData.token) {
                         var body = {};
                         body.jobSeekersId = jobSeeker.id;
                         body.token = postData.token;
 
                         //send a post request to create a new token for a jobSeeker
-                        request({
-                            url: "http://localhost:3000/jobSeekerTokens/add",
-                            method: "POST",
-                            json: true,
-                            body: body
-                        },function(error, response, body){
-                            console.log(response);
-                        });
+                        return Promise.resolve()
+                            .then(function () {
+                                return request({
+                                    url: "http://localhost:3000/jobSeekerTokens/add",
+                                    method: "POST",
+                                    json: true,
+                                    body: body
+                                });
+                            })
+                            .then(function (jobSeekerTokenData) {
+                                if (jobSeekerTokenData) {
+                                    response.tokenStatus = status.SUCCESS;
+                                }
+                            })
+                            .catch(function (err) {
+                                console.log('Error at jobSeekerTokens ' + err);
+                                response.tokenStatus = status.EXCEPTION;
+                            })
                     }
                 }
             })
-            .then(function(){
+            .then(function () {
                 response.status = status.SUCCESS;
                 res.json(response);
             })

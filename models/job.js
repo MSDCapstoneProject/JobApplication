@@ -13,6 +13,9 @@ module.exports = function (sequelize, DataTypes) {
         postDate: DataTypes.DATEONLY,
         expiryDate: DataTypes.DATEONLY,
         status: DataTypes.BOOLEAN,
+        views: DataTypes.INTEGER,
+        totalPositions: DataTypes.INTEGER,
+        filledPositions: DataTypes.INTEGER
     }, {
             paranoid: true,
             classMethods: {
