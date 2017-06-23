@@ -118,10 +118,12 @@ CREATE TABLE `JobApplications` (
 
 -- 15 June 2017
 
-create table `UserTokens`(
+create table `JobSeekerTokens`(
 `id` int(20) NOT NULL AUTO_INCREMENT,
 `token` varchar(200) NOT NULL,
+`jobSeekerId` int(11) DEFAULT NULL,
 PRIMARY KEY(`id`),
+FOREIGN KEY (`jobSeekerId`) REFERENCES `JobSeekers` (`id`) ON DELETE CASCADE,
 UNIQUE KEY(`token`),
 `createdAt` TIMESTAMP NOT NULL DEFAULT 0,
 `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -130,9 +132,7 @@ UNIQUE KEY(`token`),
 
 -- 17 June 2017 add foreign key 
 
-alter table sql9179567.JobSeekers add column userTokenId int(11);
 
-ALTER TABLE sql9179567.JobSeekers ADD CONSTRAINT fk_user_token_id FOREIGN KEY (userTokenId) REFERENCES UserTokens(id) ON DELETE CASCADE;
 
 
 

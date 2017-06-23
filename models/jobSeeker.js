@@ -12,12 +12,7 @@ module.exports = function (sequelize, DataTypes) {
         status: DataTypes.STRING,
         gender: DataTypes.STRING,
     }, {
-            paranoid: true,
-            classMethods :{
-                associate: function (models){
-                    JobSeekers.belongsTo(models.UserTokens);
-                }
-            }
+            paranoid: true
         });
 
     return JobSeekers;

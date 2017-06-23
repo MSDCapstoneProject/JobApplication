@@ -110,22 +110,23 @@ JobSubscribers Operation -----> JobSubscribers to jobApplications
                                 }
 
 
-UserTokens Operation ----->
+JobSeekerTokens Operation ----->
 
-        UserTokens get for all: http://localhost:3000/userTokens
+        JobSeekerTokens get for all: http://localhost:3000/jobSeekerTokens
 
-        UserTokens get for id: http://localhost:3000/userTokens/1
+        JobSeekerTokens get for id: http://localhost:3000/jobSeekerTokens/1
 
-        UserTokens Post Add: http://localhost:3000/userTokens/add
+        JobSeekerTokens Post Add: http://localhost:3000/jobSeekerTokens/add
 
                 Json  =         {
-                                "token": "1y766yui988876"
+                                "token": "1y766yui988876",
+                                "jobSeekersId": "1"
                                 }
 
-        JobSubscribers Post Delete: http://localhost:3000/jobSubscribers/delete
+        JobSeekerTokens Post Delete: http://localhost:3000/jobSubscribers/delete
 
                 Json  =         {
-                                "id": "1" // need to find token
+                                 "token": "1y766yui988876"
                                 }
 
 

@@ -4,6 +4,7 @@
 
 var db = require("../models");
 var status = require("./resStatus");
+var request = require('request');
 
 var routes = {};
 var response = {};
@@ -102,7 +103,25 @@ function post(req, res, method) {
             .then(function (jobSeeker) {
                 if (jobSeeker) {
                     response.name = jobSeeker.firstName;
+                    //save a token information for this jobseeker
+                    if(postData.token){
+                        var body = {};
+                        body.jobSeekersId = jobSeeker.id;
+                        body.token = postData.token;
+
+                        //send a post request to create a new token for a jobSeeker
+                        request({
+                            url: "http://localhost:3000/jobSeekerTokens/add",
+                            method: "POST",
+                            json: true,
+                            body: body
+                        },function(error, response, body){
+                            console.log(response);
+                        });
+                    }
                 }
+            })
+            .then(function(){
                 response.status = status.SUCCESS;
                 res.json(response);
             })

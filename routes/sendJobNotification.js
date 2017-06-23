@@ -47,12 +47,12 @@ function notifyJobPosting(jobId) {
                     jobSeekersPromises.push(
                         Promise.resolve()
                             .then(function () {
-                                return db.UserTokens.findAll({ where: { id: jobSeeker.UserTokenId } });
+                                return db.jobSeekerTokens.findAll({ where: { JobSeekerId: jobSeeker.id } });
                             })
-                            .then(function (userTokenData) {
-                                if (userTokenData) {
-                                    var userToken = userTokenData[0].dataValues;
-                                    message.to = userToken.token; // get of jobSeekers unique token for each user
+                            .then(function (jobSeekerTokenData) {
+                                if (jobSeekerTokenData) {
+                                    var jobSeekerToken = jobSeekerTokenData[0].dataValues;
+                                    message.to = jobSeekerToken.token; // get of jobSeekers unique token for each user
                                 }
                                 //implement code to update job notification data;
                             })

@@ -31,4 +31,4 @@ INSERT INTO `Jobs` (`employerId`,`title`,`jobTypeId`,`jobLocation`,`startDate`,`
 (1, 'Construction Labourer',3, 'Milton, ON','2017-07-25','2017-08-06','07:00:00','16:00:00',12.50,"<ul><li>Exceptional Customer Service and Sales</li><li>Communication</li><li>Time Management Skills</li><li>Energetic with Good Stress Tolerance</li><li>Team Work</li><li>Attention to Detail and Problem Solving</li><li>Work with Attention to Safety</li><li>Accountability and Dependability</li><li>Operating Lawn Care Equipment</li></ul>", '2017-07-05','2017-07-14',1,3);
 
 
-INSERT INTO `UserTokens` (`token`) VALUES ('dde233zzde3535353ddd442'), ('ffu2nfnmsii434dd22ddd225'), ('je992jjm99274784bje');
+INSERT INTO `JobSeekerTokens` (`token`,`jobSeekerId`) VALUES ('dde233zzde3535353ddd442', '1'), ('ffu2nfnmsii434dd22ddd225','2');

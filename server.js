@@ -37,7 +37,7 @@ var jobSeekers = require('./routes/jobSeekers');
 var jobs = require('./routes/jobs');
 var jobApplications = require('./routes/jobApplications');
 var jobApplicants = require('./routes/jobApplicants');
-var userTokens = require('./routes/userTokens');
+var jobSeekerTokens = require('./routes/jobSeekerTokens');
 var jobTypes = require('./routes/jobTypes');
 var jobCategories = require('./routes/jobCategories');
 
@@ -97,11 +97,11 @@ app.post('/jobApplications/delete', jobApplications.delete);
 app.get('/jobApplicants/:id',jobApplicants.list);
 app.post('/jobApplicants/update',jobApplicants.update);
 
-app.get('/userTokens', userTokens.list);
-app.get('/userTokens/:id', userTokens.list);
-app.post('/userTokens/add', userTokens.add);
-app.post('/userTokens/update', userTokens.update);
-app.post('/userTokens/delete', userTokens.delete);
+app.get('/jobSeekerTokens', jobSeekerTokens.list);
+app.get('/jobSeekerTokens/:id', jobSeekerTokens.list);
+app.post('/jobSeekerTokens/add', jobSeekerTokens.add);
+app.post('/jobSeekerTokens/update', jobSeekerTokens.update);
+app.post('/jobSeekerTokens/delete', jobSeekerTokens.delete);
 
 app.get('/jobTypes', jobTypes.list);
 app.get('/jobTypes/:id', jobTypes.list);
@@ -114,9 +114,9 @@ app.get('/fcm/sendFcmNotification', fcm.send);
 app.get('/fcm/sendFcmJobs', fcm2.send);
 //send push message
 app.get('/sendNotification', sendNotifications.send);
-//app.post('/sendNotification/add'.userTokens.add);
-//app.post('/sendNotification/delete', userTokens.delete);
-//app.post('/sendNotification/all',userTokens.all);
+//app.post('/sendNotification/add'.jobSeekerTokens.add);
+//app.post('/sendNotification/delete', jobSeekerTokens.delete);
+//app.post('/sendNotification/all',jobSeekerTokens.all);
 
 app.use(app.router);
 
