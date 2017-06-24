@@ -9,6 +9,8 @@ var response = {};
 exports.list = function (req, res) {
     getResponse = [];
     var jobSeekerId = req.query.id || req.params.id; // Check what request you are going to get
+    var jobId = req.query.jobId || req.params.jobId;
+    var jobApplicationId = req.query.jobApplicationId || req.params.jobApplicationId;
 
     Promise.resolve()
         .then(function () {
@@ -16,6 +18,17 @@ exports.list = function (req, res) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { JobSeekerId: jobSeekerId }
+                });
+            } else if (jobId) {
+                return db.JobApplications.findAll({
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                    where: { JobId: jobId }
+                });
+            }
+            else if (jobApplicationId) {
+                return db.JobApplications.findAll({
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                    where: { Id: jobApplicationId }
                 });
             } else {
                 return db.JobApplications.findAll({
