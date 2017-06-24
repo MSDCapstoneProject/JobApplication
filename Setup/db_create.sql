@@ -133,6 +133,19 @@ UNIQUE KEY(`token`),
 -- 17 June 2017 add foreign key 
 
 
+--23 June 2017 jobApplication Status
+
+create table `JobApplicationStatuses`(
+`id` int(20) NOT NULL AUTO_INCREMENT,
+`description` varchar(200),
+`internalCode` varchar(200),
+`createdAt` TIMESTAMP NOT NULL DEFAULT 0,
+`updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` DATETIME,
+PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1;
+
+
 
 
 

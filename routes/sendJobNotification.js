@@ -23,6 +23,16 @@ var message = {
 
 function notifyJobPosting(jobId) {
 
+    message = {
+        to: null,
+        collapse_key: null,
+        notification: {
+            title: null,
+            body: null
+        },
+        data: {}
+    };
+
     Promise.resolve()
         .then(function () {
             return db.Jobs.findAll({ where: { id: jobId } });
@@ -72,6 +82,67 @@ function notifyJobPosting(jobId) {
         });
 }
 
+function notifyJobStatusUpdate(jobApplicationId) {
+
+    message = {
+        to: null,
+        collapse_key: null,
+        notification: {
+            title: null,
+            body: null
+        },
+        data: {}
+    };
+
+    Promise.resolve()
+        .then(function () {
+            if (jobApplicationId) {
+                return db.JobApplications.findAll({
+                    where: { id: jobApplicationId },
+                    include: [{ model: db.JobSeekers }, {model: db.Jobs}, { model: db.Employers}]
+                });
+            }
+        })
+        .then(function (jobApplicationsData) {
+            if (jobApplicationsData) {
+                var jobApplication = jobApplicationsData[0].dataValues;
+                message.notification.title = jobApplication.Job.dataValues.title;
+                message.notification.body = "Hi " + jobApplication.JobSeeker.dataValues.firstName || '' + ", You have new job. Find More & View Details!"
+
+
+                return Promise.resolve()
+                    .then(function () {
+                        return db.JobSeekerTokens.findAll({
+                            where: { JobSeekerId: jobApplication.JobSeeker.id},
+                        })
+                    })
+                    .then(function (jobSeekerTokenData) {
+                        if (jobSeekerTokenData) {
+                            var jobSeekerToken = jobSeekerTokenData[0].dataValues;
+                            message.to = jobSeekerToken.token; //get the user tokken
+                        }
+                    })
+                    .then(function(){
+                        //send token only if valid token present
+                        if(message.to){
+                            fcm.send(message);
+                        }
+                    })
+                    .catch(function (err) {
+                        console.log('Error at notifyJobStatusUpdate - jobApplicationsData  ' + err);
+                    });
+
+            }
+        })
+        .catch(function (err) {
+            console.log('Error at notifyJobStatusUpdate ' + err);
+        })
+
+
+}
+
+
+allFunctions.notifyJobStatusUpdate = notifyJobStatusUpdate;
 allFunctions.notifyJobPosting = notifyJobPosting;
 
 module.exports = allFunctions;
