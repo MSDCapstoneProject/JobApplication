@@ -60,6 +60,16 @@ exports.list = function (req, res) {
                                 if (jobCategoryData) {
                                     job.jobCategory = jobCategoryData.description;
                                 }
+                                return db.JobApplications.findAll({ 
+                                    attributes: [[ db.Sequelize.fn('COUNT','id'),'totalApplications']], //db.Sequelize.literal('views+1')
+                                    where: { JobId: job.id, applicationStatus: 'applied' } 
+                                });
+                            })
+                            .then(function(jobApplicationsData){
+                                if(jobApplicationsData){
+                                    job.totalApplications = jobApplicationsData[0].dataValues.totalApplications || 0;
+                                }
+
                             })
                             .catch(function (err) {
                                 console.log("Error at Get Jobs - Employers " + err);
@@ -203,7 +213,7 @@ function post(req, res, method) {
             .then(function () {
                 return db.Jobs.update({
                     views: db.Sequelize.literal('views+1') //sequelize.literal('profiles.userId IS null'),
-                },{
+                }, {
                         where: { id: postData.jobId }
                     });
             })
