@@ -200,12 +200,12 @@ Job Applications Operation for JobSeekers :
         Job Application update : http://localhost:3000/jobApplications/update
 
 
-        //if application cancelled by jobSeeker then change status to cancelled
+        //if application canceled by jobSeeker then change status to canceled
         Json - {
 	        "id": "7",
             "EmployerId": "2",
             applicationStatus: postData.applicationStatus,
-            "applicationStatus" : "cancelled"
+            "applicationStatus" : "canceled"
             "JobId":"4",
             "JobSeekerId": "2"
                 }
@@ -216,6 +216,10 @@ Job Applications Operation for JobSeekers :
 			"id": "8"
                 }
 
-        
+JobSeeker Application Method:
+
+        Get Method ; http://localhost:3000/jobSeekerApplication/30
+
+        or for all : http://localhost:3000/jobSeekerApplication
 
 ## NOTES
