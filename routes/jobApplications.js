@@ -17,7 +17,7 @@ exports.list = function (req, res) {
             if (jobSeekerId) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { JobSeekerId: jobSeekerId }
+                    where: { id: jobSeekerId }
                 });
             } else if (jobId) {
                 return db.JobApplications.findAll({
@@ -123,18 +123,19 @@ function post(req, res, method) {
         }
 
         Promise.resolve()
-            .then(function () {
-                return isJobApplicationValid(postData.JobId, response);
-            })
+            //.then(function () {
+                //allow unlimitted number of applications
+                //return isJobApplicationValid(postData.JobId, response);
+            //})
             .then(function () {
                 //need to check the number of positions 
-                if (response.jobApplicationValid) {
+                //if (response.jobApplicationValid) {
                     //there are still some jobs to be filled so we increased the count and now update the job
                     return db.JobApplications.create(entry);
-                } else {
-                    response.message = "All Positions Are Filled";
-                    response.status = status.DATA_FULL;
-                }
+                //} else {
+                    //response.message = "All Positions Are Filled";
+                    //response.status = status.DATA_FULL;
+                //}
             })
             .then(function (JobApplicationsData) {
                 if (JobApplicationsData) {
@@ -143,17 +144,17 @@ function post(req, res, method) {
                 }
             })
             .then(function () {
-                if (response.jobApplicationValid) {
+                //if (response.jobApplicationValid) {
                     return increaseJobsApplied(postData.JobId, response);
-                } else {
-                    response.increaseJobsApplied = false;
-                }
+                //} else {
+                    //response.increaseJobsApplied = false;
+                //}
             })
             .then(function () {
                 //change the staus if both the functions are successful
-                if (response.jobApplicationValid && response.increaseJobsApplied) {
+                //if (response.jobApplicationValid && response.increaseJobsApplied) {
                     response.status = status.SUCCESS;
-                }
+                //}
                 res.json(response);
             })
             .catch(function (err) {

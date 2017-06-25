@@ -1,5 +1,6 @@
 var db = require("../models");
 var status = require("./resStatus");
+var notifiticationFunctions = require("./sendJobNotification");
 
 var routes = {};
 var getResponse = [];
@@ -101,6 +102,8 @@ function post(req, res, method) {
             })
             .then(function (jobApplication) {
                 if (jobApplication) {
+                    //send notifiction on status changed for a particular job application 
+                    notifiticationFunctions.notifyJobStatusUpdate(postData.jobApplicationId);
                     response.status = status.SUCCESS;
                 }
                 res.json(response);

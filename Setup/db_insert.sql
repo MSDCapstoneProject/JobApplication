@@ -32,3 +32,10 @@ INSERT INTO `Jobs` (`employerId`,`title`,`jobTypeId`,`jobLocation`,`startDate`,`
 
 
 INSERT INTO `JobSeekerTokens` (`token`,`jobSeekerId`) VALUES ('dde233zzde3535353ddd442', '1'), ('ffu2nfnmsii434dd22ddd225','2');
+
+INSERT INTO `JobApplicationStatuses` (`description`,`internalCode`) VALUES 
+('Applied','APPLIED'),
+('Approved By Employer','APPROVED_BY_'),
+('Denied By Employer','DENIED'),
+('Cancelled By User','CANCELLED_BY_USER'),
+('Cancelled By Employer','CANCELLED_BY_EMPLOYER'),;

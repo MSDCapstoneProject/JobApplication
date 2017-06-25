@@ -36,6 +36,7 @@ var employers = require('./routes/employers');
 var jobSeekers = require('./routes/jobSeekers');
 var jobs = require('./routes/jobs');
 var jobApplications = require('./routes/jobApplications');
+var jobSeekerApplication = require('./routes/jobSeekerApplication');
 var jobApplicants = require('./routes/jobApplicants');
 var jobSeekerTokens = require('./routes/jobSeekerTokens');
 var jobTypes = require('./routes/jobTypes');
@@ -94,6 +95,10 @@ app.get('/jobApplications/:id', jobApplications.list);
 app.post('/jobApplications/add', jobApplications.add);
 app.post('/jobApplications/update', jobApplications.update);
 app.post('/jobApplications/delete', jobApplications.delete);
+
+app.get('/jobSeekerApplication', jobSeekerApplication.list);
+app.get('/jobSeekerApplication/:id', jobSeekerApplication.list);
+
 
 app.get('/jobApplicants/:id',jobApplicants.list);
 app.post('/jobApplicants/update',jobApplicants.update);
