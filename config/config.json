@@ -26,16 +26,16 @@
         }
     },
     "production": {
-        "urlPath": "/opt/app-root/src/",
-        "username": "root",
-        "password": "",
-        "database": "jobbridge",
-        "host": "127.0.0.1",
+        "urlPath": "/",
+        "username": "sql9179567",
+        "password": "ZaDW8MW3JF",
+        "database": "sql9179567",
+        "host": "sql9.freemysqlhosting.net",
         "port": 3306,
         "forceUpdate": false,
         "dialect": "mysql",
         "dialectOptions": {
-            "instanceName": "MySQL57"
+        "instanceName": "MySQL57"
         }
     }    
 }
