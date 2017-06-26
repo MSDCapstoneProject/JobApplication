@@ -15,7 +15,7 @@ exports.list = function (req, res) {
             if (jobSeekerId) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { id: jobSeekerId }
+                    where: { JobSeekerId: jobSeekerId }
                 });
             } else {
                 return db.JobApplications.findAll({
