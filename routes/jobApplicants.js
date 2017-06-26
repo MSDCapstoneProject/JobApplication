@@ -8,16 +8,16 @@ var method;
 var response = {};
 
 exports.list = function (req, res) {
-    var employerId = req.query.employerId || req.params.employerId;
+    var jobId = req.query.jobId || req.params.jobId;
     var jobApplicationId = req.query.jobApplicationId || req.params.jobApplicationId;
     getResponse = [];
 
     Promise.resolve()
         .then(function () {
-            if (employerId) {
+            if (jobId) {
                 return db.Jobs.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { EmployerId: employerId }
+                    where: { jobId: jobId }
                 })
             } else if (jobApplicationId) {
                 return db.Jobs.findAll({
