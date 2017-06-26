@@ -179,7 +179,8 @@ Job Applicants Opearion for Employer----->
 
 Job Applications Operation for JobSeekers :
 
-        Job Applications Get 
+        Job Applications Get 1. http://localhost:8080/jobApplications?jobApplicationId=28
+                        2. http://localhost:8080/jobApplications?jobSeekerId=3
 
        Job Application Add - http://localhost:3000/jobApplications/add
        Json = {
@@ -188,27 +189,15 @@ Job Applications Operation for JobSeekers :
             "JobId":"4",
             "JobSeekerId": "2"
         }
-        
-        Resposne json if all job positions are filled = 
-        Json = {
-                "jobApplicationValid": false,
-                "message": "All Positions Are Filled",
-                "status": 7,
-                "increaseJobsApplied": false
-                }
 
         Job Application update : http://localhost:3000/jobApplications/update
 
-
-        //if application canceled by jobSeeker then change status to canceled
         Json - {
-	        "id": "7",
+            "applicationStatus": "canceled",
             "EmployerId": "2",
-            applicationStatus: postData.applicationStatus,
-            "applicationStatus" : "canceled"
-            "JobId":"4",
-            "JobSeekerId": "2"
-                }
+            "JobId": "4",
+            "JobSeekerId": "3"
+        } //if application canceled by jobSeeker then change status to canceled
 
         Job Application delete : http://localhost:3000/jobApplications/delete
 
