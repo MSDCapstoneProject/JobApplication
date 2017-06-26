@@ -193,6 +193,7 @@ Job Applications Operation for JobSeekers :
         Job Application update : http://localhost:3000/jobApplications/update
 
         Json - {
+        "jobApplicationId" : "28",
             "applicationStatus": "canceled",
             "EmployerId": "2",
             "JobId": "4",
@@ -202,7 +203,7 @@ Job Applications Operation for JobSeekers :
         Job Application delete : http://localhost:3000/jobApplications/delete
 
         Json - {
-			"id": "8"
+			"jobApplicationId" : "28",
                 }
 
 JobSeeker Application Method:

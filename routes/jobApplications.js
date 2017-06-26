@@ -163,7 +163,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobApplications.update(entry, { where: { id: postData.id } });
+                return db.JobApplications.update(entry, { where: { id: postData.jobApplicationId } });
             })
             .then(function (JobApplicationsData) {
                 if (JobApplicationsData) {
@@ -180,7 +180,7 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobApplications.destroy({ where: { id: postData.id } });
+                return db.JobApplications.destroy({ where: { id: postData.jobApplicationId } });
             })
             .then(function (JobApplicationsData) {
                 if (JobApplicationsData) {
