@@ -137,7 +137,7 @@ function post(req, res, method) {
             })
             .then(function () {
                 //if (response.jobApplicationValid) {
-                    return increaseJobsApplied(postData.JobId, response);
+                    return updateJobsAppliedCount(postData.JobId, response, '+1');
                 //} else {
                     //response.increaseJobsApplied = false;
                 //}
@@ -169,6 +169,10 @@ function post(req, res, method) {
                 if (JobApplicationsData) {
                     response.status = status.SUCCESS;
                 }
+            })
+            .then(function(){
+                if(postData.applicationStatus == "canceled")
+                return updateJobsAppliedCount(postData.JobId, response, "-1");
             })
             .then(function () {
                 res.json(response);
@@ -226,11 +230,11 @@ function isJobApplicationValid(jobId, response) {
 
 }
 
-function increaseJobsApplied(jobId, response) {
+function updateJobsAppliedCount(jobId, response,value) {
     return Promise.resolve()
         .then(function () {
             return db.Jobs.update({
-                filledPositions: db.Sequelize.literal('filledPositions+1')
+                filledPositions: db.Sequelize.literal('filledPositions'+value)
             }, {
                     where: { id: jobId }
                 })

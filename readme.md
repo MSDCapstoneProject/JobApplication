@@ -203,13 +203,14 @@ Job Applications Operation for JobSeekers :
 
         Job Application update : http://localhost:3000/jobApplications/update
 
-        Json - {
-        "jobApplicationId" : "28",
+        Json -     {
             "applicationStatus": "canceled",
-            "EmployerId": "2",
-            "JobId": "4",
-            "JobSeekerId": "3"
-        } //if application canceled by jobSeeker then change status to canceled
+            "EmployerId": "1",
+            "JobId":"7",
+            "JobSeekerId": "8",
+            "jobApplicationId": "36"
+        }
+        //if application canceled by jobSeeker then change status to canceled
 
         Job Application delete : http://localhost:3000/jobApplications/delete
 
