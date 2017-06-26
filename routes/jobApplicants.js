@@ -104,12 +104,12 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobApplications.update(entry, { where: { id: postData.jobApplicationId } });
+                return db.JobApplications.update(entry, { where: { id: postData.id } });
             })
             .then(function (jobApplication) {
                 if (jobApplication) {
                     //send notifiction on status changed for a particular job application 
-                    notifiticationFunctions.notifyJobStatusUpdate(postData.jobApplicationId);
+                    notifiticationFunctions.notifyJobStatusUpdate(postData.id);
                     response.status = status.SUCCESS;
                 }
                 res.json(response);
