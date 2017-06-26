@@ -3,14 +3,19 @@
  */
 
 var express = require('express');
-var app = express();
+
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+
+var app = express();
+
+app.set('ip_address',process.env.OPENSHIFT_NODEJS_IP || process.env.IP || '0.0.0.0'); //OPENSHIFT_NODEJS_IP = '127.0.0.1 and Heroku IP = '0.0.0.0'
+app.set('port',process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080); //var port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.logger('dev'));
@@ -126,6 +131,8 @@ app.get('/sendNotification', sendNotifications.send);
 
 app.use(app.router);
 
-http.createServer(app).listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
+var server = http.createServer(app);
+
+server.listen(app.get('port'), app.get('ip_address'), function(){
+  console.log('Server ' + app.get('ip_address') + ' as Express server listening on port ' + app.get('port'));
 });
