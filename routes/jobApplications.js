@@ -13,12 +13,13 @@ exports.list = function (req, res) {
 
     Promise.resolve()
         .then(function () {
-            if (jobSeekerId) {
+
+            if (jobSeekerId && jobApplicationId == null) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { JobSeekerId: jobSeekerId }
                 });
-            } else if(jobApplicationId) {
+            } else if(jobApplicationId && jobSeekerId == null) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { id: jobApplicationId }
