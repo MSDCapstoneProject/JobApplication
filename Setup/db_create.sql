@@ -169,6 +169,21 @@ PRIMARY KEY (`id`),
 FOREIGN KEY(`topicGroupId`) REFERENCES TopicGroups(`id`) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
+--28 June 2017 JobSeekerNotifications
+
+CREATE TABLE IF NOT EXISTS `JobSeekerNotifications` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`topicId` int(11),
+`jobSeekerId` int(11),
+`status` boolean,
+`createdAt` TIMESTAMP NOT NULL DEFAULT 0,
+`updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` DATETIME,
+PRIMARY KEY (`id`),
+FOREIGN KEY(`topicId`) REFERENCES Topics(`id`) ON DELETE CASCADE,
+FOREIGN KEY(`jobSeekerId`) REFERENCES JobSeekers(`id`) ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1;
+
 /*drop table Jobs;
 drop table JobSeekers;
 drop table JobCategories;
