@@ -246,4 +246,28 @@ Topic Groups method
                 "id": "10"
         }
 
+
+Topics method
+
+        Get Method: http://localhost:8080/topics/1
+        for all   : http://localhost:8080/topics
+        
+        add method: http://localhost:8080/topics/add
+        JSON =   {
+                "description": "Part Time",
+                "TopicGroupId": "1"
+        }
+
+        update method: http://localhost:8080/topics/update
+        JSON =   {
+                "id": "1",
+                "description": "Part-Time",
+                "TopicGroupId": "1"
+        }
+
+        delete method: http://localhost:8080/topics/delete
+        JSON = {
+                "id": "10"
+        }
+
 ## NOTES
