@@ -145,9 +145,29 @@ create table `JobApplicationStatuses`(
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
+--26 June 2017 Topics
 
+CREATE TABLE IF NOT EXISTS `TopicGroups` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`description` varchar(200),
+`internalCode` varchar(200),
+`createdAt` TIMESTAMP NOT NULL DEFAULT 0,
+`updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` DATETIME,
+PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1;
 
-
+CREATE TABLE IF NOT EXISTS `Topics` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`description` varchar(200),
+`internalCode` varchar(200),
+`topicGroupId` int(11),
+`createdAt` TIMESTAMP NOT NULL DEFAULT 0,
+`updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` DATETIME,
+PRIMARY KEY (`id`),
+FOREIGN KEY(`topicGroupId`) REFERENCES TopicGroups(`id`) ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1;
 
 /*drop table Jobs;
 drop table JobSeekers;

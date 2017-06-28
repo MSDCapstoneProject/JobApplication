@@ -172,7 +172,7 @@ function post(req, res, method) {
             })
             .then(function(){
                 if(postData.applicationStatus == "canceled")
-                return updateJobsAppliedCount(postData.JobId, response, "-1");
+                return updateJobsAppliedCount(postData.JobId, response, "-1"); //Decrease the count on cancellation
             })
             .then(function () {
                 res.json(response);
