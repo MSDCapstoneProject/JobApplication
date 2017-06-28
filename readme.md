@@ -220,8 +220,30 @@ Job Applications Operation for JobSeekers :
 
 JobSeeker Application Method:
 
-        Get Method ; http://localhost:3000/jobSeekerApplication/30
+        Get Method : http://localhost:3000/jobSeekerApplication/30
 
         or for all : http://localhost:3000/jobSeekerApplication
+
+
+Topic Groups method
+
+        Get Method: http://localhost:8080/topicGroups/1
+        for all   : http://localhost:8080/topicGroups
+        
+        add method: http://localhost:8080/topicGroups/add
+        JSON =   {
+                "description": "Job Type"
+        }
+
+        update method: http://localhost:8080/topicGroups/update
+        JSON =   {
+                "id": "1",
+                "description": "Job Types"
+        }
+
+        delete method: http://localhost:8080/topicGroups/delete
+        JSON = {
+                "id": "10"
+        }
 
 ## NOTES
