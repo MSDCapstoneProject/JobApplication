@@ -106,6 +106,7 @@ function notifyJobStatusUpdate(jobApplicationId) {
         .then(function (jobApplicationsData) {
             if (jobApplicationsData) {
                 var jobApplication = jobApplicationsData[0].dataValues;
+                message.data.jobApplicationId = jobApplication.id;
                 message.notification.title = jobApplication.Job.dataValues.title;
                 message.notification.body = "Hi " + jobApplication.JobSeeker.dataValues.firstName || '' + ", You have new job. Find More & View Details!"
 
