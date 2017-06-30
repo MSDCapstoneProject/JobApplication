@@ -1,11 +1,22 @@
 "use strict";
+var moment = require('moment');
 
 module.exports = function (sequelize, DataTypes) {
     var Jobs = sequelize.define("Jobs", {
         title: DataTypes.STRING,
         jobLocation: DataTypes.STRING,
-        startDate: DataTypes.DATEONLY,
-        endDate: DataTypes.DATEONLY,
+        startDate:{
+            type: DataTypes.DATEONLY,
+            get: function(){
+                return moment(this.getDataValue('startDate')).format('YYYY-MM-DD')
+            }
+        } ,
+        endDate:{
+            type: DataTypes.DATEONLY,
+            get: function(){
+                return moment(this.getDataValue('endDate')).format('YYYY-MM-DD')
+            }
+        } ,
         startTime: DataTypes.TIME,
         endTime: DataTypes.TIME,
         wage: DataTypes.DECIMAL(10, 2),
