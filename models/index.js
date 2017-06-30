@@ -75,7 +75,7 @@ db.init = new Promise(function (res, rej) {
         })
         //read the reference data to create enums
         .then(function () {
-            
+
             return Promise.all(getGenEnumPromises());
         })
         //remember some things for later
@@ -91,6 +91,39 @@ db.init = new Promise(function (res, rej) {
             console.log(err);
         });
 });
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+
+//Models/tables
+db.Employers = require('./employer')(sequelize, Sequelize);
+db.Jobs = require('./job')(sequelize, Sequelize);
+db.JobApplications = require('./jobApplication')(sequelize, Sequelize);
+db.JobCategories = require('./jobCategory')(sequelize, Sequelize);
+db.JobSeekers = require('./jobSeeker')(sequelize, Sequelize);
+db.JobSeekerNotifications = require('./jobSeekerNotification')(sequelize, Sequelize);
+db.JobSeekerTokens = require('./jobSeekerToken')(sequelize, Sequelize);
+db.JobTypes = require('./jobType')(sequelize, Sequelize);
+db.Topics = require('./topic')(sequelize, Sequelize);
+db.TopicGroups = require('./topicGroup')(sequelize, Sequelize);
+
+
+//Relations  
+db.Jobs.belongsTo(db.Employers);
+db.Jobs.belongsTo(db.JobTypes);
+db.Jobs.belongsTo(db.JobCategories);
+db.JobApplications.belongsTo(db.Employers);
+db.JobApplications.belongsTo(db.JobSeekers);
+db.JobApplications.belongsTo(db.Jobs);
+db.JobSeekerNotifications.belongsTo(db.JobSeekers);
+db.JobSeekerNotifications.belongsTo(db.Topics);
+db.JobSeekerTokens.belongsTo(db.JobSeekers);
+db.Topics.belongsTo(db.TopicGroups);
+
+
+
+
 
 //export this object
 module.exports = db;
