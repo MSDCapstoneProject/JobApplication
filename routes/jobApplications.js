@@ -80,7 +80,7 @@ exports.list = function (req, res) {
             res.json(getResponse);
         })
         .catch(function (err) {
-            console.log("Error at savejobApplication " + err);
+            console.log("Error at get jobApplication " + err);
         });
 }
 

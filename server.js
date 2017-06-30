@@ -118,7 +118,7 @@ app.post('/jobApplications/delete', jobApplications.delete);
 app.get('/jobSeekerApplication', jobSeekerApplication.list);
 app.get('/jobSeekerApplication/:id', jobSeekerApplication.list);
 
-
+app.get('/jobApplicants',jobApplicants.list);
 app.get('/jobApplicants/:id',jobApplicants.list);
 app.post('/jobApplicants/update',jobApplicants.update);
 

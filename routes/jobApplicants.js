@@ -14,76 +14,75 @@ exports.list = function (req, res) {
 
     Promise.resolve()
         .then(function () {
-            if (jobId) {
-                return db.Jobs.findAll({
+
+            if (jobId && jobApplicationId == null) {
+                return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { jobId: jobId }
-                })
-            } else if (jobApplicationId) {
-                return db.Jobs.findAll({
+                    where: { JobId: jobId }
+                });
+            } else if(jobApplicationId && jobId == null) {
+                return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { id: jobApplicationId }
-                })
+                });
+            }else if(jobSeekerId && jobApplicationId){
+                return null;
             }
         })
-        .then(function (jobs) {
-            if (jobs) {
-                var jobApplicationsPromises = [];
-                jobs.forEach(function (jobData) {
-                    var job = jobData.dataValues;
-                    job.JobApplications = [];
-                    getResponse.push(job);
-                    jobApplicationsPromises.push(
+        .then(function (JobApplications) {
+            if (JobApplications) {
+                var employerPromises = [];
+                JobApplications.forEach(function (JobApplicationsData) {
+                    var jobApplication = JobApplicationsData.dataValues;
+                    getResponse.push(jobApplication);
+                    jobApplication.Employer = {};
+                    jobApplication.Job = {};
+                    jobApplication.JobSeeker = {};
+                    employerPromises.push(
                         Promise.resolve()
                             .then(function () {
-                                return db.JobApplications.findAll({
+                                return db.Employers.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { JobId: job.id }
+                                    where: { id: jobApplication.EmployerId }
                                 });
                             })
-                            .then(function (jobApplications) {
-                                var jobSeekersPromises = [];
-                                jobApplications.forEach(function (jobApplicationData) {
-                                    var jobApplication = jobApplicationData.dataValues;
-                                    job.JobApplications.push(jobApplication);
-                                    jobSeekersPromises.push(
-                                        Promise.resolve()
-                                            .then(function () {
-                                                return db.JobSeekers.findAll({
-                                                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                                    where: { id: jobApplication.JobSeekerId }
-                                                })
-                                            })
-                                            .then(function (jobSeekers) {
-                                                if (jobSeekers) {
-                                                    jobApplication.JobSeekers = [];
-                                                    jobSeekers.forEach(function (jobSeekerData) {
-                                                        jobApplication.JobSeekers.push(jobSeekerData);
-                                                    });
-                                                }
-                                            })
-                                            .catch(function (err) {
-                                                console.log('Error at jobSeekersPromises ' + err);
-                                            })
-                                    );
+                            .then(function (employerData) {
+                                if (employerData) {
+                                    jobApplication.Employer = employerData[0].dataValues;
+                                }
+                                return db.Jobs.findAll({
+                                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                                    where: { id: jobApplication.JobId }
                                 });
-                                return Promise.all(jobSeekersPromises);
+                            })
+                            .then(function (jobdata) {
+                                if (jobdata) {
+                                    jobApplication.Job = jobdata[0].dataValues;
+                                }
+                                return db.JobSeekers.findAll({
+                                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                                    where: { id: jobApplication.JobSeekerId }
+                                });
+                            })
+                            .then(function (jobSeekerdata) {
+                                if (jobSeekerdata) {
+                                    jobApplication.JobSeeker = jobSeekerdata[0].dataValues;
+                                }
                             })
                             .catch(function (err) {
-                                console.log('Error at jobApplicationsPromises ' + err);
+                                console.log("Error at get JobApplications " + err);
                             })
                     );
                 });
-                return Promise.all(jobApplicationsPromises);
+                return Promise.all(employerPromises);
             }
         })
         .then(function () {
-            getResponse.status = status.SUCCESS;
             res.json(getResponse);
         })
         .catch(function (err) {
-            console.log('Error at getJobApplicants ' + err);
-        })
+            console.log("Error at get jobApplicant " + err);
+        });
 }
 
 exports.update = function (req, res) {
