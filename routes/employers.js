@@ -89,7 +89,11 @@ function post(req, res, method) {
         // building json for insert
         var entry = {
             name: postData.name,
-            //address: postData.address,
+            street: postData.street,
+            city: postData.city,
+            province: postData.province,
+            country: postData.country,
+            postalCode: postData.postalCode,
             email: postData.email,
             phone: postData.phone,
             website: postData.website || null,
@@ -118,7 +122,11 @@ function post(req, res, method) {
         //create a json
         var entry = {
             name: postData.name,
-            //address: postData.address,
+            street: postData.street,
+            city: postData.city,
+            province: postData.province,
+            country: postData.country,
+            postalCode: postData.postalCode,
             email: postData.email,
             phone: postData.phone,
             website: postData.website || null,

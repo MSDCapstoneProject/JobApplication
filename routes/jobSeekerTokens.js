@@ -74,7 +74,7 @@ function post(req, res, method) {
     if (method == "saveJobSeekerTokens") {
         var entry = {
             token: postData.token,
-            JobSeekerId: postData.jobSeekersId,
+            jobSeekerId: postData.jobSeekersId,
             createdAt: new Date(),
             updatedAt: new Date()
         };

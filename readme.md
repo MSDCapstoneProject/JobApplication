@@ -50,8 +50,42 @@ config.json
 
         Employer get for all: http://localhost:3000/employers
         Employer get for id: http://localhost:3000/employers?id=1 or http://localhost:3000/employers/1 
-        Employer post add employer : http://localhost:3000/employers/update?name=Dell &address=new London&email=jobs@skywheel.com&phone=44224555&website=http://www.skywheel.com
-        Employer post delete an existing employer : http://localhost:3000/employers/delete?id=1
+        Employer post add employer : http://localhost:8080/employers/add
+
+            {
+        "name": "Trinity Metals",
+        "email": "jobs@trinitymetals.com",
+        "phone": "233920004",
+        "website": "http://www.trinitymetals.com",
+        "street": "32 Pearson Street",
+        "city": "Kitchener",
+        "province": "Ontario",
+        "country": "Canada",
+        "postalCode": "N2K4E4"
+    }
+
+        Employer post edit employer : http://localhost:8080/employers/update
+
+            {
+    	"id": "42",
+        "name": "Trinity Metals Ltd",
+        "email": "jobs@trinitymetals.com",
+        "phone": "233920004",
+        "website": "http://www.trinitymetals.com",
+        "street": "32 Pearson Street",
+        "city": "Kitchener",
+        "province": "Ontario",
+        "country": "Canada",
+        "postalCode": "N2K4E4"
+    }
+
+
+
+        Employer post delete an existing employer : http://localhost:8080/employers/delete
+
+            {
+    	"id": "42"
+    }
 
         Jobseeker Operation ----> 
 
