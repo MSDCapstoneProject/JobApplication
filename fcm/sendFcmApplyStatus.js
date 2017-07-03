@@ -7,12 +7,12 @@ var fcm = new FCM(serverKey);
 
 var message = { 
     //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-    to: "/topics/jobs",
+    to: "/topics/applystatus",
     collapse_key: 'your_collapse_key',
     //collapse_key to prevent duplicate message
     notification: {
-        title: 'jobs1',
-        body: 'jobs1'
+        title: 'applystatus',
+        body: 'applystatus'
     }
 }
 
