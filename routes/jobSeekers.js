@@ -17,9 +17,9 @@ exports.list = function (req, res) {
     Promise.resolve()
         .then(function () {
             if (jobSeekersId) {
-                return db.JobSeekers.findAll({ attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'], where: { id: jobSeekersId } }); //if id is present
+                return db.JobSeekers.findAll({ attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }, where: { id: jobSeekersId } }); //if id is present
             } else {
-                return db.JobSeekers.findAll({ attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'phone', 'sin', 'DOB', 'status', 'gender'] }); //if id is not present
+                return db.JobSeekers.findAll({ attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } }); //if id is not present
             }
         })
         .then(function (jobSeekers) {
@@ -85,7 +85,7 @@ function post(req, res, method) {
         var entry = {
             firstName: postData.firstName,
             lastName: postData.lastName,
-            address: postData.address,
+            //address: postData.address,
             email: postData.email,
             phone: postData.phone,
             sin: postData.sin,
@@ -146,7 +146,7 @@ function post(req, res, method) {
         var entry = {
             firstName: postData.firstName,
             lastName: postData.lastName,
-            address: postData.address,
+            //address: postData.address,
             email: postData.email,
             phone: postData.phone,
             sin: postData.sin,

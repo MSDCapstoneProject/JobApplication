@@ -16,11 +16,11 @@ exports.list = function (req, res) {
         .then(function () {
             if (employerId) {
                 return db.Employers.findAll({
-                    attributes: ['id', 'name', 'address', 'email', 'phone', 'website'],
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { id: employerId }
                 }); //if id is present
             } else {
-                return db.Employers.findAll({ attributes: ['id', 'name', 'address', 'email', 'phone', 'website'] }); //if id is not present
+                return db.Employers.findAll({ attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } }); //if id is not present
             }
         })
         .then(function (employers) {
@@ -65,7 +65,7 @@ function post(req, res, method) {
         Promise.resolve()
             .then(function () {
                 return db.Employers.findAll({
-                    attributes: ['id', 'name', 'address', 'email', 'phone', 'website'],
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { name: { $like: "%" + postData.name + "%" } }
                 }); //currently searching only through name
             })
@@ -89,7 +89,7 @@ function post(req, res, method) {
         // building json for insert
         var entry = {
             name: postData.name,
-            address: postData.address,
+            //address: postData.address,
             email: postData.email,
             phone: postData.phone,
             website: postData.website || null,
@@ -118,7 +118,7 @@ function post(req, res, method) {
         //create a json
         var entry = {
             name: postData.name,
-            address: postData.address,
+            //address: postData.address,
             email: postData.email,
             phone: postData.phone,
             website: postData.website || null,

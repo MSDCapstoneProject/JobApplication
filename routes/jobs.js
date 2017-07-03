@@ -39,7 +39,7 @@ exports.list = function (req, res) {
                             .then(function () {
                                 return db.Employers.findOne({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: job.EmployerId }
+                                    where: { id: job.employerId }
                                 })
                             })
                             .then(function (employerData) {
@@ -48,13 +48,13 @@ exports.list = function (req, res) {
                                     employer = employerData.dataValues;
                                     job.Employer = employer;
                                 }
-                                return db.JobTypes.findOne({ where: { id: job.JobTypeId } });
+                                return db.JobTypes.findOne({ where: { id: job.jobTypeId } });
                             })
                             .then(function (jobTypeData) {
                                 if (jobTypeData) {
                                     job.jobType = jobTypeData.description;
                                 }
-                                return db.JobCategories.findOne({ where: { id: job.JobCategoryId } })
+                                return db.JobCategories.findOne({ where: { id: job.jobCategoryId } })
                             })
                             .then(function (jobCategoryData) {
                                 if (jobCategoryData) {
@@ -62,7 +62,7 @@ exports.list = function (req, res) {
                                 }
                                 return db.JobApplications.findAll({ 
                                     attributes: [[ db.Sequelize.fn('COUNT','id'),'totalApplications']], //db.Sequelize.literal('views+1')
-                                    where: { JobId: job.id, applicationStatus: 'applied' } 
+                                    where: { JobId: job.id, JobApplicationStatusId: 2 } //convert to enum
                                 });
                             })
                             .then(function(jobApplicationsData){
@@ -129,9 +129,9 @@ function post(req, res, method) {
             postDate: postData.postDate,
             expiryDate: postData.expiryDate,
             status: postData.status,
-            EmployerId: postData.employerId,
-            JobTypeId: postData.jobTypeId,
-            JobCategoryId: postData.jobCategoryId,
+            employerId: postData.employerId,
+            jobTypeId: postData.jobTypeId,
+            jobCategoryId: postData.jobCategoryId,
             createdAt: new Date(),
             updatedAt: new Date(),
             totalPositions: postData.totalPositions,
@@ -169,9 +169,9 @@ function post(req, res, method) {
             postDate: postData.postDate,
             expiryDate: postData.expiryDate,
             status: postData.status,
-            EmployerId: postData.employerId,
-            JobTypeId: postData.jobTypeId,
-            JobCategoryId: postData.jobCategoryId,
+            employerId: postData.employerId,
+            jobTypeId: postData.jobTypeId,
+            jobCategoryId: postData.jobCategoryId,
             updatedAt: new Date(),
             totalPositions: postData.totalPositions
         }

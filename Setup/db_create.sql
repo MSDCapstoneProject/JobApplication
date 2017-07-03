@@ -79,32 +79,39 @@ CREATE TABLE IF NOT EXISTS `jobCategories` (
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `jobs` (
-`id` int NOT NULL AUTO_INCREMENT,
-`employerId` int,
-`title` varchar(200),
-`jobTypeId` int,
-`street` varchar(200),
-`city` varchar(200),
-`postalCode` varchar(20),
-`startDate` date,
-`endDate` date,
-`startTime` time,
-`endTime` time,
-`wage` decimal(10,2),
-`description` longtext,
-`postDate` date,
-`expiryDate` date,
-`status` bit,
-`jobCategoryId` int,
-`createdAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-`updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`deletedAt` datetime DEFAULT NULL,
-PRIMARY KEY (`id`),
-FOREIGN KEY(`jobTypeId`) REFERENCES jobTypes(`id`) ON DELETE CASCADE,
-FOREIGN KEY(`jobCategoryId`) REFERENCES jobCategories(`id`) ON DELETE CASCADE,
-FOREIGN KEY(`employerId`) REFERENCES employers(`id`) ON DELETE CASCADE
-)ENGINE=InnoDB AUTO_INCREMENT=1;
+CREATE TABLE `jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employerId` int(11) DEFAULT NULL,
+  `title` varchar(200) DEFAULT NULL,
+  `jobTypeId` int(11) DEFAULT NULL,
+  `street` varchar(200) DEFAULT NULL,
+  `city` varchar(200) DEFAULT NULL,
+  `postalCode` varchar(20) DEFAULT NULL,
+  `startDate` date DEFAULT NULL,
+  `endDate` date DEFAULT NULL,
+  `startTime` time DEFAULT NULL,
+  `endTime` time DEFAULT NULL,
+  `wage` decimal(10,2) DEFAULT NULL,
+  `description` longtext,
+  `postDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `status` bit(1) DEFAULT NULL,
+  `jobCategoryId` int(11) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deletedAt` datetime DEFAULT NULL,
+  `views` int(11) DEFAULT NULL,
+  `totalPositions` int(11) DEFAULT NULL,
+  `filledPositions` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobTypeId` (`jobTypeId`),
+  KEY `jobCategoryId` (`jobCategoryId`),
+  KEY `employerId` (`employerId`),
+  FOREIGN KEY (`jobTypeId`) REFERENCES `jobtypes` (`id`) ON DELETE CASCADE,
+ FOREIGN KEY (`jobCategoryId`) REFERENCES `jobcategories` (`id`) ON DELETE CASCADE,
+FOREIGN KEY (`employerId`) REFERENCES `employers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
 
 CREATE TABLE `jobApplications` (
   `id` int NOT NULL AUTO_INCREMENT,
