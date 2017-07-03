@@ -66,5 +66,3 @@ INSERT INTO `heroku_81310767018f667`.`topics` (`description`, `internalCode`, `t
 INSERT INTO `heroku_81310767018f667`.`topics` (`description`, `internalCode`, `topicGroupId`) VALUES ('Cambridge', 'CAMBRIDGE', '22');
 INSERT INTO `heroku_81310767018f667`.`topics` (`description`, `internalCode`, `topicGroupId`) VALUES ('Black Smith', 'BLACK_SMITH', '32');
 INSERT INTO `heroku_81310767018f667`.`topics` (`description`, `internalCode`, `topicGroupId`) VALUES ('Bock Tools', 'BOCK_TOOLS', '32');
-
-

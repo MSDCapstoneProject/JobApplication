@@ -5,12 +5,12 @@ var getResponse = [];
 
 exports.list = function (req, res) {
     var jobSeekerId = req.params.jobSeekerId || req.query.jobSeekerId;
-    var jobSeekerNotificationId = req.params.jobSeekerNotificationId || req.query.jobSeekerNotificationId;
+    var jobSeekerSubscriptionId = req.params.jobSeekerSubscriptionId || req.query.jobSeekerSubscriptionId;
     getResponse = [];
     Promise.resolve()
         .then(function () {
             if (jobSeekerId) {
-                return db.JobSeekerNotifications.findAll({
+                return db.JobSeekerSubscriptions.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     include: [
                         { model: db.JobSeekers, attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } },
@@ -18,17 +18,17 @@ exports.list = function (req, res) {
                     ],
                     where: { JobSeekerId: jobSeekerId }
                 })
-            } else if (jobSeekerNotificationId) {
-                return db.JobSeekerNotifications.findAll({
+            } else if (jobSeekerSubscriptionId) {
+                return db.JobSeekerSubscriptions.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     include: [
                         { model: db.JobSeekers, attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } },
                         { model: db.Topics, attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }, include: [{ model: db.TopicGroups, attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } }] }
                     ],
-                    where: { id: jobSeekerNotificationId }
+                    where: { id: jobSeekerSubscriptionId }
                 })
             } else {
-                return db.JobSeekerNotifications.findAll({
+                return db.JobSeekerSubscriptions.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     include: [
                         { model: db.JobSeekers, attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] } },
@@ -37,11 +37,11 @@ exports.list = function (req, res) {
                 })
             }
         })
-        .then(function (jobSeekerNotifications) {
-            if (jobSeekerNotifications) {
-                jobSeekerNotifications.forEach(function (jobSeekerNotificationData) {
-                    var jobSeekerNotification = jobSeekerNotificationData.dataValues;
-                    getResponse.push(jobSeekerNotification);
+        .then(function (jobSeekerSubscriptions) {
+            if (jobSeekerSubscriptions) {
+                jobSeekerSubscriptions.forEach(function (jobSeekerSubscriptionData) {
+                    var jobSeekerSubscription = jobSeekerSubscriptionData.dataValues;
+                    getResponse.push(jobSeekerSubscription);
                 });
             }
         })
@@ -49,23 +49,23 @@ exports.list = function (req, res) {
             res.json(getResponse);
         })
         .catch(function (err) {
-            console.log('Error at get jobSeekerNotification' + err);
+            console.log('Error at get jobSeekerSubscription' + err);
         })
 }
 
 
 exports.add = function (req, res) {
-    method = "saveJobSeekerNotification";
+    method = "saveJobSeekerSubscription";
     post(req, res, method);
 }
 
 exports.update = function (req, res) {
-    method = "editJobSeekerNotification";
+    method = "editJobSeekerSubscription";
     post(req, res, method);
 }
 
 exports.delete = function (req, res) {
-    method = "deleteJobSeekerNotification";
+    method = "deleteJobSeekerSubscription";
     post(req, res, method);
 }
 
@@ -74,7 +74,7 @@ function post(req, res, method) {
     var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
     response = {};
 
-    if (method == "saveJobSeekerNotification") {
+    if (method == "saveJobSeekerSubscription") {
         var entry = {
             //need to change at server side
             JobSeekerId: postData.JobSeekerId,
@@ -85,18 +85,18 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSeekerNotifications.create(entry);
+                return db.JobSeekerSubscriptions.create(entry);
             })
-            .then(function (JobSeekerNotificationData) {
-                if (JobSeekerNotificationData) {
+            .then(function (JobSeekerSubscriptionData) {
+                if (JobSeekerSubscriptionData) {
                     response.status = status.SUCCESS;
                 }
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at saveJobSeekerNotification " + err);
+                console.log("Error at saveJobSeekerSubscription " + err);
             })
-    } else if (method == "editJobSeekerNotification") {
+    } else if (method == "editJobSeekerSubscription") {
         var entry = {
             //need to change at server side
             JobSeekerId: postData.JobSeekerId,
@@ -106,22 +106,22 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSeekerNotifications.update(entry, { where: { id: postData.id } });
+                return db.JobSeekerSubscriptions.update(entry, { where: { id: postData.id } });
             })
-            .then(function (jobSeekerNotificationData) {
-                if (jobSeekerNotificationData) {
+            .then(function (jobSeekerSubscriptionData) {
+                if (jobSeekerSubscriptionData) {
                     response.status = status.SUCCESS;
                 }
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at editJobSeekerNotification " + err);
+                console.log("Error at editJobSeekerSubscription " + err);
             })
-    } else if (method == "deleteJobSeekerNotification") {
+    } else if (method == "deleteJobSeekerSubscription") {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSeekerNotifications.destroy({ where: { id: postData.id } });
+                return db.JobSeekerSubscriptions.destroy({ where: { id: postData.id } });
             })
             .then(function (topicsData) {
                 if (topicsData) {
@@ -134,7 +134,7 @@ function post(req, res, method) {
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at deleteJobSeekerNotification " + err);
+                console.log("Error at deleteJobSeekerSubscription " + err);
             })
     } else {
         console.log("Undefined Method");

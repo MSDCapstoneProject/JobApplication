@@ -177,9 +177,9 @@ PRIMARY KEY (`id`),
 FOREIGN KEY(`topicGroupId`) REFERENCES topicGroups(`id`) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
--- 28 June 2017 JobSeekerNotifications
+-- 28 June 2017 JobSeekerSubscriptions
 
-CREATE TABLE IF NOT EXISTS `jobSeekerNotifications` (
+CREATE TABLE IF NOT EXISTS `jobseekersubscriptions` (
 `id` int NOT NULL AUTO_INCREMENT,
 `topicId` int,
 `jobSeekerId` int,
@@ -199,7 +199,7 @@ drop table jobs;
 drop table employers;
 drop table jobseekertokens;
 drop table jobSeekers;
-drop table jobseekernotifications;
+drop table jobSeekerSubscriptions;
 drop table jobCategories;
 drop table jobTypes;
 drop table topics;
