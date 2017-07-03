@@ -1,9 +1,11 @@
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
-    var Jobs = sequelize.define("Jobs", {
+    var Jobs = sequelize.define("jobs", {
         title: DataTypes.STRING,
-        jobLocation: DataTypes.STRING,
+        street: DataTypes.TEXT,
+        city: DataTypes.STRING,
+        postalCode: DataTypes.STRING,
         startDate: DataTypes.DATEONLY,
         endDate: DataTypes.DATEONLY,
         startTime: DataTypes.TIME,
@@ -18,13 +20,6 @@ module.exports = function (sequelize, DataTypes) {
         filledPositions: DataTypes.INTEGER
     }, {
             paranoid: true,
-           /* classMethods: {
-                associate: function (models) {
-                    Jobs.belongsTo(models.Employers);
-                    Jobs.belongsTo(models.JobTypes);
-                    Jobs.belongsTo(models.JobCategories);
-                }
-            } */
         });
 
     return Jobs;

@@ -1,12 +1,16 @@
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
-    var Employers = sequelize.define("Employers", {
+    var Employers = sequelize.define("employers", {
         name: DataTypes.STRING,
-        address: DataTypes.STRING,
         email: DataTypes.STRING,
         phone: DataTypes.STRING,
-        website: DataTypes.STRING
+        website: DataTypes.STRING,
+        street: DataTypes.TEXT,
+        city: DataTypes.STRING,
+        province: DataTypes.STRING,
+        country: DataTypes.STRING,
+        postalCode: DataTypes.STRING
     }, {
             paranoid: true,
         });

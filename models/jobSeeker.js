@@ -1,10 +1,14 @@
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
-    var JobSeekers = sequelize.define("JobSeekers", {
+    var JobSeekers = sequelize.define("jobseekers", {
         firstName: DataTypes.STRING,
         lastName: DataTypes.STRING,
-        address: DataTypes.STRING,
+        street: DataTypes.TEXT,
+        city: DataTypes.STRING,
+        province: DataTypes.STRING,
+        country: DataTypes.STRING,
+        postalCode: DataTypes.STRING,
         email: DataTypes.STRING,
         phone: DataTypes.STRING,
         sin: DataTypes.STRING,
@@ -17,6 +21,3 @@ module.exports = function (sequelize, DataTypes) {
 
     return JobSeekers;
 };
-
-
-
