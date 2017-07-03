@@ -121,9 +121,5 @@ db.JobSeekerNotifications.belongsTo(db.Topics);
 db.JobSeekerTokens.belongsTo(db.JobSeekers);
 db.Topics.belongsTo(db.TopicGroups);
 
-
-
-
-
 //export this object
 module.exports = db;

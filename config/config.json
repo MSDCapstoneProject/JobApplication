@@ -1,10 +1,10 @@
-{
+{   
     "development": {
-        "urlPath": "/",
-        "username": "sql9179567",
-        "password": "ZaDW8MW3JF",
-        "database": "sql9179567",
-        "host": "sql9.freemysqlhosting.net",
+        "urlPath": "mysql://",
+        "username": "b591dc18c91c4a",
+        "password": "f4cf29fb",
+        "database": "heroku_81310767018f667",
+        "host": "us-cdbr-iron-east-03.cleardb.net",
         "port": 3306,
         "forceUpdate": false,
         "dialect": "mysql",
@@ -26,16 +26,16 @@
         }
     },
     "production": {
-        "urlPath": "/",
-        "username": "sql9179567",
-        "password": "ZaDW8MW3JF",
-        "database": "sql9179567",
-        "host": "sql9.freemysqlhosting.net",
+        "urlPath": "mysql://",
+        "username": "b591dc18c91c4a",
+        "password": "f4cf29fb",
+        "database": "heroku_81310767018f667",
+        "host": "us-cdbr-iron-east-03.cleardb.net",
         "port": 3306,
         "forceUpdate": false,
         "dialect": "mysql",
         "dialectOptions": {
         "instanceName": "MySQL57"
         }
-    }    
+    },   
 }
