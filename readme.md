@@ -101,45 +101,59 @@ config.json
         Jobs get for id: http://localhost:3000/jobs?id=1 or http://localhost:3000/jobs/1
         Jobs Add: http://localhost:3000/jobs/add
 
-        {	
-        "title": "General Labour",
-        "jobLocation": "Ottawa, ON",
-        "startDate": "2017-07-21T00:00:00.000Z",
-        "endDate": "2017-07-29T00:00:00.000Z",
+    {
+        "title": "General Labour/Picker",
+        "street": "18 Sun Street",
+        "city": "Kitchener",
+        "province": "Ontario",
+        "country": "Canada",
+        "startDate": "2017-07-10",
+        "endDate": "2017-08-25",
         "startTime": "08:00:00",
         "endTime": "17:00:00",
-        "wage": 12,
-        "description": "New Labour Job",
-        "postDate": "2017-07-11T00:00:00.000Z",
-        "expiryDate": "2017-07-21T00:00:00.000Z",
+        "wage": "16.00",
+        "description": "<ul><li>Working with team members in egg collection</li><li>Completing general barn duties such as feeding and bedding</li><li>Maintaining barn and all equipment</li><li>Ability to handle moderate to heavy physical work</li><li>Must be able to work in a fast-paced environment; work under pressure</li></ul>",
+        "postDate": "2017-07-01",
+        "expiryDate": "2017-07-19",
         "status": true,
+        "views": 126,
+        "totalPositions": 20,
+        "filledPositions": 5,
         "employerId": 2,
         "jobTypeId": 2,
         "jobCategoryId": 2,
-        "totalPositions": 10
-        }
+        "totalApplications": 10
+    }
 
-        Jobs Update: http://localhost:3000/jobs/update
+        Jobs Update: http://localhost:8080/jobs/update
 
-        {	
-        "title": "General Labour",
-        "jobLocation": "Ottawa, ON",
-        "startDate": "2017-07-21T00:00:00.000Z",
-        "endDate": "2017-07-29T00:00:00.000Z",
+    {
+    	"id": "82",
+        "title": "General Labour/Picker",
+        "street": "18 Sun Street",
+        "city": "Kitchener",
+        "province": "Ontario",
+        "country": "Canada",
+        "startDate": "2017-07-10",
+        "endDate": "2017-08-25",
         "startTime": "08:00:00",
         "endTime": "17:00:00",
-        "wage": 12,
-        "description": "New Labour Job",
-        "postDate": "2017-07-11T00:00:00.000Z",
-        "expiryDate": "2017-07-21T00:00:00.000Z",
+        "wage": "16.00",
+        "description": "<ul><li>Working with team members in egg collection</li><li>Completing general barn duties such as feeding and bedding</li><li>Maintaining barn and all equipment</li><li>Ability to handle moderate to heavy physical work</li><li>Must be able to work in a fast-paced environment; work under pressure</li></ul>",
+        "postDate": "2017-07-01",
+        "expiryDate": "2017-07-19",
         "status": true,
+        "totalPositions": 20,
         "employerId": 2,
         "jobTypeId": 2,
-        "jobCategoryId": 2,
-        "totalPositions": 10
-        }
+        "jobCategoryId": 2
+    }
 
-        Jobs Delete: http://localhost:3000/jobs/delete/?id=1
+        Jobs Delete: http://localhost:3000/jobs/delete
+
+        {
+                "id": "82"
+        }
 
         Jobs View POST: http://localhost:3000/jobs/view
 
@@ -291,14 +305,14 @@ Topics method
         add method: http://localhost:8080/topics/add
         JSON =   {
                 "description": "Part Time",
-                "TopicGroupId": "1"
+                "topicGroupId": "1"
         }
 
         update method: http://localhost:8080/topics/update
         JSON =   {
                 "id": "1",
                 "description": "Part-Time",
-                "TopicGroupId": "1"
+                "topicGroupId": "1"
         }
 
         delete method: http://localhost:8080/topics/delete

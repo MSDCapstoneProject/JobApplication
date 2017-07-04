@@ -33,7 +33,7 @@ exports.list = function (req, res) {
                 jobs.forEach(function (jobData) {
                     var job = jobData.dataValues;
                     getResponse.push(job); // added value into getResponse
-                    job.Employer = {};
+                    job.employer = {};
                     employerPromises.push(
                         Promise.resolve()
                             .then(function () {
@@ -46,27 +46,27 @@ exports.list = function (req, res) {
                                 if (employerData) {
                                     var employer = {};
                                     employer = employerData.dataValues;
-                                    job.Employer = employer;
+                                    job.employer = employer;
                                 }
-                                return db.JobTypes.findOne({ where: { id: job.jobTypeId } });
+                                return db.JobTypes.findOne({ where: { id: job.jobtypeId } });
                             })
                             .then(function (jobTypeData) {
                                 if (jobTypeData) {
                                     job.jobType = jobTypeData.description;
                                 }
-                                return db.JobCategories.findOne({ where: { id: job.jobCategoryId } })
+                                return db.JobCategories.findOne({ where: { id: job.jobcategoryId } })
                             })
                             .then(function (jobCategoryData) {
                                 if (jobCategoryData) {
                                     job.jobCategory = jobCategoryData.description;
                                 }
-                                return db.JobApplications.findAll({ 
-                                    attributes: [[ db.Sequelize.fn('COUNT','id'),'totalApplications']], //db.Sequelize.literal('views+1')
+                                return db.JobApplications.findAll({
+                                    attributes: [[db.Sequelize.fn('COUNT', 'id'), 'totalApplications']], //db.Sequelize.literal('views+1')
                                     where: { JobId: job.id, JobApplicationStatusId: 2 } //convert to enum
                                 });
                             })
-                            .then(function(jobApplicationsData){
-                                if(jobApplicationsData){
+                            .then(function (jobApplicationsData) {
+                                if (jobApplicationsData) {
                                     job.totalApplications = jobApplicationsData[0].dataValues.totalApplications || 0;
                                 }
 
@@ -119,7 +119,11 @@ function post(req, res, method) {
 
         var entry = {
             title: postData.title,
-            jobLocation: postData.jobLocation,
+            street: postData.street,
+            city: postData.city,
+            province: postData.province,
+            country: postData.country,
+            postalCode: postData.postalCode,
             startDate: postData.startDate,
             endDate: postData.endDate,
             startTime: postData.startTime,
@@ -159,7 +163,11 @@ function post(req, res, method) {
 
         var entry = {
             title: postData.title,
-            jobLocation: postData.jobLocation,
+            street: postData.street,
+            city: postData.city,
+            province: postData.province,
+            country: postData.country,
+            postalCode: postData.postalCode,
             startDate: postData.startDate,
             endDate: postData.endDate,
             startTime: postData.startTime,

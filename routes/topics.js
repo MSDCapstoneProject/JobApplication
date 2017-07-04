@@ -81,7 +81,7 @@ function post(req, res, method) {
             //need to change at server side   
             description: postData.description,
             internalCode: libFunctions.formatInternalCode(postData.description),
-            TopicGroupId: postData.TopicGroupId,
+            topicGroupId: postData.topicGroupId,
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -103,7 +103,7 @@ function post(req, res, method) {
         var entry = {
             description: postData.description,
             internalCode: libFunctions.formatInternalCode(postData.description),
-            TopicGroupId: postData.TopicGroupId,
+            topicGroupId: postData.topicGroupId,
             updatedAt: new Date()
         }
 

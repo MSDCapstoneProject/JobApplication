@@ -199,6 +199,12 @@ FOREIGN KEY(`topicId`) REFERENCES topics(`id`) ON DELETE CASCADE,
 FOREIGN KEY(`jobSeekerId`) REFERENCES jobSeekers(`id`) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
+ALTER TABLE `heroku_81310767018f667`.`jobs` 
+ADD COLUMN `province` VARCHAR(45) NULL AFTER `city`,
+ADD COLUMN `country` VARCHAR(200) NULL AFTER `province`;
+
+
+
 /*USE heroku_81310767018f667;
 
 drop table jobapplications;

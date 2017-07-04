@@ -72,3 +72,10 @@ UPDATE `heroku_81310767018f667`.`jobs` SET `views`='120', `totalPositions`='20',
 UPDATE `heroku_81310767018f667`.`jobs` SET `views`='123', `totalPositions`='14', `filledPositions`='1' WHERE `id`='32';
 UPDATE `heroku_81310767018f667`.`jobs` SET `views`='132', `totalPositions`='24', `filledPositions`='3' WHERE `id`='62';
 UPDATE `heroku_81310767018f667`.`jobs` SET `views`='121', `totalPositions`='11', `filledPositions`='0' WHERE `id`='72';
+
+UPDATE `heroku_81310767018f667`.`jobs` SET `province`='Ontario', `country`='Canada' WHERE `id`='22';
+UPDATE `heroku_81310767018f667`.`jobs` SET `province`='Ontario', `country`='Canada' WHERE `id`='32';
+UPDATE `heroku_81310767018f667`.`jobs` SET `province`='Ontario', `country`='Canada' WHERE `id`='62';
+UPDATE `heroku_81310767018f667`.`jobs` SET `province`='Ontario', `country`='Canada' WHERE `id`='72';
+
+
