@@ -32,7 +32,7 @@ exports.list = function (req, res) {
                         .then(function () {
                             return db.TopicGroups.findAll({
                                 attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                where: { id: topic.TopicGroupId }
+                                where: { id: topic.topicGroupId }
                             });
                         })
                         .then(function (topicGroupData) {

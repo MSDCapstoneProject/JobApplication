@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function(sequelize,DataTypes){
-    var JobApplications = sequelize.define("jobapplications",{
+    var JobApplications = sequelize.define("jobApplications",{
         appliedOn: DataTypes.DATEONLY
     },{
         paranoid : true,

@@ -18,7 +18,7 @@ exports.list = function (req, res) {
             if (jobId && jobApplicationId == null) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { JobId: jobId }
+                    where: { jobId: jobId }
                 });
             } else if(jobApplicationId && jobId == null) {
                 return db.JobApplications.findAll({
@@ -35,38 +35,38 @@ exports.list = function (req, res) {
                 JobApplications.forEach(function (JobApplicationsData) {
                     var jobApplication = JobApplicationsData.dataValues;
                     getResponse.push(jobApplication);
-                    jobApplication.Employer = {};
-                    jobApplication.Job = {};
-                    jobApplication.JobSeeker = {};
+                    jobApplication.employer = {};
+                    jobApplication.job = {};
+                    jobApplication.jobSeeker = {};
                     employerPromises.push(
                         Promise.resolve()
                             .then(function () {
                                 return db.Employers.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobApplication.EmployerId }
+                                    where: { id: jobApplication.employerId }
                                 });
                             })
                             .then(function (employerData) {
                                 if (employerData) {
-                                    jobApplication.Employer = employerData[0].dataValues;
+                                    jobApplication.employer = employerData[0].dataValues;
                                 }
                                 return db.Jobs.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobApplication.JobId }
+                                    where: { id: jobApplication.jobId }
                                 });
                             })
                             .then(function (jobdata) {
                                 if (jobdata) {
-                                    jobApplication.Job = jobdata[0].dataValues;
+                                    jobApplication.job = jobdata[0].dataValues;
                                 }
                                 return db.JobSeekers.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobApplication.JobSeekerId }
+                                    where: { id: jobApplication.jobSeekerId }
                                 });
                             })
                             .then(function (jobSeekerdata) {
                                 if (jobSeekerdata) {
-                                    jobApplication.JobSeeker = jobSeekerdata[0].dataValues;
+                                    jobApplication.jobSeeker = jobSeekerdata[0].dataValues;
                                 }
                             })
                             .catch(function (err) {
@@ -97,7 +97,7 @@ function post(req, res, method) {
 
     if (method == "editJobApplication") {
         var entry = {
-            applicationStatus: postData.status,
+            jobApplicationStatusId: postData.jobApplicationStatusId,
             updatedAt: new Date()
         };
 

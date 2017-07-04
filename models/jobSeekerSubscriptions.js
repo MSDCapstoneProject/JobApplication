@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function(sequelize,DataTypes){
-    var JobSeekerSubscriptions = sequelize.define("jobseekersubscriptions",{
+    var JobSeekerSubscriptions = sequelize.define("jobSeekerSubscriptions",{
         status: DataTypes.BOOLEAN
     },{
         paranoid: true,

@@ -163,33 +163,32 @@ config.json
 
                 
 
-JobSubscribers Operation -----> JobSubscribers to jobApplications
+jobSeekerSubscriptions Operation ----->
 
-       // ---JobSubscribers get for all: http://localhost:3000/jobSubscribers  
+       // ---JobSubscribers get for all: http://localhost:8080/jobSeekerSubscriptions 
 
-        JobSubscribers get for id: http://localhost:3000/jobSubscribers/1 -- need all jobs for job seeker id then return need all jobs
+        jobSeekerSubscriptions get for  id: http://localhost:8080/jobSeekerSubscriptions?jobSeekerId=1 -- need all jobs for job seeker id then return need all jobs
 
         //jobSeeker 
 
 
-        JobSubscribers Post Add: http://localhost:3000/jobSubscribers/add
+        JobSubscribers Post Add:http://localhost:8080/jobSeekerSubscriptions/add
 
                 Json  =         {
-                                "EmployerId": "1",
-                                "JobId":"1",
-                                "JobSeekerId": "1"
+                                "jobSeekerId": "1",
+                                "topicId": "5"
                                 }
 
-        JobSubscribers Post update: http://localhost:3000/jobSubscribers/update
+        JobSubscribers Post update: http://localhost:8080/jobSeekerSubscriptions/update
 
                 Json  =         {
-                                "id": "1"
-                                "EmployerId": "1",
-                                "JobId":"3",
-                                "JobSeekerId": "1"
+                                "id": "1",
+                                "jobSeekerId": "1",
+                                "topicId": "2",
+                                "status": true //true: subscribed and false: un-subscribed
                                 }
 
-        JobSubscribers Post Delete: http://localhost:3000/jobSubscribers/delete
+        JobSubscribers Post Delete: http://localhost:8080/jobSeekerSubscriptions/delete
 
                 Json  =         {
                                 "id": "1"
@@ -235,7 +234,13 @@ Job Applicants Opearion for Employer----->
 	                "status" : "Approved"
                 }
 
-        applicationStatus Types = denied, canceled, applied, accepted
+        jobApplicationStatuses
+'1', 'Applied'
+'2', 'Approved By Employer'
+'3', 'Denied By Employer'
+'4', 'Cancelled By User'
+'5', 'Cancelled By Employer'
+
 
 
 Job Applications Operation for JobSeekers :
@@ -245,19 +250,18 @@ Job Applications Operation for JobSeekers :
 
        Job Application Add - http://localhost:3000/jobApplications/add
        Json = {
-            "appliedOn": "2017-06-14",
-            "EmployerId": "1",
-            "JobId":"4",
-            "JobSeekerId": "2"
+            "employerId": "1",
+            "jobId":"4",
+            "jobSeekerId": "2"
         }
 
         Job Application update : http://localhost:3000/jobApplications/update
 
         Json -     {
-            "applicationStatus": "canceled",
-            "EmployerId": "1",
-            "JobId":"7",
-            "JobSeekerId": "8",
+            "jobApplicationStatusId": "4",
+            "employerId": "1",
+            "jobId":"7",
+            "jobSeekerId": "8",
             "jobApplicationId": "36"
         }
         //if application canceled by jobSeeker then change status to canceled

@@ -91,7 +91,6 @@ function post(req, res, method) {
             })
             .catch(function (err) {
                 console.log('Error at saveJobSeekerTokens' + err);
-                res.json({ status: status.EXCEPTION });
             })
     } else if (method == "editJobSeekerTokens") { // edit is not required
         var entry = {

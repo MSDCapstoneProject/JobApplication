@@ -1,4 +1,4 @@
-USE heroku_81310767018f667;
+USE klvbr8oj6g21j61r;
 
 SET SQL_MODE = "ALLOW_INVALID_DATES";
 SET time_zone = "+00:00";
@@ -81,9 +81,7 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE `jobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employerId` int(11) DEFAULT NULL,
   `title` varchar(200) DEFAULT NULL,
-  `jobTypeId` int(11) DEFAULT NULL,
   `street` varchar(200) DEFAULT NULL,
   `city` varchar(200) DEFAULT NULL,
   `postalCode` varchar(20) DEFAULT NULL,
@@ -96,44 +94,25 @@ CREATE TABLE `jobs` (
   `postDate` date DEFAULT NULL,
   `expiryDate` date DEFAULT NULL,
   `status` bit(1) DEFAULT NULL,
-  `jobCategoryId` int(11) DEFAULT NULL,
   `createdAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deletedAt` datetime DEFAULT NULL,
   `views` int(11) DEFAULT NULL,
   `totalPositions` int(11) DEFAULT NULL,
   `filledPositions` int(11) DEFAULT NULL,
+  `employerId` int(11) DEFAULT NULL,
+  `jobCategoryId` int(11) DEFAULT NULL,
+  `jobTypeId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `jobTypeId` (`jobTypeId`),
-  KEY `jobCategoryId` (`jobCategoryId`),
-  KEY `employerId` (`employerId`),
-  FOREIGN KEY (`jobTypeId`) REFERENCES `jobtypes` (`id`) ON DELETE CASCADE,
- FOREIGN KEY (`jobCategoryId`) REFERENCES `jobcategories` (`id`) ON DELETE CASCADE,
-FOREIGN KEY (`employerId`) REFERENCES `employers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1;
-
-
-CREATE TABLE `jobApplications` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `jobapplicationstatusId` int DEFAULT NULL,
-  `appliedOn` date DEFAULT NULL,
-  `employerId` int DEFAULT NULL,
-  `jobId` int DEFAULT NULL,
-  `jobSeekerId` int DEFAULT NULL,
-`createdAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-`updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`deletedAt` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`jobapplicationstatusId`) REFERENCES `jobapplicationstatuses` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`jobId`) REFERENCES `jobs` (`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`jobSeekerId`) REFERENCES `jobSeekers` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`jobTypeId`) REFERENCES `jobTypes` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`jobCategoryId`) REFERENCES `jobCategories` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`employerId`) REFERENCES `employers` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 
 -- 15 June 2017
 
-create table `JobSeekerTokens`(
+create table `jobSeekerTokens`(
 `id` int NOT NULL AUTO_INCREMENT,
 `token` varchar(200) NOT NULL,
 `jobSeekerId` int DEFAULT NULL,
@@ -159,6 +138,23 @@ create table `jobApplicationStatuses`(
 `deletedAt` datetime DEFAULT NULL,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1;
+
+CREATE TABLE `jobApplications` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `jobApplicationStatusId` int DEFAULT NULL,
+  `appliedOn` date DEFAULT NULL,
+`createdAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+`updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` datetime DEFAULT NULL,
+  `employerId` int DEFAULT NULL,
+  `jobId` int DEFAULT NULL,
+  `jobSeekerId` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`jobApplicationStatusId`) REFERENCES `jobApplicationStatuses` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`jobId`) REFERENCES `jobs` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`jobSeekerId`) REFERENCES `jobSeekers` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`employerId`) REFERENCES `employers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 -- 26 June 2017 Topics
 
@@ -186,7 +182,7 @@ FOREIGN KEY(`topicGroupId`) REFERENCES topicGroups(`id`) ON DELETE CASCADE
 
 -- 28 June 2017 JobSeekerSubscriptions
 
-CREATE TABLE IF NOT EXISTS `jobseekersubscriptions` (
+CREATE TABLE IF NOT EXISTS `jobSeekerSubscriptions` (
 `id` int NOT NULL AUTO_INCREMENT,
 `topicId` int,
 `jobSeekerId` int,
@@ -199,7 +195,7 @@ FOREIGN KEY(`topicId`) REFERENCES topics(`id`) ON DELETE CASCADE,
 FOREIGN KEY(`jobSeekerId`) REFERENCES jobSeekers(`id`) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1;
 
-ALTER TABLE `heroku_81310767018f667`.`jobs` 
+ALTER TABLE `jobs` 
 ADD COLUMN `province` VARCHAR(45) NULL AFTER `city`,
 ADD COLUMN `country` VARCHAR(200) NULL AFTER `province`;
 

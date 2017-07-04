@@ -1,10 +1,10 @@
 {   
     "development": {
         "urlPath": "mysql://",
-        "username": "b591dc18c91c4a",
-        "password": "f4cf29fb",
-        "database": "heroku_81310767018f667",
-        "host": "us-cdbr-iron-east-03.cleardb.net",
+        "username": "eustc4m52y73bveo",
+        "password": "g8c9okb26hh06pxd",
+        "database": "klvbr8oj6g21j61r",
+        "host": "ko86t9azcob3a2f9.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
         "port": 3306,
         "forceUpdate": false,
         "dialect": "mysql",

@@ -77,8 +77,9 @@ function post(req, res, method) {
     if (method == "saveJobSeekerSubscription") {
         var entry = {
             //need to change at server side
-            JobSeekerId: postData.JobSeekerId,
-            TopicId: postData.TopicId,
+            jobSeekerId: postData.jobSeekerId,
+            topicId: postData.topicId,
+            status: true,
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -99,8 +100,9 @@ function post(req, res, method) {
     } else if (method == "editJobSeekerSubscription") {
         var entry = {
             //need to change at server side
-            JobSeekerId: postData.JobSeekerId,
-            TopicId: postData.TopicId,
+            jobSeekerId: postData.jobSeekerId,
+            topicId: postData.topicId,
+            status: postData.status,
             updatedAt: new Date()
         }
 

@@ -1,7 +1,7 @@
 "use strict"
 
 module.exports = function(sequelize, DataTypes){
-    var JobCategories = sequelize.define("jobcategories",{
+    var JobCategories = sequelize.define("jobCategories",{
         description: DataTypes.STRING,
         internalCode: DataTypes.STRING,
     },{

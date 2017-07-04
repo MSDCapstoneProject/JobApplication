@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
-    var TopicGroups = sequelize.define("topicgroups", {
+    var TopicGroups = sequelize.define("topicGroups", {
         description: DataTypes.STRING,
         internalCode: DataTypes.STRING
     }, {

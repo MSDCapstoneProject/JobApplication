@@ -1,7 +1,7 @@
 "user strict";
 
 module.exports = function (sequelize, DataTypes) {
-    var JobSeekerTokens = sequelize.define("jobseekertokens", {
+    var JobSeekerTokens = sequelize.define("jobSeekerTokens", {
         token: DataTypes.STRING
     }, {
             paranoid: true,

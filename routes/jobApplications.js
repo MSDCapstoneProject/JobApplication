@@ -17,7 +17,7 @@ exports.list = function (req, res) {
             if (jobSeekerId && jobApplicationId == null) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { JobSeekerId: jobSeekerId }
+                    where: { jobSeekerId: jobSeekerId }
                 });
             } else if(jobApplicationId && jobSeekerId == null) {
                 return db.JobApplications.findAll({
@@ -34,38 +34,38 @@ exports.list = function (req, res) {
                 JobApplications.forEach(function (JobApplicationsData) {
                     var jobApplication = JobApplicationsData.dataValues;
                     getResponse.push(jobApplication);
-                    jobApplication.Employer = {};
-                    jobApplication.Job = {};
-                    jobApplication.JobSeeker = {};
+                    jobApplication.employer = {};
+                    jobApplication.job = {};
+                    jobApplication.jobSeeker = {};
                     employerPromises.push(
                         Promise.resolve()
                             .then(function () {
                                 return db.Employers.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobApplication.EmployerId }
+                                    where: { id: jobApplication.employerId }
                                 });
                             })
                             .then(function (employerData) {
                                 if (employerData) {
-                                    jobApplication.Employer = employerData[0].dataValues;
+                                    jobApplication.employer = employerData[0].dataValues;
                                 }
                                 return db.Jobs.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobApplication.JobId }
+                                    where: { id: jobApplication.jobId }
                                 });
                             })
                             .then(function (jobdata) {
                                 if (jobdata) {
-                                    jobApplication.Job = jobdata[0].dataValues;
+                                    jobApplication.job= jobdata[0].dataValues;
                                 }
                                 return db.JobSeekers.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                                    where: { id: jobApplication.JobSeekerId }
+                                    where: { id: jobApplication.jobSeekerId }
                                 });
                             })
                             .then(function (jobSeekerdata) {
                                 if (jobSeekerdata) {
-                                    jobApplication.JobSeeker = jobSeekerdata[0].dataValues;
+                                    jobApplication.jobSeeker = jobSeekerdata[0].dataValues;
                                 }
                             })
                             .catch(function (err) {
@@ -107,9 +107,9 @@ function post(req, res, method) {
         var entry = {
             applicationStatus: "applied", //need to change at server side
             appliedOn: new Date(),
-            EmployerId: postData.EmployerId,
-            JobId: postData.JobId,
-            JobSeekerId: postData.JobSeekerId,
+            employerId: postData.employerId,
+            jobId: postData.jobId,
+            jobSeekerId: postData.jobSeekerId,
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -117,7 +117,7 @@ function post(req, res, method) {
         Promise.resolve()
             //.then(function () {
                 //allow unlimitted number of applications
-                //return isJobApplicationValid(postData.JobId, response);
+                //return isJobApplicationValid(postData.jobId, response);
             //})
             .then(function () {
                 //need to check the number of positions 
@@ -137,7 +137,7 @@ function post(req, res, method) {
             })
             .then(function () {
                 //if (response.jobApplicationValid) {
-                    return updateJobsAppliedCount(postData.JobId, response, '+1');
+                    return updateJobsAppliedCount(postData.jobId, response, '+1');
                 //} else {
                     //response.increaseJobsApplied = false;
                 //}
@@ -155,9 +155,9 @@ function post(req, res, method) {
     } else if (method == "editjobApplication") {
         var entry = {
             applicationStatus: postData.applicationStatus,
-            EmployerId: postData.EmployerId,
-            JobId: postData.JobId,
-            JobSeekerId: postData.JobSeekerId,
+            employerId: postData.employerId,
+            jobId: postData.jobId,
+            jobSeekerId: postData.jobSeekerId,
             updatedAt: new Date()
         }
 
@@ -172,7 +172,7 @@ function post(req, res, method) {
             })
             .then(function(){
                 if(postData.applicationStatus == "canceled")
-                return updateJobsAppliedCount(postData.JobId, response, "-1"); //Decrease the count on cancellation
+                return updateJobsAppliedCount(postData.jobId, response, "-1"); //Decrease the count on cancellation
             })
             .then(function () {
                 res.json(response);
