@@ -324,4 +324,9 @@ Topics method
                 "id": "10"
         }
 
+
+-- Operations for JobApplicationStatuses
+
+                To get all : - http://localhost:8080/jobApplicationStatuses
+                To get for id: - http://localhost:8080/jobApplicationStatuses?id=1
 ## NOTES
