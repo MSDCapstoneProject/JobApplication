@@ -48,13 +48,13 @@ exports.list = function (req, res) {
                                     employer = employerData.dataValues;
                                     job.employer = employer;
                                 }
-                                return db.JobTypes.findOne({ where: { id: job.jobtypeId } });
+                                return db.JobTypes.findOne({ where: { id: job.jobTypeId } });
                             })
                             .then(function (jobTypeData) {
                                 if (jobTypeData) {
                                     job.jobType = jobTypeData.description;
                                 }
-                                return db.JobCategories.findOne({ where: { id: job.jobcategoryId } })
+                                return db.JobCategories.findOne({ where: { id: job.jobCategoryId } })
                             })
                             .then(function (jobCategoryData) {
                                 if (jobCategoryData) {
