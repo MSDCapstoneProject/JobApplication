@@ -19,13 +19,15 @@ exports.list = function (req, res) {
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { jobSeekerId: jobSeekerId }
                 });
-            } else if(jobApplicationId && jobSeekerId == null) {
+            } else if (jobApplicationId && jobSeekerId == null) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
                     where: { id: jobApplicationId }
                 });
-            }else if(jobSeekerId && jobApplicationId){
-                return null;
+            } else {
+                return db.JobApplications.findAll({
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] }
+                });
             }
         })
         .then(function (JobApplications) {
@@ -56,7 +58,7 @@ exports.list = function (req, res) {
                             })
                             .then(function (jobdata) {
                                 if (jobdata) {
-                                    jobApplication.job= jobdata[0].dataValues;
+                                    jobApplication.job = jobdata[0].dataValues;
                                 }
                                 return db.JobSeekers.findAll({
                                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
@@ -66,6 +68,14 @@ exports.list = function (req, res) {
                             .then(function (jobSeekerdata) {
                                 if (jobSeekerdata) {
                                     jobApplication.jobSeeker = jobSeekerdata[0].dataValues;
+                                }
+                                return db.JobApplicationStatuses.findAll({
+                                    where: { id: jobApplication.jobApplicationStatusId }
+                                })
+                            })
+                            .then(function (jobApplicationStatus) {
+                                if (jobApplicationStatus) {
+                                    jobApplication.applicationStatus = jobApplicationStatus[0].description;
                                 }
                             })
                             .catch(function (err) {
@@ -105,7 +115,7 @@ function post(req, res, method) {
 
     if (method == "savejobApplication") {
         var entry = {
-            applicationStatus: "applied", //need to change at server side
+            jobApplicationStatusId: 1, //need to change at server side (Get it through Enums)
             appliedOn: new Date(),
             employerId: postData.employerId,
             jobId: postData.jobId,
@@ -116,36 +126,36 @@ function post(req, res, method) {
 
         Promise.resolve()
             //.then(function () {
-                //allow unlimitted number of applications
-                //return isJobApplicationValid(postData.jobId, response);
+            //allow unlimitted number of applications
+            //return isJobApplicationValid(postData.jobId, response);
             //})
             .then(function () {
                 //need to check the number of positions 
                 //if (response.jobApplicationValid) {
-                    //there are still some jobs to be filled so we increased the count and now update the job
-                    return db.JobApplications.create(entry);
+                //there are still some jobs to be filled so we increased the count and now update the job
+                return db.JobApplications.create(entry);
                 //} else {
-                    //response.message = "All Positions Are Filled";
-                    //response.status = status.DATA_FULL;
+                //response.message = "All Positions Are Filled";
+                //response.status = status.DATA_FULL;
                 //}
             })
             .then(function (JobApplicationsData) {
                 if (JobApplicationsData) {
-                    response.applicationStatus = entry.applicationStatus;
+                    response.jobApplicationStatusId = entry.jobApplicationStatusId;
                     response.appliedOn = postData.appliedOn;
                 }
             })
             .then(function () {
                 //if (response.jobApplicationValid) {
-                    return updateJobsAppliedCount(postData.jobId, response, '+1');
+                return updateJobsAppliedCount(postData.jobId, response, '+1');
                 //} else {
-                    //response.increaseJobsApplied = false;
+                //response.increaseJobsApplied = false;
                 //}
             })
             .then(function () {
                 //change the staus if both the functions are successful
                 //if (response.jobApplicationValid && response.increaseJobsApplied) {
-                    response.status = status.SUCCESS;
+                response.status = status.SUCCESS;
                 //}
                 res.json(response);
             })
@@ -154,7 +164,7 @@ function post(req, res, method) {
             })
     } else if (method == "editjobApplication") {
         var entry = {
-            applicationStatus: postData.applicationStatus,
+            jobApplicationStatusId: postData.jobApplicationStatusId,
             employerId: postData.employerId,
             jobId: postData.jobId,
             jobSeekerId: postData.jobSeekerId,
@@ -170,9 +180,12 @@ function post(req, res, method) {
                     response.status = status.SUCCESS;
                 }
             })
-            .then(function(){
-                if(postData.applicationStatus == "canceled")
-                return updateJobsAppliedCount(postData.jobId, response, "-1"); //Decrease the count on cancellation
+            .then(function () {
+                if (postData.jobApplicationStatusId == 2) {  // Increase the count on approval by an employer
+                    return updateJobsAppliedCount(postData.jobId, response, "+1");
+                } else if (postData.jobApplicationStatusId == 4) {  //Decrease the count on cancellation
+                    return updateJobsAppliedCount(postData.jobId, response, "-1");
+                }
             })
             .then(function () {
                 res.json(response);
@@ -230,11 +243,11 @@ function isJobApplicationValid(jobId, response) {
 
 }
 
-function updateJobsAppliedCount(jobId, response,value) {
+function updateJobsAppliedCount(jobId, response, value) {
     return Promise.resolve()
         .then(function () {
             return db.Jobs.update({
-                filledPositions: db.Sequelize.literal('filledPositions'+value)
+                filledPositions: db.Sequelize.literal('filledPositions' + value)
             }, {
                     where: { id: jobId }
                 })
