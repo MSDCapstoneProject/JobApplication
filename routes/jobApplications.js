@@ -163,8 +163,9 @@ function post(req, res, method) {
                 console.log("Error at savejobApplication " + err);
             })
     } else if (method == "editjobApplication") {
+
         var entry = {
-            jobApplicationStatusId: postData.jobApplicationStatusId,
+            //jobApplicationStatusId: postData.jobApplicationStatusId,
             employerId: postData.employerId,
             jobId: postData.jobId,
             jobSeekerId: postData.jobSeekerId,
@@ -173,6 +174,14 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
+                if (postData.applicationStatus) {
+                    return db.JobApplicationStatuses.findAll({ where: { description: postData.applicationStatus } })
+                }
+            })
+            .then(function (jobApplicationStatus) {
+                if(jobApplicationStatus){
+                   entry.jobApplicationStatusId =  jobApplicationStatus[0].id;
+                }
                 return db.JobApplications.update(entry, { where: { id: postData.jobApplicationId } });
             })
             .then(function (JobApplicationsData) {

@@ -257,14 +257,24 @@ Job Applications Operation for JobSeekers :
 
         Job Application update : http://localhost:3000/jobApplications/update
 
+        //if application cancelled by user
         Json -     {
-            "jobApplicationStatusId": "4",                      //'4' = 'Cancelled By User'
+            "applicationStatus": "Cancelled",                      // 'Cancelled By User'
             "employerId": "1",
             "jobId":"7",
             "jobSeekerId": "8",
             "jobApplicationId": "36"
         }
-        //if application cancelled by user
+        
+        //If job application is not cancelled but updated with other fields
+        Json -  {                   
+            "employerId": "1",
+            "jobId":"7",
+            "jobSeekerId": "8",
+            "jobApplicationId": "36"
+        }
+
+
 
         Job Application delete : http://localhost:3000/jobApplications/delete
 
