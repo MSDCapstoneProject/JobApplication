@@ -221,7 +221,7 @@ Job Types Operation ----->
 
         Job Types get for id: http://localhost:3000/jobTypes/1
 
-Job Applicants Opearion for Employer----->
+Job Applicants Operation for Employer----->
 
         job Applicants get for only single job : http://localhost:8080/jobApplicants?jobId=2
         for jobApplication id: http://localhost:8080/jobApplicants?jobApplicationId=1

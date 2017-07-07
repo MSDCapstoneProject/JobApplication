@@ -33,18 +33,61 @@ function notifyJobPosting(jobId) {
         data: {}
     };
 
+    var jobSeekerSubscriptionList = [];
+
     Promise.resolve()
         .then(function () {
-            return db.Jobs.findAll({ where: { id: jobId } });
+            return db.Jobs.findAll({
+                include: [{ model: db.JobTypes }, { model: db.JobCategories }],
+                where: { id: jobId }
+            });
         })
         .then(function (jobData) {
             if (jobData) {
                 var job = jobData[0].dataValues; //get all the info for posted job;
                 message.notification.title = job.title;
                 message.data.jobId = job.id;
-                message.data.employerId = job.EmployerId;
-                return db.JobSeekers.findAll(); // get all job seekers || add more logic for notifying particular users
+                message.data.employerId = job.employerId;
+                //find all topic id's related to this job
+                return db.Topics.findAll({
+                    where: { description: { $in: [job.jobType.description, job.jobCategory.description, job.city] } }
+                })
             }
+        })
+        .then(function (topics) {
+            if (topics) {
+                var jobSeekerSubscriptionsPromises =[];
+                topics.forEach(function (topicData) {
+                    var topic = topicData.dataValues;
+                    jobSeekerSubscriptionsPromises.push(
+                        Promise.resolve()
+                            .then(function () {
+                                //get unique jobseekers for each topics
+                                return db.JobSeekerSubscriptions.findAll({
+                                    attributes: [[db.sequelize.fn('distinct', db.sequelize.col('jobSeekerId')), 'jobSeekerId']],
+                                    where: { topicId: topic.id }
+                                })
+                            })
+                            .then(function (jobSeekerSubscriptions) {
+                                if (jobSeekerSubscriptions) {
+                                    jobSeekerSubscriptions.forEach(function (jobSeekerSubscriptionData) {
+                                        jobSeekerSubscriptionList.push(jobSeekerSubscriptionData.jobSeekerId);
+                                    })
+                                }
+                            })
+                            .catch(function (err) {
+                                console.log('Error at JobSeekerSubscriptions ' + err);
+                            })
+                    );
+
+                })
+                return Promise.all(jobSeekerSubscriptionsPromises);
+            }
+        })
+        .then(function () {
+            return db.JobSeekers.findAll({
+                where: { id: { $in: [jobSeekerSubscriptionList] } }
+            }); // get all job seekers || add more logic for notifying particular users
         })
         .then(function (jobSeekers) {
             if (jobSeekers) {
@@ -52,7 +95,7 @@ function notifyJobPosting(jobId) {
 
                 jobSeekers.forEach(function (jobSeekerData) {
                     var jobSeeker = jobSeekerData.dataValues;
-                    message.notification.body = "Hi " + jobSeeker.firstName + ", You have new job. Find More & View Details!"
+                    message.notification.body = "Hi " + jobSeeker.firstName + ", You have a new job. Find More!"
 
                     jobSeekersPromises.push(
                         Promise.resolve()
@@ -67,10 +110,10 @@ function notifyJobPosting(jobId) {
                                 //implement code to update job notification data;
                             })
                             .then(function () {
-                                fcm.send(message); //message object is ready now then send it to a user.
+                                return fcm.send(message); //message object is ready now then send it to a user.
                             })
                             .catch(function (err) {
-                                console.log("error at jobSeekersPromises" + err);
+                                console.log("error at jobSeekersPromises " + err);
                             })
                     );
                 });
@@ -99,7 +142,7 @@ function notifyJobStatusUpdate(jobApplicationId) {
             if (jobApplicationId) {
                 return db.JobApplications.findAll({
                     where: { id: jobApplicationId },
-                    include: [{ model: db.JobSeekers }, {model: db.Jobs}, { model: db.Employers}]
+                    include: [{ model: db.JobSeekers }, { model: db.Jobs }, { model: db.Employers }]
                 });
             }
         })
@@ -108,13 +151,13 @@ function notifyJobStatusUpdate(jobApplicationId) {
                 var jobApplication = jobApplicationsData[0].dataValues;
                 message.data.jobApplicationId = jobApplication.id;
                 message.notification.title = jobApplication.Job.dataValues.title;
-                message.notification.body = "Hi " + jobApplication.JobSeeker.dataValues.firstName  + ", Your Job Application Status has been changed!"
+                message.notification.body = "Hi " + jobApplication.JobSeeker.dataValues.firstName + ", Your Job Application Status has been changed!"
 
 
                 return Promise.resolve()
                     .then(function () {
                         return db.JobSeekerTokens.findAll({
-                            where: { JobSeekerId: jobApplication.JobSeeker.id},
+                            where: { JobSeekerId: jobApplication.JobSeeker.id },
                         })
                     })
                     .then(function (jobSeekerTokenData) {
@@ -123,9 +166,9 @@ function notifyJobStatusUpdate(jobApplicationId) {
                             message.to = jobSeekerToken.token; //get the user tokken
                         }
                     })
-                    .then(function(){
+                    .then(function () {
                         //send token only if valid token present
-                        if(message.to){
+                        if (message.to) {
                             fcm.send(message);
                         }
                     })
