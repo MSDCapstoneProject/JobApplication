@@ -13,8 +13,8 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-app.set('ip_address',process.env.OPENSHIFT_NODEJS_IP || process.env.IP || '0.0.0.0'); //OPENSHIFT_NODEJS_IP = '127.0.0.1 and Heroku IP = '0.0.0.0'
-app.set('port',process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080); //var port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+app.set('ip_address', process.env.OPENSHIFT_NODEJS_IP || process.env.IP || '0.0.0.0'); //OPENSHIFT_NODEJS_IP = '127.0.0.1 and Heroku IP = '0.0.0.0'
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080); //var port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -61,6 +61,7 @@ var topicGroups = require('./routes/topicGroups');
 var topics = require('./routes/topics');
 var jobSeekerSubscriptions = require('./routes/jobSeekerSubscriptions');
 var jobApplicationStatuses = require('./routes/jobApplicationStatuses');
+var jobRatings = require('./routes/jobRatings');
 
 //Notification
 var sendNotifications = require('./routes/sendFcmNotification');
@@ -108,7 +109,7 @@ app.get('/jobs/:id', jobs.list);
 app.post('/jobs/add', jobs.add);
 app.post('/jobs/update', jobs.update);
 app.post('/jobs/delete', jobs.delete);
-app.post('/jobs/view',jobs.view);
+app.post('/jobs/view', jobs.view);
 
 app.get('/jobApplications', jobApplications.list);
 app.get('/jobApplications/:id', jobApplications.list);
@@ -119,9 +120,9 @@ app.post('/jobApplications/delete', jobApplications.delete);
 app.get('/jobSeekerApplication', jobSeekerApplication.list);
 app.get('/jobSeekerApplication/:id', jobSeekerApplication.list);
 
-app.get('/jobApplicants',jobApplicants.list);
-app.get('/jobApplicants/:id',jobApplicants.list);
-app.post('/jobApplicants/update',jobApplicants.update);
+app.get('/jobApplicants', jobApplicants.list);
+app.get('/jobApplicants/:id', jobApplicants.list);
+app.post('/jobApplicants/update', jobApplicants.update);
 
 app.get('/jobSeekerTokens', jobSeekerTokens.list);
 app.get('/jobSeekerTokens/:id', jobSeekerTokens.list);
@@ -135,26 +136,33 @@ app.get('/jobCategories', jobCategories.list);
 app.get('/jobCategories/:id', jobCategories.list);
 
 
-app.get('/topicGroups',topicGroups.list);
+app.get('/topicGroups', topicGroups.list);
 app.get('/topicGroups/:id', topicGroups.list);
 app.post('/topicGroups/add', topicGroups.add);
 app.post('/topicGroups/update', topicGroups.update);
 app.post('/topicGroups/delete', topicGroups.delete);
 
 
-app.get('/topics',topics.list);
+app.get('/topics', topics.list);
 app.get('/topics/:id', topics.list);
 app.post('/topics/add', topics.add);
 app.post('/topics/update', topics.update);
 app.post('/topics/delete', topics.delete);
 
-app.get('/jobSeekerSubscriptions',jobSeekerSubscriptions.list);
-app.get('/jobSeekerSubscriptions/:id',jobSeekerSubscriptions.list);
-app.post('/jobSeekerSubscriptions/add',jobSeekerSubscriptions.add);
-app.post('/jobSeekerSubscriptions/update',jobSeekerSubscriptions.update);
-app.post('/jobSeekerSubscriptions/delete',jobSeekerSubscriptions.delete);
+app.get('/jobSeekerSubscriptions', jobSeekerSubscriptions.list);
+app.get('/jobSeekerSubscriptions/:id', jobSeekerSubscriptions.list);
+app.post('/jobSeekerSubscriptions/add', jobSeekerSubscriptions.add);
+app.post('/jobSeekerSubscriptions/update', jobSeekerSubscriptions.update);
+app.post('/jobSeekerSubscriptions/delete', jobSeekerSubscriptions.delete);
 
-app.get('/jobApplicationStatuses',jobApplicationStatuses.list);
+
+app.get('/jobRatings', jobRatings.list);
+app.get('/jobRatings/:id', jobRatings.list);
+app.post('/jobRatings/add', jobRatings.add);
+app.post('/jobRatings/update', jobRatings.update);
+app.post('/jobRatings/delete', jobRatings.delete);
+
+app.get('/jobApplicationStatuses', jobApplicationStatuses.list);
 
 //send push message by Moonsun - 
 app.get('/fcm/sendFcmNotification', fcm.send);
@@ -171,6 +179,6 @@ app.use(app.router);
 
 var server = http.createServer(app);
 
-server.listen(app.get('port'), app.get('ip_address'), function(){
-  console.log('Server ' + app.get('ip_address') + ' as Express server listening on port ' + app.get('port'));
+server.listen(app.get('port'), app.get('ip_address'), function () {
+    console.log('Server ' + app.get('ip_address') + ' as Express server listening on port ' + app.get('port'));
 });

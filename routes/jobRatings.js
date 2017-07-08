@@ -95,58 +95,59 @@ function post(req, res, method) {
     var postData = Object.keys(req.query).length !== 0 ? req.query : Object.keys(req.body).length !== 0 ? req.body : null;
     response = {};
 
-    if (method == "saveTopic") {
+    if (method == "saveJobRating") {
         var entry = {
             //need to change at server side   
-            description: postData.description,
-            internalCode: libFunctions.formatInternalCode(postData.description),
-            topicGroupId: postData.topicGroupId,
+            jobId: postData.jobId,
+            jobSeekerId: postData.jobSeekerId,
+            status: postData.status,
             createdAt: new Date(),
             updatedAt: new Date()
         }
 
         Promise.resolve()
             .then(function () {
-                return db.Topics.create(entry);
+                return db.JobRatings.upsert(entry);
             })
-            .then(function (topicData) {
-                if (topicData) {
+            .then(function (jobRatingData) {
+                if (jobRatingData) {
                     response.status = status.SUCCESS;
                 }
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at saveTopic " + err);
+                console.log("Error at Save jobRating " + err);
             })
-    } else if (method == "editTopic") {
+    } else if (method == "editJobRating") {
         var entry = {
-            description: postData.description,
-            internalCode: libFunctions.formatInternalCode(postData.description),
-            topicGroupId: postData.topicGroupId,
+            //need to change at server side   
+            jobId: postData.jobId,
+            jobSeekerId: postData.jobSeekerId,
+            status: postData.status,
             updatedAt: new Date()
         }
 
         Promise.resolve()
             .then(function () {
-                return db.Topics.update(entry, { where: { id: postData.id } });
+                return db.JobRatings.update(entry, { where: { id: postData.id } });
             })
-            .then(function (topicData) {
-                if (topicData) {
+            .then(function (jobRatingData) {
+                if (jobRatingData) {
                     response.status = status.SUCCESS;
                 }
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at editTopic " + err);
+                console.log("Error at edit JobRating " + err);
             })
-    } else if (method == "deleteTopic") {
+    } else if (method == "deleteJobRating") {
 
         Promise.resolve()
             .then(function () {
-                return db.Topics.destroy({ where: { id: postData.id } });
+                return db.JobRatings.destroy({ where: { id: postData.id } });
             })
-            .then(function (topicsData) {
-                if (topicsData) {
+            .then(function (jobRatingData) {
+                if (jobRatingData) {
                     response.status = status.SUCCESS;
                 } else {
                     response.status = status.NO_DATA_FOUND;
@@ -156,7 +157,7 @@ function post(req, res, method) {
                 res.json(response);
             })
             .catch(function (err) {
-                console.log("Error at deleteTopics " + err);
+                console.log("Error at delete JobRating " + err);
             })
     } else {
         console.log("Undefined Method");

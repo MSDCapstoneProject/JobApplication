@@ -339,4 +339,34 @@ Topics method
 
                 To get all : - http://localhost:8080/jobApplicationStatuses
                 To get for id: - http://localhost:8080/jobApplicationStatuses?id=1
+
+
+-- Operations for JobRatings
+
+        To get all: - http://localhost:8080/jobRatings
+        To get all: -
+
+        To add: - http://localhost:8080/jobRatings/add
+
+        {
+	        "status": "1",
+	        "jobId": "1",
+	        "jobSeekerId": "1"
+        }
+
+        To update: - http://localhost:8080/jobRatings/update
+
+        {
+                "id": "1",
+	        "status": "0",
+	        "jobId": "1",
+	        "jobSeekerId": "1"
+        }
+
+        To Delete: - http://localhost:8080/jobRatings/delete
+
+        {
+                "id": "1"
+        }
+
 ## NOTES
