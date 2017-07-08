@@ -200,6 +200,21 @@ ADD COLUMN `province` VARCHAR(45) NULL AFTER `city`,
 ADD COLUMN `country` VARCHAR(200) NULL AFTER `province`;
 
 
+-- 7 July 
+
+CREATE TABLE IF NOT EXISTS `jobRatings` (
+`id` int NOT NULL AUTO_INCREMENT,
+`status` int,
+`jobId` int,
+`jobSeekerId` int,
+`createdAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+`updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`deletedAt` datetime DEFAULT NULL,
+PRIMARY KEY (`id`),
+FOREIGN KEY(`jobId`) REFERENCES jobs(`id`) ON DELETE CASCADE,
+FOREIGN KEY(`jobSeekerId`) REFERENCES jobSeekers(`id`) ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1;
+
 
 /*USE heroku_81310767018f667;
 

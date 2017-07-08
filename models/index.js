@@ -100,7 +100,7 @@ db.sequelize = sequelize;
 db.Employers = require('./employer')(sequelize, Sequelize);
 db.Jobs = require('./job')(sequelize, Sequelize);
 db.JobApplications = require('./jobApplication')(sequelize, Sequelize);
-db.JobApplicationStatuses = require('./jobApplicationStatuses')(sequelize,Sequelize);
+db.JobApplicationStatuses = require('./jobApplicationStatuses')(sequelize, Sequelize);
 db.JobCategories = require('./jobCategory')(sequelize, Sequelize);
 db.JobSeekers = require('./jobSeeker')(sequelize, Sequelize);
 db.JobSeekerSubscriptions = require('./jobSeekerSubscriptions')(sequelize, Sequelize);
@@ -108,6 +108,7 @@ db.JobSeekerTokens = require('./jobSeekerToken')(sequelize, Sequelize);
 db.JobTypes = require('./jobType')(sequelize, Sequelize);
 db.Topics = require('./topic')(sequelize, Sequelize);
 db.TopicGroups = require('./topicGroup')(sequelize, Sequelize);
+db.JobRatings = require('./jobRating')(sequelize, Sequelize);
 
 
 //Relations  
@@ -122,6 +123,7 @@ db.JobSeekerSubscriptions.belongsTo(db.JobSeekers);
 db.JobSeekerSubscriptions.belongsTo(db.Topics);
 db.JobSeekerTokens.belongsTo(db.JobSeekers);
 db.Topics.belongsTo(db.TopicGroups);
-
+db.JobRatings.belongsTo(db.Jobs);
+db.JobRatings.belongsTo(db.JobSeekers);
 //export this object
 module.exports = db;

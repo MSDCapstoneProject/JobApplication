@@ -1,15 +1,12 @@
 
-https://www.db4free.net/phpMyAdmin/
+//add following in your my sql server
 
 
 
-        "username": "sql9179567",
-        "password": "ZaDW8MW3JF",
-        "database": "sql9179567",
-        "host": "sql9.freemysqlhosting.net",
+        "urlPath": "mysql://",
+        "username": "eustc4m52y73bveo",
+        "password": "g8c9okb26hh06pxd",
+        "database": "klvbr8oj6g21j61r",
+        "host": "ko86t9azcob3a2f9.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
         "port": 3306,
-        "forceUpdate": false,
-        "dialect": "mysql",
-        "dialectOptions": {
-        "instanceName": "MySQL57"
-        }
+        "dialect": "mysql"
