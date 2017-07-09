@@ -89,3 +89,17 @@ VALUES
 ('2','1','1'),
 ('3','2','1'),
 ('2','2','1');
+
+
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('1', '1', '1');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('1', '1', '2');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('0', '1', '3');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('1', '1', '4');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('1', '2', '1');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('1', '2', '2');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('0', '2', '3');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('1', '2', '4');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('1', '3', '1');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('1', '3', '2');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('0', '3', '3');
+INSERT INTO `klvbr8oj6g21j61r`.`jobRatings` (`status`, `jobId`, `jobSeekerId`) VALUES ('0', '3', '4');

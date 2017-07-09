@@ -344,7 +344,9 @@ Topics method
 -- Operations for JobRatings
 
         To get all: - http://localhost:8080/jobRatings
-        To get all: -
+        To get job Ratings id : - http://localhost:8080/jobRatings?id=1
+        To get jobSeeker id : - http://localhost:8080/jobRatings?jobSeekerId=1
+
 
         To add: - http://localhost:8080/jobRatings/add
 
