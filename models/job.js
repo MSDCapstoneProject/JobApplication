@@ -7,6 +7,7 @@ module.exports = function (sequelize, DataTypes) {
         city: DataTypes.STRING,
         province: DataTypes.STRING,
         country: DataTypes.STRING,
+        postalCode:DataTypes.STRING,
         startDate: DataTypes.DATEONLY,
         endDate: DataTypes.DATEONLY,
         startTime: DataTypes.TIME,
