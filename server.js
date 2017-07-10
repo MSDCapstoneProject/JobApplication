@@ -62,6 +62,7 @@ var topics = require('./routes/topics');
 var jobSeekerSubscriptions = require('./routes/jobSeekerSubscriptions');
 var jobApplicationStatuses = require('./routes/jobApplicationStatuses');
 var jobRatings = require('./routes/jobRatings');
+var statistics = require('./routes/statistics');
 
 //Notification
 var sendNotifications = require('./routes/sendFcmNotification');
@@ -163,6 +164,12 @@ app.post('/jobRatings/update', jobRatings.update);
 app.post('/jobRatings/delete', jobRatings.delete);
 
 app.get('/jobApplicationStatuses', jobApplicationStatuses.list);
+
+
+//statistics for employer
+app.get('/statistics/jobsByCity',statistics.jobsByCity);
+app.get('/statistics/jobsByJobType',statistics.jobsByJobType);
+app.get('/statistics/jobsByJobCategory',statistics.jobsByJobCategory);
 
 //send push message by Moonsun - 
 app.get('/fcm/sendFcmNotification', fcm.send);

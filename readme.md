@@ -371,4 +371,14 @@ Topics method
                 "id": "1"
         }
 
+
+-- Statistics Method
+
+       Jobs By City Get Method http://localhost:8080/statistics/jobsByCity?employerId=2&year=2017&month=7
+
+       Jobs By JobType Get Method http://localhost:8080/statistics/jobsByJobType?employerId=2&year=2017&month=7
+
+       Jobs By JobCategory Get Method http://localhost:8080/statistics/jobsByJobCategory?employerId=2&year=2017&month=7
+
+               
 ## NOTES
