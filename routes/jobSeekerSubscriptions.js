@@ -75,6 +75,11 @@ function post(req, res, method) {
     response = {};
 
     if (method == "saveJobSeekerSubscription") {
+        /*
+        1.Delete all the current subscritions for partucular jobSeeker
+        2.add individual entries as per the current topicId Array
+        */
+
         var entry = {
             //need to change at server side
             jobSeekerId: postData.jobSeekerId,
@@ -86,7 +91,35 @@ function post(req, res, method) {
 
         Promise.resolve()
             .then(function () {
-                return db.JobSeekerSubscriptions.create(entry);
+                //Step 1
+                return db.JobSeekerSubscriptions.destroy({ where: { jobSeekerId: postData.jobSeekerId } });
+            })
+            .then(function () {
+                var jobSeekerSubscriptionsPromises = [];
+                postData.topicId.forEach(function (topicId) {
+                    jobSeekerSubscriptionsPromises.push(
+                        Promise.resolve()
+                            .then(function () {
+                                return entry = {
+                                    //need to change at server side
+                                    jobSeekerId: postData.jobSeekerId,
+                                    topicId: topicId,
+                                    status: true,
+                                    createdAt: new Date(),
+                                    updatedAt: new Date()
+                                }
+                            })
+                            .then(function (entry) {
+                                if (entry) {
+                                    return db.JobSeekerSubscriptions.create(entry);
+                                }
+                            })
+                            .catch(function (err) {
+                                console.log("Error at saveJobSeekerSubscription : jobSeekerSubscriptionsPromises " + err);
+                            })
+                    )
+                })
+                return Promise.all(jobSeekerSubscriptionsPromises);
             })
             .then(function (JobSeekerSubscriptionData) {
                 if (JobSeekerSubscriptionData) {
