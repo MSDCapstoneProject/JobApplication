@@ -79,6 +79,8 @@ function post(req, res, method) {
         1.Delete all the current subscritions for partucular jobSeeker
         2.add individual entries as per the current topicId Array
         */
+        postData.topicId = postData.topicId.replace(/'/g, '"');
+        postData.topicId = JSON.parse(postData.topicId);
 
         var entry = {
             //need to change at server side

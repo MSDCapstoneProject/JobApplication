@@ -176,7 +176,7 @@ jobSeekerSubscriptions Operation ----->
 
                 Json  =         {
                                 "jobSeekerId": "1",
-                                "topicId": ["5","6","7"]
+                                "topicId": "['5','6']"
                                 }
 
         JobSubscribers Post update: http://localhost:8080/jobSeekerSubscriptions/update
