@@ -19,11 +19,12 @@ exports.list = function (req, res) {
             if (jobId) {
                 return db.Jobs.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { id: jobId }
+                    where: { id: jobId, expiryDate: { $gte: new Date() } }
                 });
             } else {
                 return db.Jobs.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                    where: { expiryDate: { $gte: new Date() } }
                 });
             }
         })
