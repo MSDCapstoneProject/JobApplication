@@ -198,14 +198,14 @@ function notifyJobStatusUpdate(jobApplicationId) {
             if (jobApplicationsData) {
                 var jobApplication = jobApplicationsData[0].dataValues;
                 message.data.jobApplicationId = jobApplication.id;
-                message.notification.title = jobApplication.Job.dataValues.title;
-                message.notification.body = "Hi " + jobApplication.JobSeeker.dataValues.firstName + ", Your Job Application Status has been changed!"
+                message.notification.title = jobApplication.job.dataValues.title;
+                message.notification.body = "Hi " + jobApplication.jobSeeker.dataValues.firstName + ", Your Job Application Status has been changed!"
 
 
                 return Promise.resolve()
                     .then(function () {
                         return db.JobSeekerTokens.findAll({
-                            where: { JobSeekerId: jobApplication.JobSeeker.id },
+                            where: { JobSeekerId: jobApplication.jobSeeker.id },
                         })
                     })
                     .then(function (jobSeekerTokenData) {
