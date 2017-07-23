@@ -125,15 +125,20 @@ function post(req, res, method) {
         }
 
         Promise.resolve()
-            //.then(function () {
-            //allow unlimitted number of applications
-            //return isJobApplicationValid(postData.jobId, response);
-            //})
             .then(function () {
-                //need to check the number of positions 
-                //if (response.jobApplicationValid) {
-                //there are still some jobs to be filled so we increased the count and now update the job
-                return db.JobApplications.create(entry);
+                //find if jobSeeker already applied for this job
+                return db.JobApplications.findAll({ where: { jobId: postData.jobId, jobSeekerId: postData.jobSeekerId, } })
+            })
+            .then(function (jobApplicationData) {
+                if (jobApplicationData.length>0) {
+                    response.status = status.DATA_FULL;
+                    return null;
+                } else {
+                    //need to check the number of positions 
+                    //if (response.jobApplicationValid) {
+                    //there are still some jobs to be filled so we increased the count and now update the job
+                    return db.JobApplications.create(entry);
+                }
                 //} else {
                 //response.message = "All Positions Are Filled";
                 //response.status = status.DATA_FULL;
@@ -147,7 +152,9 @@ function post(req, res, method) {
             })
             .then(function () {
                 //if (response.jobApplicationValid) {
-                return updateJobsAppliedCount(postData.jobId, response, '+1');
+                if (!response.status && response.status == null) {
+                    return updateJobsAppliedCount(postData.jobId, response, '+1');
+                }
                 //} else {
                 //response.increaseJobsApplied = false;
                 //}
@@ -155,7 +162,9 @@ function post(req, res, method) {
             .then(function () {
                 //change the staus if both the functions are successful
                 //if (response.jobApplicationValid && response.increaseJobsApplied) {
-                response.status = status.SUCCESS;
+                if (!response.status && response.status == null) {
+                    response.status = status.SUCCESS;
+                }
                 //}
                 res.json(response);
             })
@@ -189,7 +198,9 @@ function post(req, res, method) {
                 }
             })
             .then(function () {
-                if (postData.jobApplicationStatusId == 4) {  //Decrease the count on cancellation
+                if (postData.jobApplicationStatusId == "1") {  // Increase the count on applied
+                    return updateJobsAppliedCount(postData.jobId, response, "+1");
+                } else if (postData.jobApplicationStatusId == "4") {  //Decrease the count on cancellation
                     return updateJobsAppliedCount(postData.jobId, response, "-1");
                 }
             })

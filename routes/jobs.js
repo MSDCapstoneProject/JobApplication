@@ -140,7 +140,8 @@ function post(req, res, method) {
             createdAt: new Date(),
             updatedAt: new Date(),
             totalPositions: postData.totalPositions,
-            views: 0
+            views: 0,
+            filledPositions: 0
         }
 
         Promise.resolve()
