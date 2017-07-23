@@ -130,7 +130,7 @@ function post(req, res, method) {
                 return db.JobApplications.findAll({ where: { jobId: postData.jobId, jobSeekerId: postData.jobSeekerId, } })
             })
             .then(function (jobApplicationData) {
-                if (jobApplicationData.length>0) {
+                if (jobApplicationData.length > 0) {
                     response.status = status.DATA_FULL;
                     return null;
                 } else {
@@ -189,6 +189,9 @@ function post(req, res, method) {
             .then(function (jobApplicationStatus) {
                 if (jobApplicationStatus) {
                     entry.jobApplicationStatusId = jobApplicationStatus[0].id;
+                    if (postData.jobApplicationStatusId == null) {
+                        postData.jobApplicationStatusId = jobApplicationStatus[0].id;
+                    }
                 }
                 return db.JobApplications.update(entry, { where: { id: postData.jobApplicationId } });
             })
