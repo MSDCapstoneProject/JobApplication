@@ -18,16 +18,19 @@ exports.list = function (req, res) {
             if (jobId && jobApplicationId == null) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { jobId: jobId, jobApplicationStatusId: { $ne: "4" } }
+                    where: { jobId: jobId, jobApplicationStatusId: { $eq: "1" } }
                 });
             } else if (jobApplicationId && jobId == null) {
                 return db.JobApplications.findAll({
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
-                    where: { id: jobApplicationId, jobApplicationStatusId: { $ne: "4" } }
+                    where: { id: jobApplicationId, jobApplicationStatusId: { $eq: "1" } }
                 });
             } else if (jobId == null && jobApplicationId == null) {
-                return null;
-            } else if(jobId && jobApplicationId){
+                return db.JobApplications.findAll({
+                    attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
+                    where: { jobApplicationStatusId: { $eq: "1" } }
+                });
+            } else if (jobId && jobApplicationId) {
                 return null
             }
         })
