@@ -165,7 +165,6 @@ function post(req, res, method) {
     } else if (method == "editjobApplication") {
 
         var entry = {
-            //jobApplicationStatusId: postData.jobApplicationStatusId,
             employerId: postData.employerId,
             jobId: postData.jobId,
             jobSeekerId: postData.jobSeekerId,
@@ -179,8 +178,8 @@ function post(req, res, method) {
                 }
             })
             .then(function (jobApplicationStatus) {
-                if(jobApplicationStatus){
-                   entry.jobApplicationStatusId =  jobApplicationStatus[0].id;
+                if (jobApplicationStatus) {
+                    entry.jobApplicationStatusId = jobApplicationStatus[0].id;
                 }
                 return db.JobApplications.update(entry, { where: { id: postData.jobApplicationId } });
             })
@@ -190,9 +189,7 @@ function post(req, res, method) {
                 }
             })
             .then(function () {
-                if (postData.jobApplicationStatusId == 2) {  // Increase the count on approval by an employer
-                    return updateJobsAppliedCount(postData.jobId, response, "+1");
-                } else if (postData.jobApplicationStatusId == 4) {  //Decrease the count on cancellation
+                if (postData.jobApplicationStatusId == 4) {  //Decrease the count on cancellation
                     return updateJobsAppliedCount(postData.jobId, response, "-1");
                 }
             })
