@@ -46,7 +46,7 @@ config.json
     DATA_FULL:7
 };
 
-        Jobseeker Operation ---->
+        Employer Operation ---->
 
         Employer get for all: http://localhost:3000/employers
         Employer get for id: http://localhost:3000/employers?id=1 or http://localhost:3000/employers/1 
