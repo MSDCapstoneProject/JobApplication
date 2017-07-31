@@ -164,3 +164,31 @@ exports.jobsByMonthlyViewsByJobCategory = function (req, res) {
             console.log('Error at jobsByMonthlyViewsByJobCategory ' + err);
         })
 }
+
+
+exports.jobsByRating = function (req, res) {
+    getResponse = [];
+    var employerId = req.param.employerId || req.query.employerId;
+    var jobId = req.param.jobId || req.query.jobId;
+    var year = req.param.year || req.query.year;
+    var month = req.param.month || req.query.month;
+
+    Promise.resolve()
+        .then(function () {
+            //make a call to a procedure to CALL proc_stats_jobs_by_city(2, '2017', '07');
+            return db.sequelize.query("CALL proc_stats_jobs_by_rating('" + employerId + "','" + jobId + "','" + year + "','" + month + "')");
+        })
+        .then(function (jobsByRatings) {
+            if (jobsByRatings) {
+                jobsByRatings.forEach(function (jobsByRating) {
+                    getResponse.push(jobsByRating);
+                });
+            }
+        })
+        .then(function () {
+            res.json(getResponse);
+        })
+        .catch(function (err) {
+            console.log('Error at jobsByRating ' + err);
+        })
+}

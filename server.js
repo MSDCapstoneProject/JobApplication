@@ -174,6 +174,7 @@ app.get('/statistics/jobsByJobCategory',statistics.jobsByJobCategory);
 app.get('/statistics/jobsByMonthlyViews',statistics.jobsByMonthlyViews); //http://localhost:8080/statistics/jobsByMonthlyViews?employerId=null&year=2017
 app.get('/statistics/jobsByMonthlyViewsByJobType',statistics.jobsByMonthlyViewsByJobType);//http://localhost:8080/statistics/jobsByMonthlyViewsByJobType?employerId=null&year=2017
 app.get('/statistics/jobsByMonthlyViewsByJobCategory',statistics.jobsByMonthlyViewsByJobCategory);//http://localhost:8080/statistics/jobsByMonthlyViewsByJobCategory?employerId=null&year=2017
+app.get('/statistics/jobsByRating',statistics.jobsByRating);
 
 //send push message by Moonsun - 
 app.get('/fcm/sendFcmNotification', fcm.send);
